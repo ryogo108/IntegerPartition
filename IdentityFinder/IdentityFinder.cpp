@@ -39,8 +39,7 @@ bool diffAtDist(list<int> lst,int dist,int diff){
   for(list<int>::iterator itr=lst.begin();next(itr,dist)!=lst.end();itr++){
     if((*itr)-*next(itr,dist)<diff)return false;
   }
-  return true;
-  
+  return true; 
 }
 bool congruenceAtDist(list<int> lst,int A,int B,int C,int D){
   // diff of lamda_j and lamda_{j+A} is less than or equal to B only if sum from lamda_j to lamda_{j+A} is congruence to C (mod D)
