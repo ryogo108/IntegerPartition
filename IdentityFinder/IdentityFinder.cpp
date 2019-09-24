@@ -67,36 +67,52 @@ bool RogersRamanujan(Par p){
   return diffAtDist(p,1,2);
 }
 
-bool checkConditions(Par & p){
-  return I2(p);
-  //return diffAtDist(p,1,2);
+bool checkConditions(Par & p,vector<int> & params){
+  if(params.size()<7)return false;
+  int k=params[0];
+  int dist=params[1];
+  int diff=params[2];
+  int A=params[3];
+  int B=params[4];
+  int C=params[5];
+  int D=params[6];
+  if(dist<1||A<1||C>=D||D<1)return false;
+  return smallestPart(p,k)&&diffAtDist(p,dist,diff)&&congruenceAtDist(p,A,B,C,D);
+}
+bool checkParams(vector<int> & params){
+  if(params.size()<7)return false;
+  int k=params[0];
+  int dist=params[1];
+  int diff=params[2];
+  int A=params[3];
+  int B=params[4];
+  int C=params[5];
+  int D=params[6];
+  bool f = (k>=1&&dist>=1&&A>=1&&C<D&&D>=1);
+  
+  return f;
 }
 
-int generatePartition(int n,int tail,int sum,Par prev){
+int generatePartition(int n,int tail,int sum,Par prev,vector<int> & params){
   if(sum!=0)prev.push_back(tail);
   Par now(prev);
   if(n<sum)return 0;
   if(n==sum){
-    if(checkConditions(now)){
-      print_vector(now);
+    if(checkConditions(now,params)){
+     // print_vector(now);
       return 1;
     }
     return 0;
   }
   int re=0;
   for(int i=tail;i>=1;i--){
-     re+=generatePartition(n,i,sum+i,now);
+     re+=generatePartition(n,i,sum+i,now,params);
   }
   return re;
 }
-
-void partition(int n){
+int countPartition(int n,vector<int> &params){
   Par p;
-  generatePartition(n,n,0,p);
-}
-int countPartition(int n){
-  Par p;
-  return generatePartition(n,n,0,p);
+  return generatePartition(n,n,0,p,params);
 }
 
 vector<int> Factor(vector<int> B){
@@ -119,10 +135,29 @@ vector<int> Factor(vector<int> B){
   return A;
 }
 
+void enumPartition(int n,vector<int> & params){
+  vector<int> B;
+  for(int i=0;i<=n;i++)B.push_back(countPartition(i,params));
+  int sum=0;
+  for(int i=0;i<B.size();i++)sum+=B[i];
+  if(sum==0)return;
+  cout<<"params:(sp,dist,diff,A,B,C,D):";print_vector(params);
+  print_vector(B);
+  print_vector(Factor(B)); 
+}
+void identityFinder(int n,int param_max,int param_num,vector<int> params){
+  if(params.size()==param_num){
+    if(checkParams(params))enumPartition(n,params);
+    return;
+  }
+  for(int i=0;i<=param_max;i++){
+    vector<int> next(params);
+    next.push_back(i);
+    identityFinder(n,param_max,param_num,next);
+  }
+}
 int main(int argc,char *argv[]){
   int n=atoi(argv[1]);
-  vector<int> B;
-  for(int i=0;i<=n;i++)B.push_back(countPartition(i));
-  print_vector(B);
-  print_vector(Factor(B));
+  vector<int> params;
+  identityFinder(n,3,7,params);
 }
