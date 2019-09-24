@@ -1,15 +1,9 @@
 #include<iostream>
-#include<list>
 #include<vector>
 using namespace std;
 
-template<class T> void print_list(list<T> lst){
-  for(typename list<T>::iterator itr=lst.begin();itr!=lst.end();itr++){
-    if(itr!=lst.begin())cout<<" ";
-    cout<<*itr;
-  }
-  cout<<endl;
-}
+typedef vector<long long> Par;
+
 template<class T>void print_vector(vector<T> vec){
   for(int i=0;i<vec.size();i++){
     if(i>0)cout<<" ";
@@ -19,88 +13,72 @@ template<class T>void print_vector(vector<T> vec){
 }
 
 
-
-bool strict(list<int> lst){
-  if(lst.empty())return true;
-  for(list<int>::iterator itr=lst.begin();next(itr)!=lst.end();itr++){
-    if((*itr)==*next(itr))return false;
-  }
-  return true;
-}
-bool hyperStrict(list<int> lst){
-  if(lst.empty())return true;
-  for(list<int>::iterator itr=lst.begin();next(itr)!=lst.end();itr++){
-    if((*itr)-*next(itr)<2)return false;
-  }
-  return true;
-}
-bool diffAtDist(list<int> lst,int dist,int diff){
-  if(lst.size()<dist)return true;
-  for(list<int>::iterator itr=lst.begin();next(itr,dist)!=lst.end();itr++){
-    if((*itr)-*next(itr,dist)<diff)return false;
+bool diffAtDist(Par & p,int dist,int diff){
+  if(p.size()<dist)return true;
+  for(int i=0;i<p.size()-dist;i++){
+    if(p[i]-p[i+dist]<diff)return false;
   }
   return true; 
 }
-bool congruenceAtDist(list<int> lst,int A,int B,int C,int D){
+bool congruenceAtDist(Par & p,int A,int B,int C,int D){
   // diff of lamda_j and lamda_{j+A} is less than or equal to B only if sum from lamda_j to lamda_{j+A} is congruence to C (mod D)
-  if(lst.size()<A)return true;
-  for(list<int>::iterator itr=lst.begin();next(itr,A)!=lst.end();itr++){
-    if((*itr)-*next(itr,A)<=B){
+  if(p.size()<A)return true;
+  for(int i=0;i<p.size()-A;i++){
+    if(p[i]-p[i+A]<=B){
       int sum=0;
-      for(list<int>::iterator jtr=itr;jtr!=next(itr,A+1);jtr++){
-        sum+=*(jtr);
-      }
+      for(int j=0;j<=A;j++)sum+=p[i+j];
       if(sum%D!=C)return false;
     }
   }
   return true;
 }
-bool smallestPart(list<int> lst,int n){
-  if(lst.empty())return true;
-  return *prev(lst.end())>=n;
+bool smallestPart(Par & p,int n){
+  if(p.empty())return true;
+  return p[p.size()-1]>=n;
 }
 
-bool I1(list<int> lst){
-  return diffAtDist(lst,2,3)&&congruenceAtDist(lst,1,1,0,3)&&smallestPart(lst,1);
+bool I1(Par p){
+  return diffAtDist(p,2,3)&&congruenceAtDist(p,1,1,0,3)&&smallestPart(p,1);
 }
-bool I2(list<int> lst){
-  return diffAtDist(lst,2,3)&&congruenceAtDist(lst,1,1,0,3)&&smallestPart(lst,2);
+bool I2(Par p){
+  return diffAtDist(p,2,3)&&congruenceAtDist(p,1,1,0,3)&&smallestPart(p,2);
 }
-bool I3(list<int> lst){
-  return diffAtDist(lst,2,3)&&congruenceAtDist(lst,1,1,0,3)&&smallestPart(lst,3);
+bool I3(Par p){
+  return diffAtDist(p,2,3)&&congruenceAtDist(p,1,1,0,3)&&smallestPart(p,3);
 }
-bool I4(list<int> lst){
-  return diffAtDist(lst,2,3)&&congruenceAtDist(lst,1,1,2,3)&&smallestPart(lst,2);
+bool I4(Par p){
+  return diffAtDist(p,2,3)&&congruenceAtDist(p,1,1,2,3)&&smallestPart(p,2);
 }
-bool I5(list<int> lst){
-  list<int> tmpLst(lst);
-  if(!tmpLst.empty())tmpLst.pop_back();
-  return diffAtDist(lst,3,3)&&congruenceAtDist(lst,2,1,1,3)&&smallestPart(tmpLst,2);
+bool I5(Par p){
+  Par tmpp(p);
+  if(!tmpp.empty())tmpp.pop_back();
+  return diffAtDist(p,3,3)&&congruenceAtDist(p,2,1,1,3)&&smallestPart(tmpp,2);
 }
-bool I6(list<int> lst){
-  list<int> tmpLst(lst);
-  if(!tmpLst.empty())tmpLst.pop_back();
-  return diffAtDist(lst,3,3)&&congruenceAtDist(lst,2,1,2,3)&&smallestPart(tmpLst,3)&&smallestPart(lst,2);
-}
-
-bool euler(list<int> lst){
-  return diffAtDist(lst,1,1);
-}
-bool RogersRamanujan(list<int> lst){
-  return diffAtDist(lst,1,2);
+bool I6(Par p){
+  Par tmpp(p);
+  if(!tmpp.empty())tmpp.pop_back();
+  return diffAtDist(p,3,3)&&congruenceAtDist(p,2,1,2,3)&&smallestPart(tmpp,3)&&smallestPart(p,2);
 }
 
-bool checkConditions(list<int> lst){
-  return diffAtDist(lst,1,2);
+bool euler(Par p){
+  return diffAtDist(p,1,1);
+}
+bool RogersRamanujan(Par p){
+  return diffAtDist(p,1,2);
 }
 
-int generatePartition(int n,int tail,int sum,list<int> prev){
+bool checkConditions(Par & p){
+  return I2(p);
+  //return diffAtDist(p,1,2);
+}
+
+int generatePartition(int n,int tail,int sum,Par prev){
   if(sum!=0)prev.push_back(tail);
-  list<int> now(prev);
+  Par now(prev);
   if(n<sum)return 0;
   if(n==sum){
     if(checkConditions(now)){
-      print_list(now);
+      print_vector(now);
       return 1;
     }
     return 0;
@@ -113,12 +91,12 @@ int generatePartition(int n,int tail,int sum,list<int> prev){
 }
 
 void partition(int n){
-  list<int> lst;
-  generatePartition(n,n,0,lst);
+  Par p;
+  generatePartition(n,n,0,p);
 }
 int countPartition(int n){
-  list<int> lst;
-  return generatePartition(n,n,0,lst);
+  Par p;
+  return generatePartition(n,n,0,p);
 }
 
 vector<int> Factor(vector<int> B){
@@ -145,5 +123,6 @@ int main(int argc,char *argv[]){
   int n=atoi(argv[1]);
   vector<int> B;
   for(int i=0;i<=n;i++)B.push_back(countPartition(i));
+  print_vector(B);
   print_vector(Factor(B));
 }
