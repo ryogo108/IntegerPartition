@@ -37,34 +37,38 @@ bool smallestPart(Par & p,int n){
   return p[p.size()-1]>=n;
 }
 
-bool I1(Par p){
+bool I1(Par & p){
   return diffAtDist(p,2,3)&&congruenceAtDist(p,1,1,0,3)&&smallestPart(p,1);
 }
-bool I2(Par p){
+bool I2(Par & p){
   return diffAtDist(p,2,3)&&congruenceAtDist(p,1,1,0,3)&&smallestPart(p,2);
 }
-bool I3(Par p){
+bool I3(Par & p){
   return diffAtDist(p,2,3)&&congruenceAtDist(p,1,1,0,3)&&smallestPart(p,3);
 }
-bool I4(Par p){
+bool I4(Par & p){
   return diffAtDist(p,2,3)&&congruenceAtDist(p,1,1,2,3)&&smallestPart(p,2);
 }
-bool I5(Par p){
+bool I5(Par & p){
   Par tmpp(p);
   if(!tmpp.empty())tmpp.pop_back();
   return diffAtDist(p,3,3)&&congruenceAtDist(p,2,1,1,3)&&smallestPart(tmpp,2);
 }
-bool I6(Par p){
+bool I6(Par & p){
   Par tmpp(p);
   if(!tmpp.empty())tmpp.pop_back();
   return diffAtDist(p,3,3)&&congruenceAtDist(p,2,1,2,3)&&smallestPart(tmpp,3)&&smallestPart(p,2);
 }
 
-bool euler(Par p){
+bool euler(Par & p){
   return diffAtDist(p,1,1);
 }
-bool RogersRamanujan(Par p){
+bool RogersRamanujan(Par & p){
   return diffAtDist(p,1,2);
+}
+
+bool Capparelli(Par & p){
+  return smallestPart(p,2)&&diffAtDist(p,1,2)&&congruenceAtDist(p,1,3,0,3);
 }
 
 bool checkConditions(Par & p,vector<int> & params){
@@ -163,7 +167,7 @@ void enumPartition(int n,vector<int> & params){
   if(l>2){
     cout<<"params:(sp,dist,diff,A,B,C,D):";print_vector(params);
     cout<<"周期"<<l<<endl;
-  //  print_vector(B);
+    print_vector(B);
     print_vector(Factor(B)); 
   }
 }
