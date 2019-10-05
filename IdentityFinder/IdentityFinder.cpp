@@ -92,23 +92,19 @@ bool checkParams(vector<int> & params){
   int B=params[4];
   int C=params[5];
   int D=params[6];
-  bool f = (k>=1&&dist>=1&&A>=1&&C<D&&D>=1);
+  bool f = (k>=1&&dist>=1&&diff>=1&&A>=1&&C<D&&D>=2);
   if(!f)return false;
-  //f=f&&((dist>=A)||(dist<A && (A/dist)*diff<=B)||(A==1&&B==0));
-  f=f&&(diff!=0 || !(C==0 && D==1));
+  f=f&&(B>=diff*(A/dist));
   return f;
 }
 
 int generatePartition(int n,int tail,int sum,Par prev,vector<int> & params){
   if(sum!=0)prev.push_back(tail);
   Par now(prev);
-  if(n<sum)return 0;
+  if(n<sum || !checkConditions(now,params))return 0;
   if(n==sum){
-    if(checkConditions(now,params)){
-     // print_vector(now);
-      return 1;
-    }
-    return 0;
+    //print_vector(now);
+    return 1;
   }
   int re=0;
   for(int i=tail;i>=1;i--){
@@ -136,7 +132,6 @@ vector<long long> Factor(vector<long long> &  B){
       }
       t-=tmp*B[i-j];
     }
-    if(t%i!=0)cerr<<"there exists an error in an  implementation of euler's algorithm"<<endl;
     A.push_back(t/i);
   }
   return A;
@@ -163,12 +158,13 @@ void enumPartition(int n,vector<int> & params){
   bool f=false;
   for(int i=0;i<B.size();i++)if(B[i]!=0)f=true;
   if(!f)return;
-  int l=detect(Factor(B));
+  vector<long long> A(Factor(B));
+  int l=detect(A);
   if(l>2){
     cout<<"params:(sp,dist,diff,A,B,C,D):";print_vector(params);
-    cout<<"周期"<<l<<endl;
-    print_vector(B);
-    print_vector(Factor(B)); 
+    cout<<"n="<<l<<" ";
+    //print_vector(B);
+    print_vector(vector<long long>(A.begin()+1,A.begin()+l+1)); 
   }
 }
 void identityFinder(int n,int param_max,int param_num,vector<int> params){
