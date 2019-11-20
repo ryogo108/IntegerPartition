@@ -1,9 +1,8 @@
 #include"common.cpp"
 #include"countPartition.cpp"
 #include<queue>
-#include<functional>
 
-const int PARTITION_LENGTH=60;
+const int PARTITION_LENGTH=100;
 
 vector<part> partitions;
 
@@ -18,8 +17,7 @@ long long sizeOfPartition(int n){ //partition を一列に列挙するのに必�
 
 void generatePartition(int n){
   for(int i=1;i<=n;i++){
-    int head=sizeOfPartition(i-1);
-    int num=0;
+    long long head=sizeOfPartition(i-1);
     long long cnt=0;
     queue<vector<part> > que;
     for(int j=i;j>=1;j--)que.push(vector<part>(1,j));
@@ -60,14 +58,6 @@ vector<long long>countPartitions(int n,vector<part> & ps,function<bool(Par &)>f)
   return re;
 }
 
-function<bool(Par&)> generateConditionsKR1(vector<int> & params){
-  cout<<"Condition:";
-  print_vector(params);
-  return [&params](Par & p)->bool{
-    bool f=diffAtDist(p,params[0],params[1])&&smallestPart(p,params[2])&&congruenceAtDist(p,params[3],params[4],params[5],params[6]);
-    return f;
-  };
-}
 void SearchSp_KR1(int n){
   rep(i,5)rep(j,5)rep(k,10)rep(A,5)rep(B,5)rep(C,5)rep(D,5){
     bool f = (k>=1&&i>=1&&j>=1&&A>=1&&C<D&&D>=2);
@@ -80,10 +70,28 @@ void SearchSp_KR1(int n){
     printPeriodOfSeq(A); 
   }
 }
+void SearchSp_Schur(int n){
+	rep(i,20){
+		vector<int>params={i};
+		vector<long long>count=countPartitions(n,partitions,generateConditionsSchur(params));
+		vector<long long>A=Factor(count);
+		printPeriodOfSeq(A);
+	}
+}
+void SearchSp_Origin1(int n){
+	rep(k,10)rep(a,10)rep(b,10){
+		if(k==0 || b==0||a>=b)continue;
+		vector<int>params={k,a,b};
+		vector<long long>count=countPartitions(n,partitions,generateConditionsOriginal1(params));
+		vector<long long>A=Factor(count);
+		printPeriodOfSeq(A);
+
+	}
+}
 
 int main(int argc,char *argv[]){
   int n=atoi(argv[1]);
   partitions.resize(sizeOfPartition(n));
   generatePartition(n);
-  SearchSp_KR1(n);
+	SearchSp_Origin1(n);
 }
