@@ -59,7 +59,8 @@ void enumPartition(int n,vector<int> & params){
     cout<<"params:(sp,dist,diff,A,B,C,D):";print_vector(params);
     cout<<"n="<<l<<" ";
     //print_vector(B);
-    print_vector(vector<long long>(A.begin()+1,A.begin()+l+1)); 
+    vector<long long>v(A.begin()+1,A.begin()+l+1);
+    print_vector(v); 
   }
 }
 void identityFinder(int n,int param_max,int param_num,vector<int> params){
@@ -76,5 +77,5 @@ void identityFinder(int n,int param_max,int param_num,vector<int> params){
 int main(int argc,char *argv[]){
   int n=atoi(argv[1]);
   vector<int> params;
-  identityFinder(n,3,7,params);
+  identityFinder(n,4,7,params);
 }
