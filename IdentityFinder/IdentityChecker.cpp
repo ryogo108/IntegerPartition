@@ -1,7 +1,7 @@
 #include"common.cpp"
 
 bool checkConditions(Par & p){
-  return smallestPart(p,4)&&diffAtDist(p,2,4)&&congruenceAtDist(p,1,0,0,4);
+  return diffAtDist(p,2,1)&&smallestPart(p,1)&&congruenceAtDist(p,1,0,0,3);
 }
 int generatePartition(int n,int tail,int sum,Par prev){
   if(sum!=0)prev.push_back(tail);
@@ -34,7 +34,8 @@ void enumPartition(int n){
   print_vector(A);
   if(l>2){
     cout<<"n="<<l<<" ";
-    print_vector(vector<long long>(A.begin()+1,A.begin()+l+1)); 
+    vector<long long>v(A.begin()+1,A.begin()+l+1);
+    print_vector(v); 
   }
 }
 
