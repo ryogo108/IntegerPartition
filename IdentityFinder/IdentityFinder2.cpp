@@ -42,10 +42,45 @@ void SearchSp_Original5(int n){
 		printPeriodOfSeq(A);
 	}
 }
+void SearchSp_Original6(int n){
+  rep(k,6)rep(i,6)rep(j,6)rep(A1,6)rep(B1,6)rep(C1,6)rep(D1,6)rep(A2,6)rep(B2,6)rep(C2,6)rep(D2,6){
+    bool f = (k>=1&&i>=1&&j>=1&&A1>=1&&C1<D1&&D1>=2);
+		f=f&&(A2>=1&&C2<D2&&D2>=2);
+    if(!f)continue;
+    f=f&&(B1>=j*(A1/i));
+    f=f&&(B2>=j*(A2/i));
+    if(!f)continue;
+    vector<int>params={k,i,j,A1,B1,C1,D1,A2,B2,C2,D2};
+    vector<long long>count=countPartitions(n,partitions,generateConditionsOriginal6(params));
+    vector<long long> A=Factor(count);
+    printPeriodOfSeq(A); 
+  }
+}
 
+void SearchSp_GeneralMacMahon(int n){
+	rep(sp,5)rep(k,5){
+		vector<int>params={sp,k};
+		vector<long long>count=countPartitions(n,partitions,generateConditionsGeneralMacMahon(params));
+		vector<long long>A=Factor(count);
+		printPeriodOfSeq(A);
+	}
+}
+void SearchSp_Original6_1(int n){
+  rep(k,6)rep(A1,9)rep(B1,9)rep(C1,9)rep(D1,9){
+		int i=5,j=4;
+    bool f = (k>=1&&i>=1&&j>=1&&A1>=1&&C1<D1&&D1>=2);
+    if(!f)continue;
+    f=f&&(B1>=j*(A1/i));
+    if(!f)continue;
+    vector<int>params={k,i,j,A1,B1,C1,D1};
+    vector<long long>count=countPartitions(n,partitions,generateConditionsOriginal6_1(params));
+    vector<long long> A=Factor(count);
+    printPeriodOfSeq(A); 
+  }
+}
 
 int main(int argc,char *argv[]){
   int n=atoi(argv[1]);
   generatePartition(n,partitions);
-	SearchSp_KR1(n);
+	SearchSp_Original6_1(n);
 }

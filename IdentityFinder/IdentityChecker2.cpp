@@ -7,11 +7,16 @@ bool checkConditions(Par & p){
 	for(int i=0;i<p.size();i++){
 		if(p[i]==0)break;
 		else{
-			f=f&&(p[i]>=1);
+			f=f&&(p[i]>=3);
+		}
+		if(p[i+5]!=0){
+			f=f&&(p[i]-p[i+5]>=4);
+		}
+		if(p[i+2]!=0){
+			if(p[i]-p[i+2]<=0)f=f&&((p[i]+p[i+1]+p[i+2])%4==0);
 		}
 		if(p[i+1]!=0){
-			f=f&&(p[i]-p[i+1]>=4);
-			f=f&&(p[i]-2*p[i+1]<=0);
+			if(p[i]-p[i+1]<=0)f=f&&((p[i]+p[i+1])%5==4);
 		}
 	}
 	return f;

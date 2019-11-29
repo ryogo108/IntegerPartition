@@ -128,7 +128,7 @@ int detect(vector<long long> & A){
 void printPeriodOfSeq(vector<long long> & Seq){
   int l=detect(Seq);
 	vector<long long>v;
-	for(int i=0;i<l;i++){
+	for(int i=1;i<=l;i++){
 		if(Seq[i]!=0)v.push_back(Seq[i]*(i));
 	}
   if(v.empty())return;
@@ -266,4 +266,114 @@ function<bool(Par &)>generateConditionOriginal5(vector<int> & params){
 	//	if(f)print_partition(p);
 		return f;
 	};
+}
+function<bool(Par &)> generateConditionsOriginal6(vector<int> & params){
+  cout<<"Condition(sp,dist,diff,A1,B1,C1,D1,A2,B2,C2,D2):";
+  print_vector(params);
+	const int sp=params[0];
+	const int dist=params[1];
+	const int diff=params[2];
+	const int A1=params[3];
+	const int B1=params[4];
+	const int C1=params[5];
+	const int D1=params[6];
+	const int A2=params[7];
+	const int B2=params[8];
+	const int C2=params[9];
+	const int D2=params[10];
+  return [=](Par & p)->bool{
+		if(D1==0||D2==0)return true;
+		bool f=true;
+		for(int i=0;i<p.size();i++){
+			if(p[i]==0)break;
+			else{
+				f=f&&(p[i]>=sp);
+			}
+			if(p[i+dist]!=0){
+				f=f&&(p[i]-p[i+dist]>=diff);
+			}
+			if(p[i+A1]!=0){
+				if(p[i]-p[i+A1]<=B1){
+					unsigned short sum=0;
+					for(int j=0;j<=A1;j++)sum+=p[i+j];
+					f=f&&(sum%D1==C1);
+				}
+			}
+			if(p[i+A2]!=0){
+				if(p[i]-p[i+A2]<=B2){
+					unsigned short sum=0;
+					for(int j=0;j<=A2;j++)sum+=p[i+j];
+					f=f&&(sum%D2==C2);
+				}
+			}
+		}
+		return f;
+  };
+}
+
+function<bool(Par &)>generateConditionsGeneralMacMahon(vector<int> & params){
+	cout<<"Conditions(sp,k):";
+	print_vector(params);
+	const int sp=params[0];
+	const int k=params[1];
+	return [=](Par & p)->bool{
+		bool f=true;
+		for(int i=0;i<p.size();i++){
+			if(p[i]==0)break;
+			f=f&&(p[i]>=sp);
+			if(p[i+k]!=0){
+				for(int j=1;j<=k;j++){
+					f=f&&(p[i]-p[i+j]==0 || p[i]-p[i+j]>k);
+				}
+			}
+		}
+		return f;
+	};
+}
+
+function<bool(Par &)> generateConditionsOriginal6_1(vector<int> & params){
+  cout<<"Condition(sp,dist,diff,A1,B1,C1,D1,2,0,0,4,1,0,4,5):";
+  print_vector(params);
+	const int sp=params[0];
+	const int dist=params[1];
+	const int diff=params[2];
+	const int A1=params[3];
+	const int B1=params[4];
+	const int C1=params[6];
+	const int D1=params[7];
+  return [=](Par & p)->bool{
+		if(D1==0)return true;
+		bool f=true;
+		for(int i=0;i<p.size();i++){
+			if(p[i]==0)break;
+			else{
+				f=f&&(p[i]>=sp);
+			}
+			if(p[i+dist]!=0){
+				f=f&&(p[i]-p[i+dist]>=diff);
+			}
+			if(p[i+A1]!=0){
+				if(p[i]-p[i+A1]<=B1){
+					unsigned short sum=0;
+					for(int j=0;j<=A1;j++)sum+=p[i+j];
+					f=f&&(sum%D1==C1);
+				}
+			}
+			if(p[i+2]!=0){
+				if(p[i]-p[i+2]<=0){
+					unsigned short sum=0;
+					for(int j=0;j<=2;j++)sum+=p[i+j];
+					f=f&&(sum%4==0);
+				}
+			}
+			if(p[i+1]!=0){
+				if(p[i]-p[i+1]<=0){
+					unsigned short sum=0;
+					for(int j=0;j<=1;j++)sum+=p[i+j];
+					f=f&&(sum%5==4);
+				}
+			}
+		}
+		return f;
+  };
 }
