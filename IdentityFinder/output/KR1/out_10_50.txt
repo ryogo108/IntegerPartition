@@ -1,0 +1,243 @@
+Condition(sp,dist,diff,A,B,C,D):1 1 1 1 1 0 2
+mod : 5
+1 4
+--
+Condition(sp,dist,diff,A,B,C,D):1 1 1 1 1 0 4
+mod : 5
+1 4
+--
+Condition(sp,dist,diff,A,B,C,D):1 1 1 1 1 0 6
+mod : 5
+1 4
+--
+Condition(sp,dist,diff,A,B,C,D):1 1 1 1 1 0 8
+mod : 5
+1 4
+--
+Condition(sp,dist,diff,A,B,C,D):1 1 1 1 1 1 2
+mod : 2
+1
+--
+Condition(sp,dist,diff,A,B,C,D):1 1 1 1 1 2 4
+mod : 5
+1 4
+--
+Condition(sp,dist,diff,A,B,C,D):1 1 1 1 1 2 6
+mod : 5
+1 4
+--
+Condition(sp,dist,diff,A,B,C,D):1 1 1 1 1 2 8
+mod : 5
+1 4
+--
+Condition(sp,dist,diff,A,B,C,D):1 1 1 1 1 4 6
+mod : 5
+1 4
+--
+Condition(sp,dist,diff,A,B,C,D):1 1 1 1 1 4 8
+mod : 5
+1 4
+--
+Condition(sp,dist,diff,A,B,C,D):1 1 1 1 1 6 8
+mod : 5
+1 4
+--
+Condition(sp,dist,diff,A,B,C,D):1 1 1 1 2 0 2
+mod : 5
+1 4
+--
+Condition(sp,dist,diff,A,B,C,D):1 1 1 1 2 0 4
+mod : 8
+1 4 7
+--
+Condition(sp,dist,diff,A,B,C,D):1 1 1 1 2 2 4
+mod : 8
+1 5 6
+--
+Condition(sp,dist,diff,A,B,C,D):1 1 1 2 2 0 3
+mod : 2
+1
+--
+Condition(sp,dist,diff,A,B,C,D):1 1 1 3 3 0 2
+mod : 2
+1
+--
+Condition(sp,dist,diff,A,B,C,D):1 1 1 3 3 2 4
+mod : 2
+1
+--
+Condition(sp,dist,diff,A,B,C,D):1 1 1 4 4 0 5
+mod : 2
+1
+--
+Condition(sp,dist,diff,A,B,C,D):1 1 1 5 5 0 3
+mod : 2
+1
+--
+Condition(sp,dist,diff,A,B,C,D):1 1 1 5 5 1 2
+mod : 2
+1
+--
+Condition(sp,dist,diff,A,B,C,D):1 1 1 5 5 3 6
+mod : 2
+1
+--
+Condition(sp,dist,diff,A,B,C,D):1 1 1 6 6 0 7
+mod : 2
+1
+--
+Condition(sp,dist,diff,A,B,C,D):1 1 1 7 7 0 2
+mod : 2
+1
+--
+Condition(sp,dist,diff,A,B,C,D):1 1 1 7 7 0 4
+mod : 2
+1
+--
+Condition(sp,dist,diff,A,B,C,D):1 1 1 7 7 4 8
+mod : 2
+1
+--
+Condition(sp,dist,diff,A,B,C,D):1 1 1 8 8 0 3
+mod : 2
+1
+--
+Condition(sp,dist,diff,A,B,C,D):1 1 1 8 8 0 5
+mod : 2
+1
+--
+Condition(sp,dist,diff,A,B,C,D):1 1 1 8 8 0 9
+mod : 2
+1
+Condition(sp,dist,diff,A,B,C,D):1 1 1 8 8 1 2
+mod : 2
+1
+--
+Condition(sp,dist,diff,A,B,C,D):1 1 1 8 8 1 4
+mod : 2
+1
+--
+Condition(sp,dist,diff,A,B,C,D):1 1 1 8 8 3 6
+mod : 2
+1
+Condition(sp,dist,diff,A,B,C,D):1 1 1 8 8 3 7
+mod : 2
+1
+--
+Condition(sp,dist,diff,A,B,C,D):1 1 1 8 8 5 8
+mod : 2
+1
+--
+Condition(sp,dist,diff,A,B,C,D):1 1 1 9 9 0 2
+mod : 2
+1
+Condition(sp,dist,diff,A,B,C,D):1 1 1 9 9 0 3
+mod : 2
+1
+Condition(sp,dist,diff,A,B,C,D):1 1 1 9 9 0 4
+mod : 2
+1
+Condition(sp,dist,diff,A,B,C,D):1 1 1 9 9 0 5
+mod : 2
+1
+Condition(sp,dist,diff,A,B,C,D):1 1 1 9 9 0 6
+mod : 2
+1
+Condition(sp,dist,diff,A,B,C,D):1 1 1 9 9 0 7
+mod : 2
+1
+Condition(sp,dist,diff,A,B,C,D):1 1 1 9 9 0 8
+mod : 2
+1
+Condition(sp,dist,diff,A,B,C,D):1 1 1 9 9 0 9
+mod : 2
+1
+Condition(sp,dist,diff,A,B,C,D):1 1 1 9 9 1 2
+mod : 2
+1
+Condition(sp,dist,diff,A,B,C,D):1 1 1 9 9 1 3
+mod : 2
+1
+Condition(sp,dist,diff,A,B,C,D):1 1 1 9 9 1 4
+mod : 2
+1
+Condition(sp,dist,diff,A,B,C,D):1 1 1 9 9 1 5
+mod : 2
+1
+Condition(sp,dist,diff,A,B,C,D):1 1 1 9 9 1 6
+mod : 2
+1
+Condition(sp,dist,diff,A,B,C,D):1 1 1 9 9 1 7
+mod : 2
+1
+Condition(sp,dist,diff,A,B,C,D):1 1 1 9 9 1 8
+mod : 2
+1
+Condition(sp,dist,diff,A,B,C,D):1 1 1 9 9 1 9
+mod : 2
+1
+Condition(sp,dist,diff,A,B,C,D):1 1 1 9 9 2 3
+mod : 2
+1
+Condition(sp,dist,diff,A,B,C,D):1 1 1 9 9 2 4
+mod : 2
+1
+Condition(sp,dist,diff,A,B,C,D):1 1 1 9 9 2 5
+mod : 2
+1
+Condition(sp,dist,diff,A,B,C,D):1 1 1 9 9 2 6
+mod : 2
+1
+Condition(sp,dist,diff,A,B,C,D):1 1 1 9 9 2 7
+mod : 2
+1
+Condition(sp,dist,diff,A,B,C,D):1 1 1 9 9 2 8
+mod : 2
+1
+Condition(sp,dist,diff,A,B,C,D):1 1 1 9 9 2 9
+mod : 2
+1
+Condition(sp,dist,diff,A,B,C,D):1 1 1 9 9 3 4
+mod : 2
+1
+Condition(sp,dist,diff,A,B,C,D):1 1 1 9 9 3 5
+mod : 2
+1
+Condition(sp,dist,diff,A,B,C,D):1 1 1 9 9 3 6
+mod : 2
+1
+Condition(sp,dist,diff,A,B,C,D):1 1 1 9 9 3 7
+mod : 2
+1
+Condition(sp,dist,diff,A,B,C,D):1 1 1 9 9 3 8
+mod : 2
+1
+Condition(sp,dist,diff,A,B,C,D):1 1 1 9 9 3 9
+mod : 2
+1
+Condition(sp,dist,diff,A,B,C,D):1 1 1 9 9 4 5
+mod : 2
+1
+Condition(sp,dist,diff,A,B,C,D):1 1 1 9 9 4 6
+mod : 2
+1
+Condition(sp,dist,diff,A,B,C,D):1 1 1 9 9 4 7
+mod : 2
+1
+Condition(sp,dist,diff,A,B,C,D):1 1 1 9 9 4 8
+mod : 2
+1
+Condition(sp,dist,diff,A,B,C,D):1 1 1 9 9 4 9
+mod : 2
+1
+Condition(sp,dist,diff,A,B,C,D):1 1 1 9 9 5 6
+mod : 2
+1
+Condition(sp,dist,diff,A,B,C,D):1 1 1 9 9 5 7
+mod : 2
+1
+Condition(sp,dist,diff,A,B,C,D):1 1 1 9 9 5 8
+mod : 2
+1
+Condition(sp,dist,diff,A,B,C,D):1 1 1 9 9 5 9
+mod : 2

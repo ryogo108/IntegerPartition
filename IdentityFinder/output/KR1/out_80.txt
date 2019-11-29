@@ -1,0 +1,150 @@
+1 : 1
+2 : 2
+3 : 3
+4 : 5
+5 : 7
+6 : 11
+7 : 15
+8 : 22
+9 : 30
+10 : 42
+11 : 56
+12 : 77
+13 : 101
+14 : 135
+15 : 176
+16 : 231
+17 : 297
+18 : 385
+19 : 490
+20 : 627
+21 : 792
+22 : 1002
+23 : 1255
+24 : 1575
+25 : 1958
+26 : 2436
+27 : 3010
+28 : 3718
+29 : 4565
+30 : 5604
+31 : 6842
+32 : 8349
+33 : 10143
+34 : 12310
+35 : 14883
+36 : 17977
+37 : 21637
+38 : 26015
+39 : 31185
+40 : 37338
+41 : 44583
+42 : 53174
+43 : 63261
+44 : 75175
+45 : 89134
+46 : 105558
+47 : 124754
+48 : 147273
+49 : 173525
+50 : 204226
+51 : 239943
+52 : 281589
+53 : 329931
+54 : 386155
+55 : 451276
+56 : 526823
+57 : 614154
+58 : 715220
+59 : 831820
+60 : 966467
+61 : 1121505
+62 : 1300156
+63 : 1505499
+64 : 1741630
+65 : 2012558
+66 : 2323520
+67 : 2679689
+68 : 3087735
+69 : 3554345
+70 : 4087968
+71 : 4697205
+72 : 5392783
+73 : 6185689
+74 : 7089500
+75 : 8118264
+76 : 9289091
+77 : 10619863
+78 : 12132164
+79 : 13848650
+80 : 15796476
+Condition(sp,dist,diff,A,B,C,D):1 12 6 3 9 0 2
+Condition(sp,dist,diff,A,B,C,D):1 16 8 4 12 0 3
+Condition(sp,dist,diff,A,B,C,D):1 20 10 5 15 0 4
+Condition(sp,dist,diff,A,B,C,D):1 24 12 6 18 0 5
+Condition(sp,dist,diff,A,B,C,D):1 36 18 9 27 1 2
+Condition(sp,dist,diff,A,B,C,D):1 40 20 10 30 1 3
+Condition(sp,dist,diff,A,B,C,D):1 44 22 11 33 1 4
+Condition(sp,dist,diff,A,B,C,D):1 48 24 12 36 1 5
+Condition(sp,dist,diff,A,B,C,D):1 64 32 16 48 2 3
+Condition(sp,dist,diff,A,B,C,D):1 68 34 17 51 2 4
+Condition(sp,dist,diff,A,B,C,D):1 72 36 18 54 2 5
+Condition(sp,dist,diff,A,B,C,D):1 92 46 23 69 3 4
+Condition(sp,dist,diff,A,B,C,D):1 96 48 24 72 3 5
+Condition(sp,dist,diff,A,B,C,D):1 120 60 30 90 4 5
+Condition(sp,dist,diff,A,B,C,D):2 12 6 3 9 0 2
+Condition(sp,dist,diff,A,B,C,D):2 16 8 4 12 0 3
+Condition(sp,dist,diff,A,B,C,D):2 20 10 5 15 0 4
+Condition(sp,dist,diff,A,B,C,D):2 24 12 6 18 0 5
+Condition(sp,dist,diff,A,B,C,D):2 36 18 9 27 1 2
+Condition(sp,dist,diff,A,B,C,D):2 40 20 10 30 1 3
+Condition(sp,dist,diff,A,B,C,D):2 44 22 11 33 1 4
+Condition(sp,dist,diff,A,B,C,D):2 48 24 12 36 1 5
+Condition(sp,dist,diff,A,B,C,D):2 64 32 16 48 2 3
+Condition(sp,dist,diff,A,B,C,D):2 68 34 17 51 2 4
+Condition(sp,dist,diff,A,B,C,D):2 72 36 18 54 2 5
+Condition(sp,dist,diff,A,B,C,D):2 92 46 23 69 3 4
+Condition(sp,dist,diff,A,B,C,D):2 96 48 24 72 3 5
+Condition(sp,dist,diff,A,B,C,D):2 120 60 30 90 4 5
+Condition(sp,dist,diff,A,B,C,D):3 12 6 3 9 0 2
+Condition(sp,dist,diff,A,B,C,D):3 16 8 4 12 0 3
+Condition(sp,dist,diff,A,B,C,D):3 20 10 5 15 0 4
+Condition(sp,dist,diff,A,B,C,D):3 24 12 6 18 0 5
+Condition(sp,dist,diff,A,B,C,D):3 36 18 9 27 1 2
+Condition(sp,dist,diff,A,B,C,D):3 40 20 10 30 1 3
+Condition(sp,dist,diff,A,B,C,D):3 44 22 11 33 1 4
+Condition(sp,dist,diff,A,B,C,D):3 48 24 12 36 1 5
+Condition(sp,dist,diff,A,B,C,D):3 64 32 16 48 2 3
+Condition(sp,dist,diff,A,B,C,D):3 68 34 17 51 2 4
+Condition(sp,dist,diff,A,B,C,D):3 72 36 18 54 2 5
+Condition(sp,dist,diff,A,B,C,D):3 92 46 23 69 3 4
+Condition(sp,dist,diff,A,B,C,D):3 96 48 24 72 3 5
+Condition(sp,dist,diff,A,B,C,D):3 120 60 30 90 4 5
+Condition(sp,dist,diff,A,B,C,D):4 12 6 3 9 0 2
+Condition(sp,dist,diff,A,B,C,D):4 16 8 4 12 0 3
+Condition(sp,dist,diff,A,B,C,D):4 20 10 5 15 0 4
+Condition(sp,dist,diff,A,B,C,D):4 24 12 6 18 0 5
+Condition(sp,dist,diff,A,B,C,D):4 36 18 9 27 1 2
+Condition(sp,dist,diff,A,B,C,D):4 40 20 10 30 1 3
+Condition(sp,dist,diff,A,B,C,D):4 44 22 11 33 1 4
+Condition(sp,dist,diff,A,B,C,D):4 48 24 12 36 1 5
+Condition(sp,dist,diff,A,B,C,D):4 64 32 16 48 2 3
+Condition(sp,dist,diff,A,B,C,D):4 68 34 17 51 2 4
+Condition(sp,dist,diff,A,B,C,D):4 72 36 18 54 2 5
+Condition(sp,dist,diff,A,B,C,D):4 92 46 23 69 3 4
+Condition(sp,dist,diff,A,B,C,D):4 96 48 24 72 3 5
+Condition(sp,dist,diff,A,B,C,D):4 120 60 30 90 4 5
+Condition(sp,dist,diff,A,B,C,D):5 12 6 3 9 0 2
+Condition(sp,dist,diff,A,B,C,D):5 16 8 4 12 0 3
+Condition(sp,dist,diff,A,B,C,D):5 20 10 5 15 0 4
+Condition(sp,dist,diff,A,B,C,D):5 24 12 6 18 0 5
+Condition(sp,dist,diff,A,B,C,D):5 36 18 9 27 1 2
+Condition(sp,dist,diff,A,B,C,D):5 40 20 10 30 1 3
+Condition(sp,dist,diff,A,B,C,D):5 44 22 11 33 1 4
+Condition(sp,dist,diff,A,B,C,D):5 48 24 12 36 1 5
+Condition(sp,dist,diff,A,B,C,D):5 64 32 16 48 2 3
+Condition(sp,dist,diff,A,B,C,D):5 68 34 17 51 2 4
+Condition(sp,dist,diff,A,B,C,D):5 72 36 18 54 2 5
+Condition(sp,dist,diff,A,B,C,D):5 92 46 23 69 3 4
+Condition(sp,dist,diff,A,B,C,D):5 96 48 24 72 3 5
+Condition(sp,dist,diff,A,B,C,D):5 120 60 30 90 4 5
