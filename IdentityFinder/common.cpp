@@ -362,15 +362,122 @@ function<bool(Par &)> generateConditionsOriginal6_1(vector<int> & params){
 			if(p[i+2]!=0){
 				if(p[i]-p[i+2]<=0){
 					unsigned short sum=0;
-					for(int j=0;j<=2;j++)sum+=p[i+j];
+					for(int j=0;j<=2;j++)sum+=j*p[i+j];
 					f=f&&(sum%4==0);
 				}
 			}
 			if(p[i+1]!=0){
 				if(p[i]-p[i+1]<=0){
 					unsigned short sum=0;
-					for(int j=0;j<=1;j++)sum+=p[i+j];
+					for(int j=0;j<=1;j++)sum+=j*p[i+j];
 					f=f&&(sum%5==4);
+				}
+			}
+		}
+		return f;
+  };
+}
+function<bool(Par &)> generateConditionsOriginal7(vector<int> & params){
+  cout<<"Condition(sp,dist,diff,A1,B1,C1,D1,A2,B2,C2,D2):";
+  print_vector(params);
+	const int sp=params[0];
+	const int dist=params[1];
+	const int diff=params[2];
+	const int A1=params[3];
+	const int B1=params[4];
+	const int C1=params[5];
+	const int D1=params[6];
+	const int A2=params[7];
+	const int B2=params[8];
+	const int C2=params[9];
+	const int D2=params[10];
+  return [=](Par & p)->bool{
+		if(D1==0||D2==0)return true;
+		bool f=true;
+		for(int i=0;i<p.size();i++){
+			if(p[i]==0)break;
+			else{
+				f=f&&(p[i]>=sp);
+			}
+			if(p[i+dist]!=0){
+				f=f&&(p[i]-p[i+dist]>=diff);
+			}
+			if(p[i+A1]!=0){
+				if(p[i]-p[i+A1]<=B1){
+					unsigned short sum=0;
+					for(int j=0;j<=A1;j++)sum+=(j+1)*p[i+j];
+					f=f&&(sum%D1==C1);
+				}
+			}
+			if(p[i+A2]!=0){
+				if(p[i]-p[i+A2]<=B2){
+					unsigned short sum=0;
+					for(int j=0;j<=A2;j++)sum+=(j+1)*p[i+j];
+					f=f&&(sum%D2==C2);
+				}
+			}
+		}
+		return f;
+  };
+}
+function<bool(Par &)> generateConditionsGeneralSchur(vector<int> & params){
+  cout<<"Condition(no appear(bit),no appear all flag,dist,diff,residue(bit)):";
+  print_vector(params);
+	const int np=params[0];
+	const int af=params[1];
+	const int dist=params[2];
+	const int diff=params[3];
+	const int residue=params[4];
+  return [=](Par & p)->bool{
+		bool f=true;
+		int tmp_np=np;
+		for(int i=0;i<p.size();i++){
+			if(p[i]==0)break;
+			else{
+				if(p[i]<=10){
+					f=f&&(af || ((np>>(p[i]-1)&1)!=1));
+					tmp_np=tmp_np&(~(1<<(p[i]-1)));
+				}
+			}
+			if(p[i+dist]!=0){
+				f=f&&(p[i]-p[i+dist]>=diff);
+				if(p[i]-p[i+dist]==diff){
+					bool tmp=false;
+					for(int j=0;j<=diff;j++){
+						if((residue>>(j))&1)tmp=tmp||(p[i]%(diff)==j);
+					}
+					f=f&&tmp;
+				}
+			}
+		}
+		if(af)f=f&&(tmp_np!=0);
+		return f;
+  };
+}
+function<bool(Par &)> generateConditionsGeneralGollnitz(vector<int> & params){
+  cout<<"Condition(no appear(bit),dist,diff,m):";
+  print_vector(params);
+	const int np=params[0];
+	const int dist=params[1];
+	const int diff=params[2];
+	const int m=params[3];
+  return [=](Par & p)->bool{
+		if(m==0)return true;
+		bool f=true;
+		for(int i=0;i<p.size();i++){
+			if(p[i]==0)break;
+			else{
+				for(int j=1;j<=5;j++){
+					if((np>>(j-1))&(1))f=f&&(p[i]!=j);
+				}
+			}
+			if(p[i+dist]!=0){
+				f=f&&(p[i]-p[i+dist]>=diff);
+			}
+			if(p[i]%m==0 && p[i]/m>1){
+				for(int j=i+1;j<p.size();j++){
+					if(p[j]<(m*((p[i]/m)-1)))break;
+					f=f&&(p[i]!=(m*(p[i]/m-1)));
 				}
 			}
 		}
