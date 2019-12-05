@@ -12,7 +12,8 @@ bool checkConditions(Par & p){
 	return f;
 }
 
-void seek_qdiff(const Polynomial & p,const int order){
+void check_qdiff(const Polynomial & p){
+	const int order=2;
 	vector<Polynomial>coefs(order+1);
 	vector<Polynomial>shifted(order+1);
 	for(int i=0;i<=order;i++){
@@ -39,6 +40,6 @@ int main(int argc,char *argv[]){
   int n=atoi(argv[1]);
   generatePartition(n,partitions);
 	Polynomial p=countFinePartitions(n,partitions,checkConditions);
-	seek_qdiff(p,2);
+	check_qdiff(p);
 }
 
