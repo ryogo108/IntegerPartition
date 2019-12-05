@@ -94,7 +94,7 @@ void SearchSp_Original7(int n){
   }
 }
 void SearchSp_GeneralSchur(int n){
-  rep(np,256)rep(D,9)rep(dist,4)rep(diff,9)rep(residue,256){
+  rep(np,1024)rep(D,11)rep(dist,4)rep(diff,11)rep(residue,1024){
     bool f = (diff>=1 && dist>=1 && D>=1);
 		f=f&&(residue<pow(2,diff)&&np<pow(2,D));
     if(!f)continue;
@@ -125,5 +125,5 @@ void SearchSp_GeneralGollnitz(int n){
 int main(int argc,char *argv[]){
   int n=atoi(argv[1]);
   generatePartition(n,partitions);
-	SearchSp_GeneralSchur2(n);
+	SearchSp_GeneralSchur(n);
 }
