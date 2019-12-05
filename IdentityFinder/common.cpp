@@ -17,6 +17,14 @@ part min(part l,part r){
   if(r>l)return l;
   else return r;
 }
+int lengthOfPartition(const Par & p){
+	int l=0;
+	for(int i=0;i<p.size();i++){
+		if(p[i]==0)break;
+		l++;
+	}
+	return l;
+}
 
 template<class T>void print_vector(vector<T> & vec){
   for(int i=0;i<vec.size();i++){
@@ -87,6 +95,21 @@ vector<long long>countPartitions(int n,vector<part> & ps,function<bool(Par &)>f)
       if(f(v))cnt++;
     }
     re.push_back(cnt);
+  }
+  return re;
+}
+vector<vector<long long> >countFinePartitions(int n,vector<part> & ps,function<bool(Par &)>f){ 
+  vector<vector<long long> >re(PARTITION_LENGTH,vector<long long>(PARTITION_LENGTH,0));
+  long long now=0;
+  for(int i=0;i<=n;i++){
+    long long cap=sizeOfPartition(i);
+    for(;now<cap;now+=PARTITION_LENGTH){
+      vector<part>v;
+      v.assign(ps.begin()+now,ps.begin()+now+PARTITION_LENGTH);
+      if(f(v)){
+				re[i][lengthOfPartition(v)]++;
+			}
+    }
   }
   return re;
 }

@@ -3,7 +3,7 @@
 #include<string>
 using namespace std;
 
-typedef vector<vector<int> > Polynomial;
+typedef vector<vector<long long> > Polynomial;
 
 int max(int a,int b){
   return a>b?a:b;
@@ -52,7 +52,7 @@ Polynomial operator*(const Polynomial & l,const Polynomial & r){
   int mls=0,mrs=0;
   for(int i=0;i<l.size();i++)mls=max(mls,l[i].size());
   for(int i=0;i<r.size();i++)mrs=max(mrs,r[i].size());
-  Polynomial re(l.size()+r.size()-1,vector<int>(mls+mrs-1,0));
+  Polynomial re(l.size()+r.size()-1,vector<long long>(mls+mrs-1,0));
   for(int il=0;il<l.size();il++){
     for(int jl=0;jl<l[il].size();jl++){
       for(int ir=0;ir<r.size();ir++){
@@ -68,7 +68,7 @@ Polynomial operator*(const Polynomial & l,const Polynomial & r){
 Polynomial qShift(const Polynomial & p,int s){
   int ms=0;
   for(int i=0;i<p.size();i++)ms=max(ms,p[i].size());
-  Polynomial re(p.size()+(ms-1)*s,vector<int>(ms,0));
+  Polynomial re(p.size()+(ms-1)*s,vector<long long>(ms,0));
   for(int i=0;i<p.size();i++){
     for(int j=0;j<p[i].size();j++){
       re[i+j*s][j]=p[i][j];
