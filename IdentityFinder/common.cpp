@@ -444,23 +444,20 @@ function<bool(Par &)> generateConditionsOriginal7(vector<int> & params){
   };
 }
 function<bool(Par &)> generateConditionsGeneralSchur(vector<int> & params){
-  cout<<"Condition(no appear(bit),no appear all flag,dist,diff,residue(bit)):";
+  cout<<"Condition(no appear(residue),no appear MOD,dist,diff,residue(bit)):";
   print_vector(params);
 	const int np=params[0];
-	const int af=params[1];
+	const int D=params[1];
 	const int dist=params[2];
 	const int diff=params[3];
 	const int residue=params[4];
   return [=](Par & p)->bool{
+		if(D==0 || diff==0)return true;
 		bool f=true;
-		int tmp_np=np;
 		for(int i=0;i<p.size();i++){
 			if(p[i]==0)break;
 			else{
-				if(p[i]<=10){
-					f=f&&(af || ((np>>(p[i]-1)&1)!=1));
-					tmp_np=tmp_np&(~(1<<(p[i]-1)));
-				}
+				f=f&&((np>>((p[i]%D))&1)!=1);
 			}
 			if(p[i+dist]!=0){
 				f=f&&(p[i]-p[i+dist]>=diff);
@@ -473,7 +470,6 @@ function<bool(Par &)> generateConditionsGeneralSchur(vector<int> & params){
 				}
 			}
 		}
-		if(af)f=f&&(tmp_np!=0);
 		return f;
   };
 }
@@ -501,6 +497,37 @@ function<bool(Par &)> generateConditionsGeneralGollnitz(vector<int> & params){
 				for(int j=i+1;j<p.size();j++){
 					if(p[j]<(m*((p[i]/m)-1)))break;
 					f=f&&(p[i]!=(m*(p[i]/m-1)));
+				}
+			}
+		}
+		return f;
+  };
+}
+function<bool(Par &)> generateConditionsGeneralSchur2(vector<int> & params){
+  cout<<"Condition(GeneralSchur2) k:";
+  print_vector(params);
+	const int k=params[0];
+	const int D=2*k;
+	const int ap=(1<<1)|(1<<((1+k)%D))|(1<<((2+k)%D));
+	const int dist=1;
+	const int diff=D;
+	const int residue=(1<<1)|(1<<((1+k)%D));
+  return [=](Par & p)->bool{
+		if(D==0 || diff==0)return true;
+		bool f=true;
+		for(int i=0;i<p.size();i++){
+			if(p[i]==0)break;
+			else{
+				f=f&&((ap>>((p[i]%D))&1)==1);
+			}
+			if(p[i+dist]!=0){
+				f=f&&(p[i]-p[i+dist]>=diff);
+				if(p[i]-p[i+dist]==diff){
+					bool tmp=false;
+					for(int j=0;j<=diff;j++){
+						if((residue>>(j))&1)tmp=tmp||(p[i]%(diff)==j);
+					}
+					f=f&&tmp;
 				}
 			}
 		}

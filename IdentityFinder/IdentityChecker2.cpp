@@ -1,27 +1,18 @@
 #include"common.cpp"
-
 vector<part> partitions;
-
-bool checkConditions(Par & p){
-	bool f=true;
-	for(int i=0;i<p.size();i++){
-		if(p[i]==0)break;
-		f=f&&(p[i]%2==1);
-		if(p[i+1]!=0)f=f&&(p[i]-p[i+1]>=1);
-	}
-	if(f)print_partition(p);
-	return f;
-/*	int np=2;
-	int dist=1;
-	int diff=6;
-	int residue=42;
+int k=3;
+bool checkConditions(Par & p){	
+	const int D=2*k;
+	const int ap=(1<<1)|(1<<((1+k)%D))|(1<<((2+k)%D));
+	const int dist=1;
+	const int diff=D;
+	const int residue=(1<<1)|(1<<((1+k)%D));
+	if(D==0 || diff==0)return true;
 	bool f=true;
 	for(int i=0;i<p.size();i++){
 		if(p[i]==0)break;
 		else{
-			for(int j=1;j<=5;j++){
-				if((np>>(j-1))&(1))f=f&&(p[i]!=j);
-			}
+			f=f&&((ap>>((p[i]%D))&1)==1);
 		}
 		if(p[i+dist]!=0){
 			f=f&&(p[i]-p[i+dist]>=diff);
@@ -34,12 +25,12 @@ bool checkConditions(Par & p){
 			}
 		}
 	}
-	if(f)print_partition(p);
-	return f;*/
+	return f;
 }
 
 int main(int argc,char *argv[]){
   int n=atoi(argv[1]);
+	k=atoi(argv[2]);
   generatePartition(n,partitions);
 	vector<long long>v(countPartitions(n,partitions,checkConditions));
 	print_vector(v);
