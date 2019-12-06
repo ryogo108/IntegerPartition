@@ -76,6 +76,16 @@ Polynomial qShift(const Polynomial & p,int s){
   }
   return re;
 }
+Polynomial xInv(const Polynomial & p){
+  //x <- (-x)
+  Polynomial re=p;
+  for(int i=0;i<re.size();i++){
+    for(int j=0;j<re[i].size();j++){
+      if(j%2)re[i][j]=-re[i][j];
+    }
+  }
+  return re;
+}
 
 void print_Polynomial(Polynomial & p){
   int terms=0;
@@ -98,9 +108,9 @@ void print_Polynomial(Polynomial & p){
 
 /*int main(){
   Polynomial p={{1,1}};
-  Polynomial x={{0,1}};
+  Polynomial x={{1,1,1,1,1,1},{1,2,3,4}};
 
-  Polynomial r=p-x*qShift(p,2);
-  print_Polynomial(p);
+  Polynomial r=x-xInv(x);
+  print_Polynomial(x);
   print_Polynomial(r);
 }*/
