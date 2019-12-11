@@ -107,7 +107,7 @@ vector<vector<long long> >countFinePartitions(int n,vector<part> & ps,function<b
       vector<part>v;
       v.assign(ps.begin()+now,ps.begin()+now+PARTITION_LENGTH);
       if(f(v)){
-				re[i][v[0]]++;
+				re[i][lengthOfPartition(v)]++;
 			}
     }
   }
