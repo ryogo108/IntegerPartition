@@ -35,7 +35,7 @@ bool checkConditions(Par & p){
 	bool f=true;
 	for(int i=0;i<p.size();i++){
 		if(p[i]==0)break;
-    f=f&&(p[i]!=2);
+    f=f&&(p[i]>=3);
 		if(p[i+1]!=0){
       f=f&&(p[i]-p[i+1]>=6);
       if(p[i]-p[i+1]==6)f=f&&(p[i]%2==1);
@@ -45,46 +45,40 @@ bool checkConditions(Par & p){
 }
 
 void check_qdiff(const Polynomial & p){
-	const int order=2;
-  Polynomial A(7,vector<long long>(p[0].size(),0));
-  for(int i=0;i<=6;i++){
-    if(i==2)continue;
-    A[i][i]=1;
-  }
-  Polynomial C=Polynomial({{0},{0,1}})*Polynomial({{1},{0},{0,1}})*Polynomial({{1},{1},{0},{0},{0},{0,0,1},{0},{0},{0,0,0,0,1},{0,0,0,0,1},{0},{0},{0,0,0,0,0,0,1}});
-  Polynomial f=Polynomial({{1,-1}})*p;
-  Polynomial g=f-A;
-  Polynomial fInv=xInv(f);
-  Polynomial pInv=xInv(p);
+	const int order=3;
 	vector<Polynomial>coefs(order+1);
 	vector<Polynomial>shifted(order+1);
-	coefs[0]={{2},{0,-2}};
-	coefs[1]={{0},{0},{0},{0},{0},{0},{0,0,0,0,0,0,-1},{0,0,0,0,0,0,0,-1}};
-	coefs[2]={{0},{0},{0},{0},{0},{0},{0,0,0,0,0,0,1},{0,0,0,0,0,0,0,-1}};
-  shifted[0]=f-A;
-  shifted[1]=qShift(f,1);
-  shifted[2]=qShift(fInv,1);
+  coefs[0]=Polynomial({{1}});
+  coefs[1]=Polynomial({{-1}});
+  coefs[2]=qShift(Polynomial({{0,-1}}),3);
+  coefs[3]=qShift(Polynomial({{0,-1}}),4);
+  shifted[0]=p;
+  shifted[1]=qShift(p,2);
+  shifted[2]=qShift(p,6);
+  shifted[3]=qShift(p,8);
+  
+  print_Polynomial(shifted[0]);
+  
 	Polynomial diff;
-	/*for(int i=0;i<=order;i++){
+	for(int i=0;i<=order;i++){
 		diff=diff+coefs[i]*shifted[i];
-	}*/
-  diff=Polynomial({{1},{0,-1}})*Polynomial({{1},{0},{0,1}})*g-Polynomial({{0},{0},{0},{0},{0},{0},{0,0,0,0,0,0,1}})*(Polynomial({{1},{0},{0},{0,0,1}})*qShift(g,1)+C);
+	}
 	cout<<"q-diff:"<<endl;
-/*	for(int i=0;i<=order;i++){
+	for(int i=0;i<=order;i++){
 		print_Polynomial(coefs[i]);
 		cout<<"* ";
 		cout<<"term["<<i<<"]"<<endl;
 	}
-	cout<<"= ";*/
+	cout<<"= ";
 	print_Polynomial(diff);
 }
 
 int main(int argc,char *argv[]){
   int n=atoi(argv[1]);
-  //generatePartition(n,partitions);
-	//Polynomial p=countFinePartitions(n,partitions,checkConditions);
-  calcDp(n);
-  Polynomial p=Dp;
+  generatePartition(n,partitions);
+	Polynomial p=countFinePartitions(n,partitions,checkConditions);
+ // calcDp(n);
+  //Polynomial p=Dp;
 	check_qdiff(p);
 }
 
