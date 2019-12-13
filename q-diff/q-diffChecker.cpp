@@ -43,6 +43,18 @@ bool checkConditions(Par & p){
 	}
 	return f;
 }
+bool checkConditions2(Par & p){
+	bool f=true;
+	for(int i=0;i<p.size();i++){
+		if(p[i]==0)break;
+    f=f&&(p[i]!=2);
+		if(p[i+1]!=0){
+      f=f&&(p[i]-p[i+1]>=6);
+      if(p[i]-p[i+1]==6)f=f&&(p[i]%2==1);
+    }
+	}
+	return f;
+}
 
 void check_qdiff(const Polynomial & p){
 	const int order=3;
@@ -72,13 +84,20 @@ void check_qdiff(const Polynomial & p){
 	cout<<"= ";
 	print_Polynomial(diff);
 }
+void test(Polynomial & p1,Polynomial & p2){
+  Polynomial diff=p1-p2;
+  print_Polynomial(diff);
+}
 
 int main(int argc,char *argv[]){
   int n=atoi(argv[1]);
   generatePartition(n,partitions);
 	Polynomial p=countFinePartitions(n,partitions,checkConditions);
+	Polynomial p2=countFinePartitions(n,partitions,checkConditions2);
  // calcDp(n);
   //Polynomial p=Dp;
-	check_qdiff(p);
+	//check_qdiff(p);
+  Polynomial p1=Polynomial({{0},{0,1}})*qShift(p,4)+p;
+  test(p1,p2);
 }
 
