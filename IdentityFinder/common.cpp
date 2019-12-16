@@ -534,3 +534,31 @@ function<bool(Par &)> generateConditionsGeneralSchur2(vector<int> & params){
 		return f;
   };
 }
+
+function<bool(Par &)> generateConditionsOriginal8(vector<int> & params){
+  cout<<"Condition(no appear(bit),dist,diff,residue(bit) , equal Mod):";
+  print_vector(params);
+	const int np=params[0];
+	const int dist=params[1];
+	const int diff=params[2];
+	const int residue=params[3];
+	const int D=params[4];
+  return [=](Par & p)->bool{
+		if(D==0 || diff==0)return true;
+		bool f=true;
+		for(int i=0;i<p.size();i++){
+			if(p[i]==0)break;
+			else{
+				f=f&&((np>>(p[i]-1)&1)!=1);
+			}
+			if(p[i+dist]!=0){
+				f=f&&(p[i]-p[i+dist]>=diff);
+				if(p[i]-p[i+dist]==diff){
+					bool tmp=false;
+					f=f&&(p[i]%D==1);
+				}
+			}
+		}
+		return f;
+  };
+}
