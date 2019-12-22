@@ -28,6 +28,15 @@ Polynomial operator+(const Polynomial & l,const Polynomial & r){
   }
   return re;
 }
+Polynomial operator-(const Polynomial & r){
+  Polynomial re=r;
+  for(int i=0;i<re.size();i++){
+    for(int j=0;j<re[i].size();j++){
+      re[i][j]=-re[i][j];
+    }
+  }
+  return re;
+}
 Polynomial operator-(const Polynomial & l,const Polynomial & r){
   Polynomial re(max(l.size(),r.size()));
   for(int i=0;i<re.size();i++){
@@ -110,7 +119,7 @@ void print_Polynomial(Polynomial & p){
   Polynomial p={{1,1}};
   Polynomial x={{1,1,1,1,1,1},{1,2,3,4}};
 
-  Polynomial r=x-xInv(x);
+  Polynomial r=-x;
   print_Polynomial(x);
   print_Polynomial(r);
 }*/
