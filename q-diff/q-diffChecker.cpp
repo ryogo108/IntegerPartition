@@ -2,48 +2,9 @@
 #include"../Polynomial/Polynomial.cpp"
 const int MAX_N=1005;
 
-vector<vector<long long> >Dp;
-
-void calcDp(int n){
-  Dp.resize(n+1,vector<long long>(n+1));
-  Dp[1][1]=1;
-  for(int i=0;i<=n;i++){
-    Dp[0][i]=1;
-    Dp[2][i]=0;
-  }
-  for(int i=1;i<=n;i++){
-    if(i==2)continue;
-    for(int j=1;j<=n;j++){
-      if(i==j && i<=6)Dp[i][j]=Dp[i][j-1]+1;
-      else if(j%2==1 && i>=j && j>=6)Dp[i][j]=Dp[i][j-1]+Dp[i-j][j-6];
-      else if(j%2==0 && i>=j && j>=7)Dp[i][j]=Dp[i][j-1]+Dp[i-j][j-7];
-      else Dp[i][j]=Dp[i][j-1];
-    }
-  }
-  vector<long long>v(n+1);
-  for(int i=0;i<=n;i++){
-    v[i]=Dp[i][i];
-  }
-  print_vector(v);
-  vector<long long>A=Factor(v);
-  printPeriodOfSeq(A);
-}
-
 vector<part> partitions;
 
 bool checkConditions(Par & p){
-	bool f=true;
-	for(int i=0;i<p.size();i++){
-		if(p[i]==0)break;
-    f=f&&(p[i]>=3);
-		if(p[i+1]!=0){
-      f=f&&(p[i]-p[i+1]>=6);
-      if(p[i]-p[i+1]==6)f=f&&(p[i]%2==1);
-    }
-	}
-	return f;
-}
-bool checkConditions2(Par & p){
 	bool f=true;
 	for(int i=0;i<p.size();i++){
 		if(p[i]==0)break;
@@ -55,21 +16,33 @@ bool checkConditions2(Par & p){
 	}
 	return f;
 }
+bool checkConditions2(Par & p){
+	bool f=true;
+	for(int i=0;i<p.size();i++){
+		if(p[i]==0)break;
+    f=f&&(p[i]%2==1);
+		if(p[i+1]!=0){
+      f=f&&(p[i]-p[i+1]>=1);
+    }
+	}
+	return f;
+}
 
 void check_qdiff(const Polynomial & p){
-	const int order=3;
+	const int order=4;
 	vector<Polynomial>coefs(order+1);
 	vector<Polynomial>shifted(order+1);
-  coefs[0]=Polynomial({{1}});
-  coefs[1]=Polynomial({{-1}});
-  coefs[2]=qShift(Polynomial({{0,-1}}),3);
-  coefs[3]=qShift(Polynomial({{0,-1}}),4);
+  coefs[0]=qShift(Polynomial({{0,1}}),6)-Polynomial({{1}});
+  coefs[1]=-coefs[0];
+  coefs[2]=qShift(Polynomial({{0,-1}}),1)*Polynomial({{-1},{0},{0},{0},{1}});
+  coefs[3]=qShift(Polynomial({{0,-1}}),5)*(qShift(Polynomial({{0,1}}),2)-Polynomial({{1}}));
+  coefs[4]=qShift(Polynomial({{0,-1}}),4)*(qShift(Polynomial({{0,1}}),2)-Polynomial({{1}}));
   shifted[0]=p;
   shifted[1]=qShift(p,2);
-  shifted[2]=qShift(p,6);
-  shifted[3]=qShift(p,8);
+  shifted[2]=qShift(p,4);
+  shifted[3]=qShift(p,6);
+  shifted[4]=qShift(p,8);
   
-  print_Polynomial(shifted[0]);
   
 	Polynomial diff;
 	for(int i=0;i<=order;i++){
@@ -92,12 +65,13 @@ void test(Polynomial & p1,Polynomial & p2){
 int main(int argc,char *argv[]){
   int n=atoi(argv[1]);
   generatePartition(n,partitions);
-	Polynomial p=countFinePartitions(n,partitions,checkConditions);
-	Polynomial p2=countFinePartitions(n,partitions,checkConditions2);
- // calcDp(n);
-  //Polynomial p=Dp;
+	Polynomial p=countFinePartitions2(n,partitions,checkConditions);
+  Polynomial q=countFinePartitions(n,partitions,checkConditions2);
 	//check_qdiff(p);
-  Polynomial p1=Polynomial({{0},{0,1}})*qShift(p,4)+p;
-  test(p1,p2);
+  Polynomial r=p-q;
+  print_Polynomial(p);
+  print_Polynomial(q);
+  cout<<"p-q="<<endl;
+  print_Polynomial(r);
 }
 
