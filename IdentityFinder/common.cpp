@@ -17,6 +17,23 @@ part min(part l,part r){
   if(r>l)return l;
   else return r;
 }
+int lengthOfPartition(const Par & p){
+	int l=0;
+	for(int i=0;i<p.size();i++){
+		if(p[i]==0)break;
+		l++;
+	}
+	return l;
+}
+int lengthOfPartitionSp(const Par & p){
+	int l=0;
+	for(int i=0;i<p.size();i++){
+		if(p[i]==0)break;
+		if(p[i]%2==1)l++;
+    else l+=2;
+	}
+	return l;
+}
 
 template<class T>void print_vector(vector<T> & vec){
   for(int i=0;i<vec.size();i++){
@@ -87,6 +104,38 @@ vector<long long>countPartitions(int n,vector<part> & ps,function<bool(Par &)>f)
       if(f(v))cnt++;
     }
     re.push_back(cnt);
+  }
+  return re;
+}
+vector<vector<long long> >countFinePartitions(int n,vector<part> & ps,function<bool(Par &)>f){ 
+  vector<vector<long long> >re(PARTITION_LENGTH,vector<long long>(PARTITION_LENGTH,0));
+  long long now=0;
+  for(int i=0;i<=n;i++){
+    long long cap=sizeOfPartition(i);
+    for(;now<cap;now+=PARTITION_LENGTH){
+      vector<part>v;
+      v.assign(ps.begin()+now,ps.begin()+now+PARTITION_LENGTH);
+      if(f(v)){
+				re[i][lengthOfPartition(v)]++;
+			}
+    }
+  }
+  return re;
+}
+vector<vector<long long> >countFinePartitions2(int n,vector<part> & ps,function<bool(Par &)>f){ 
+  vector<vector<long long> >re(PARTITION_LENGTH,vector<long long>(PARTITION_LENGTH*2,0));
+  long long now=0;
+  for(int i=0;i<=n;i++){
+    long long cap=sizeOfPartition(i);
+    for(;now<cap;now+=PARTITION_LENGTH){
+      vector<part>v;
+      v.assign(ps.begin()+now,ps.begin()+now+PARTITION_LENGTH);
+      if(f(v)){
+        cout<<lengthOfPartitionSp(v)<<" ";
+        print_partition(v);
+				re[i][lengthOfPartitionSp(v)]++;
+			}
+    }
   }
   return re;
 }
@@ -505,6 +554,34 @@ function<bool(Par &)> generateConditionsGeneralSchur2(vector<int> & params){
 						if((residue>>(j))&1)tmp=tmp||(p[i]%(diff)==j);
 					}
 					f=f&&tmp;
+				}
+			}
+		}
+		return f;
+  };
+}
+
+function<bool(Par &)> generateConditionsOriginal8(vector<int> & params){
+  cout<<"Condition(no appear(bit),dist,diff,residue(bit) , equal Mod):";
+  print_vector(params);
+	const int np=params[0];
+	const int dist=params[1];
+	const int diff=params[2];
+	const int residue=params[3];
+	const int D=params[4];
+  return [=](Par & p)->bool{
+		if(D==0 || diff==0)return true;
+		bool f=true;
+		for(int i=0;i<p.size();i++){
+			if(p[i]==0)break;
+			else{
+				f=f&&((np>>(p[i]-1)&1)!=1);
+			}
+			if(p[i+dist]!=0){
+				f=f&&(p[i]-p[i+dist]>=diff);
+				if(p[i]-p[i+dist]==diff){
+					bool tmp=false;
+					f=f&&(p[i]%D==1);
 				}
 			}
 		}
