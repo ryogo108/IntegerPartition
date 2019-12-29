@@ -121,9 +121,22 @@ void SearchSp_GeneralGollnitz(int n){
 		printPeriodOfSeq(A);
 	}
 }
+void SearchSp_Original8(int n){
+  rep(np,1024)rep(diff,11)rep(D,11){
+		int residue=1;
+		int dist=1;
+    bool f = (diff>=1  && D>=1);
+		f=f&&(residue<pow(2,diff));
+    if(!f)continue;
+    vector<int>params={np,dist,diff,residue,D};
+    vector<long long>count=countPartitions(n,partitions,generateConditionsOriginal8(params));
+    vector<long long> A=Factor(count);
+    printPeriodOfSeq(A); 
+  }
+}
 
 int main(int argc,char *argv[]){
   int n=atoi(argv[1]);
   generatePartition(n,partitions);
-	SearchSp_GeneralSchur(n);
+	SearchSp_Original8(n);
 }
