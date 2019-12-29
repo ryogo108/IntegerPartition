@@ -78,7 +78,6 @@ void generatePartition(int n,vector<part> & partitions){
       if(sum==i){
         copy(v.begin(),v.end(),partitions.begin()+head+cnt*PARTITION_LENGTH);
         cnt++;
-        //print_vector(v);
       }
       else{
         for(int k=min(v.back(),i-sum);k>=1;k--){ 
@@ -101,7 +100,9 @@ vector<long long>countPartitions(int n,vector<part> & ps,function<bool(Par &)>f)
     for(;now<cap;now+=PARTITION_LENGTH){
       vector<part>v;
       v.assign(ps.begin()+now,ps.begin()+now+PARTITION_LENGTH);
-      if(f(v))cnt++;
+      if(f(v)){
+        cnt++;
+      }
     }
     re.push_back(cnt);
   }
@@ -132,7 +133,6 @@ vector<vector<long long> >countFinePartitions2(int n,vector<part> & ps,function<
       v.assign(ps.begin()+now,ps.begin()+now+PARTITION_LENGTH);
       if(f(v)){
         cout<<lengthOfPartitionSp(v)<<" ";
-        print_partition(v);
 				re[i][lengthOfPartitionSp(v)]++;
 			}
     }
