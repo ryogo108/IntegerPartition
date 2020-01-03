@@ -29,8 +29,8 @@ int lengthOfPartitionSp(const Par & p){
 	int l=0;
 	for(int i=0;i<p.size();i++){
 		if(p[i]==0)break;
-		if(p[i]%2==1)l++;
-    else l+=2;
+		if(p[i]%3==2)l+=2;
+    else l+=1;
 	}
 	return l;
 }

@@ -8,10 +8,10 @@ bool checkConditions(Par & p){
 	bool f=true;
 	for(int i=0;i<p.size();i++){
 		if(p[i]==0)break;
-    f=f&&(p[i]!=2);
+    f=f&&(p[i]%6==1 || p[i]%6==4 || p[i]%6==5);
 		if(p[i+1]!=0){
       f=f&&(p[i]-p[i+1]>=6);
-      if(p[i]-p[i+1]==6)f=f&&(p[i]%2==1);
+      if(p[i]-p[i+1]==6)f=f&&(p[i]%3==1);
     }
 	}
 	return f;
@@ -20,7 +20,7 @@ bool checkConditions2(Par & p){
 	bool f=true;
 	for(int i=0;i<p.size();i++){
 		if(p[i]==0)break;
-    f=f&&(p[i]%2==1);
+    f=f&&(p[i]%3==1);
 		if(p[i+1]!=0){
       f=f&&(p[i]-p[i+1]>=1);
     }

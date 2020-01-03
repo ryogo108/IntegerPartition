@@ -138,5 +138,5 @@ void SearchSp_Original8(int n){
 int main(int argc,char *argv[]){
   int n=atoi(argv[1]);
   generatePartition(n,partitions);
-	SearchSp_Original8(n);
+	SearchSp_GeneralSchur2(n);
 }
