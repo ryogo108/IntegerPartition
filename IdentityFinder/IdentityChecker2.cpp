@@ -1,4 +1,5 @@
 #include"common.cpp"
+#include<algorithm>
 vector<part> partitions;
 int k=3;
 
@@ -9,17 +10,15 @@ int gcd(int a,int b){
 }
 
 Par trans(Par & p){
-  Par r;
-  for(int i=0;i<p.size();i++){
-    if(p[i]==0)break;
-    if(i>0){
-      if(p[i-1]-p[i]==2){
-        r[r.size()-1]+=p[i];
-      }
-      else r.push_back(p[i]);
-    }
-    else r.push_back(p[i]);
-  }
+  Par r(p);
+  for(int i=0;i<p.size()-1;i++){
+		if(r[i]-r[i+1]==2){
+			r[i]+=r[i+1];
+			r[i+1]=0;
+			i++;
+		}
+  }	
+	sort(r.rbegin(),r.rend());
   return r;
 }
 
