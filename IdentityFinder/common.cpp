@@ -92,6 +92,19 @@ void generatePartition(int n,vector<part> & partitions){
   }
 }
 
+void enumPartitions(int n,vector<part> & ps,function<bool(Par &)>f){ 
+  long long now=0;
+  for(int l=0;l<=n;l++){
+    long long cap=sizeOfPartition(l);
+    for(;now<cap;now+=PARTITION_LENGTH){
+      vector<part>v;
+      v.assign(ps.begin()+now,ps.begin()+now+PARTITION_LENGTH);
+      if(f(v)){
+				print_partition(v);
+			}
+    }
+  }
+}
 vector<long long>countPartitions(int n,vector<part> & ps,function<bool(Par &)>f){ 
   vector<long long>re;
   long long now=0;
