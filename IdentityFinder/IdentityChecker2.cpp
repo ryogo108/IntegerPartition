@@ -13,7 +13,29 @@ Par trans(Par & p){
   Par r(p);
   for(int i=0;i<p.size()-1;i++){
 		if(r[i]-r[i+1]==2){
-			r[i]+=r[i+1];
+			int last_prev=i+1;
+			int last=i;
+			for(int j=1;j<=i+1;j++){
+				if(i-j==-1){
+					r[0]+=r[i+1];
+					if(r[0]%4==2){
+						r[0]-=2;
+						r[last_prev]+=2;
+					}
+				}
+				else if(r[i-j]>=r[last]+r[i+1]+4){
+					r[last]+=r[i+1];
+					if(r[last]%4==2){
+						r[last]-=2;
+						r[last_prev]+=2;
+					}
+					break;
+				}
+				if(r[i-j]!=0){
+					last_prev=last;
+					last=i-j;
+				}
+			}
 			r[i+1]=0;
 			i++;
 		}
@@ -51,7 +73,9 @@ bool checkConditions3(Par & v){
   Par t=trans(v);
   bool f=(checkConditions1(v)&&(!checkConditions2(v)));
   f=f&&(!checkConditions2(t));
-  f=f&&(v[4]==0);
+	if(f){
+		print_partition(t);
+	}
   return f;
 }
 
