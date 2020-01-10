@@ -8,6 +8,21 @@ int gcd(int a,int b){
   return gcd(b,a%b);
 }
 
+Par trans(Par & p){
+  Par r;
+  for(int i=0;i<p.size();i++){
+    if(p[i]==0)break;
+    if(i>0){
+      if(p[i-1]-p[i]==2){
+        r[r.size()-1]+=p[i];
+      }
+      else r.push_back(p[i]);
+    }
+    else r.push_back(p[i]);
+  }
+  return r;
+}
+
 bool checkConditions(Par & p){	
   bool f=true;
 	return f;
@@ -33,15 +48,24 @@ bool checkConditions2(Par & v){
   }
 	return f;
 }
+bool checkConditions3(Par & v){	
+  Par t=trans(v);
+  bool f=(checkConditions1(v)&&(!checkConditions2(v)));
+  f=f&&(!checkConditions2(t));
+  f=f&&(v[4]==0);
+  return f;
+}
 
 int main(int argc,char *argv[]){
   int n=atoi(argv[1]);
 	k=atoi(argv[2]);
   generatePartition(n,partitions);
-	cout<<"Condition1:"<<endl;
+/*	cout<<"Condition1:"<<endl;
 	enumPartitions(n,partitions,checkConditions1);
 	cout<<"Condition2:"<<endl;
-	enumPartitions(n,partitions,checkConditions2);
+	enumPartitions(n,partitions,checkConditions2);*/
+  cout<<"Condition1-Condition2 and trans:"<<endl;
+  enumPartitions(n,partitions,checkConditions3);
 	/*vector<long long>A(Factor(v));
 	print_vector(A);
 	printPeriodOfSeq(A);*/
