@@ -588,3 +588,29 @@ function<bool(Par &)> generateConditionsOriginal8(vector<int> & params){
 		return f;
   };
 }
+function<bool(Par &)> generateConditions_GeneralGollnitz2(vector<int> & params){
+  cout<<"Condition(M,r1,r2,r3):";
+  print_vector(params);
+	const int M=params[0];
+	const int r1=params[1];
+	const int r2=params[2];
+	const int r3=params[3];
+  return [=](Par & p)->bool{
+		bool f=true;
+		for(int i=0;i<p.size();i++){
+      bool tmp=false;
+			if(p[i]==0)break;
+			else{
+        if(p[i]>=r1+r2)tmp=tmp||(p[i]%M==(r1+r2)%M);
+        if(p[i]>=r2+r3)tmp=tmp||(p[i]%M==(r2+r3)%M);
+        if(p[i]>=r1+r3)tmp=tmp||(p[i]%M==(r1+r3)%M);
+				f=f&&(p[i]%M==r1 || p[i]%M==r2 || p[i]%M==r3 || tmp);
+			}
+			if(p[i+1]!=0){
+				f=f&&(p[i]-p[i+1]>=M);
+        if(tmp)f=f&&(p[i]-p[i+1]>M);
+			}
+		}
+		return f;
+  };
+}
