@@ -8,10 +8,10 @@ bool checkConditions(Par & p){
 	bool f=true;
 	for(int i=0;i<p.size();i++){
 		if(p[i]==0)break;
-    f=f&&(p[i]%4!=2);
+    f=f&&(p[i]%3==1 || p[i]%6==5);
 		if(p[i+1]!=0){
-      f=f&&(p[i]-p[i+1]>=4);
-      if(p[i]-p[i+1]==4)f=f&&(p[i]%2==1);
+      f=f&&(p[i]-p[i+1]>=6);
+      if(p[i]-p[i+1]==6)f=f&&(p[i]%3==1);
     }
 	}
 	return f;
@@ -22,11 +22,11 @@ void check_qdiff(const Polynomial & p){
 	vector<Polynomial>coefs(order+1);
 	vector<Polynomial>shifted(order+1);
   coefs[0]=Polynomial({{1}});
-  coefs[1]=-Polynomial({{1},{0,1},{0},{0,1}});
-  coefs[2]=-qShift(Polynomial({{0,1}}),4)*Polynomial({{1},{0},{0},{0},{0,-1}});
+  coefs[1]=-Polynomial({{1},{0,1},{0},{0},{0,1}});
+  coefs[2]=-qShift(Polynomial({{0,1}}),5)*Polynomial({{1},{0},{0},{0},{0},{0},{0,-1}});
   shifted[0]=p;
-  shifted[1]=qShift(p,4);
-  shifted[2]=qShift(p,8);
+  shifted[1]=qShift(p,6);
+  shifted[2]=qShift(p,12);
   
   
 	Polynomial diff;
