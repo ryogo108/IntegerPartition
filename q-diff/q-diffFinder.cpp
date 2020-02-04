@@ -38,7 +38,7 @@ void seek_qdiff(const Polynomial & p,const int order){
 int main(int argc,char *argv[]){
   int n=atoi(argv[1]);
   generatePartition(n,partitions);
-	Polynomial p=countFinePartitions(n,partitions,checkConditions);
+	Polynomial p=countRefinedPartitions(n,partitions,checkConditions);
 	seek_qdiff(p,2);
 }
 
