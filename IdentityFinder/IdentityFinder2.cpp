@@ -39,7 +39,7 @@ void SearchSp_Original5(int n){
 		vector<int>params={sp,dist,diff,a,b};
 		vector<long long>count=countPartitions(n,partitions,generateConditionOriginal5(params));
 		vector<long long>A=Factor(count);
-		print_vector(A);
+		printVector(A);
 		printPeriodOfSeq(A);
 	}
 }
