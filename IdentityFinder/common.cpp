@@ -194,7 +194,68 @@ void printPeriodOfSeq(vector<long long> & Seq){
   printVector(v);
 }
 
-
+//Conditions
+function<bool(Par &)> generateConditionsGeneralSchur(vector<int> & params){
+  cout<<"Condition(no appear(residue),no appear MOD,dist,diff,residue(bit)):";
+  printVector(params);
+	const int np=params[0];
+	const int D=params[1];
+	const int dist=params[2];
+	const int diff=params[3];
+	const int residue=params[4];
+  return [=](Par & p)->bool{
+		if(D==0 || diff==0)return true;
+		bool f=true;
+		for(int i=0;i<p.size();i++){
+			if(p[i]==0)break;
+			else{
+				f=f&&((np>>((p[i]%D))&1)!=1);
+			}
+			if(p[i+dist]!=0){
+				f=f&&(p[i]-p[i+dist]>=diff);
+				if(p[i]-p[i+dist]==diff){
+					bool tmp=false;
+					for(int j=0;j<=diff;j++){
+						if((residue>>(j))&1)tmp=tmp||(p[i]%(diff)==j);
+					}
+					f=f&&tmp;
+				}
+			}
+		}
+		return f;
+  };
+}
+function<bool(Par &)> generateConditionsGeneralSchur2(vector<int> & params){
+  cout<<"Condition(GeneralSchur2) k:";
+  printVector(params);
+	const int k=params[0];
+	const int D=2*k;
+	const int ap=(1<<1)|(1<<((1+k)%D))|(1<<((2+k)%D));
+	const int dist=1;
+	const int diff=D;
+	const int residue=(1<<1)|(1<<((1+k)%D));
+  return [=](Par & p)->bool{
+		if(D==0 || diff==0)return true;
+		bool f=true;
+		for(int i=0;i<p.size();i++){
+			if(p[i]==0)break;
+			else{
+				f=f&&((ap>>((p[i]%D))&1)==1);
+			}
+			if(p[i+dist]!=0){
+				f=f&&(p[i]-p[i+dist]>=diff);
+				if(p[i]-p[i+dist]==diff){
+					bool tmp=false;
+					for(int j=0;j<=diff;j++){
+						if((residue>>(j))&1)tmp=tmp||(p[i]%(diff)==j);
+					}
+					f=f&&tmp;
+				}
+			}
+		}
+		return f;
+  };
+}
 ///Condiions
 
 function<bool(Par &)> generateConditionsKR1(vector<int> & params){
@@ -476,82 +537,20 @@ function<bool(Par &)> generateConditionsOriginal7(vector<int> & params){
 		return f;
   };
 }
-function<bool(Par &)> generateConditionsGeneralSchur(vector<int> & params){
-  cout<<"Condition(no appear(residue),no appear MOD,dist,diff,residue(bit)):";
-  printVector(params);
-	const int np=params[0];
-	const int D=params[1];
-	const int dist=params[2];
-	const int diff=params[3];
-	const int residue=params[4];
-  return [=](Par & p)->bool{
-		if(D==0 || diff==0)return true;
-		bool f=true;
-		for(int i=0;i<p.size();i++){
-			if(p[i]==0)break;
-			else{
-				f=f&&((np>>((p[i]%D))&1)!=1);
-			}
-			if(p[i+dist]!=0){
-				f=f&&(p[i]-p[i+dist]>=diff);
-				if(p[i]-p[i+dist]==diff){
-					bool tmp=false;
-					for(int j=0;j<=diff;j++){
-						if((residue>>(j))&1)tmp=tmp||(p[i]%(diff)==j);
-					}
-					f=f&&tmp;
-				}
-			}
-		}
-		return f;
-  };
-}
 function<bool(Par &)> generateConditionsGeneralGollnitz(vector<int> & params){
-  cout<<"Condition(no appear(bit),dist,diff,m):";
+  cout<<"Condition(no appear(bit),dist,diff,residue(bit)):";
   printVector(params);
 	const int np=params[0];
 	const int dist=params[1];
 	const int diff=params[2];
-	const int m=params[3];
+	const int residue=params[3];
   return [=](Par & p)->bool{
-		if(m==0)return true;
+		if(diff==0)return true;
 		bool f=true;
 		for(int i=0;i<p.size();i++){
 			if(p[i]==0)break;
 			else{
-				for(int j=1;j<=5;j++){
-					if((np>>(j-1))&(1))f=f&&(p[i]!=j);
-				}
-			}
-			if(p[i+dist]!=0){
-				f=f&&(p[i]-p[i+dist]>=diff);
-			}
-			if(p[i]%m==0 && p[i]/m>1){
-				for(int j=i+1;j<p.size();j++){
-					if(p[j]<(m*((p[i]/m)-1)))break;
-					f=f&&(p[i]!=(m*(p[i]/m-1)));
-				}
-			}
-		}
-		return f;
-  };
-}
-function<bool(Par &)> generateConditionsGeneralSchur2(vector<int> & params){
-  cout<<"Condition(GeneralSchur2) k:";
-  printVector(params);
-	const int k=params[0];
-	const int D=2*k;
-	const int ap=(1<<1)|(1<<((1+k)%D))|(1<<((2+k)%D));
-	const int dist=1;
-	const int diff=D;
-	const int residue=(1<<1)|(1<<((1+k)%D));
-  return [=](Par & p)->bool{
-		if(D==0 || diff==0)return true;
-		bool f=true;
-		for(int i=0;i<p.size();i++){
-			if(p[i]==0)break;
-			else{
-				f=f&&((ap>>((p[i]%D))&1)==1);
+				f=f&&((np>>(p[i]-1)&1)!=1);
 			}
 			if(p[i+dist]!=0){
 				f=f&&(p[i]-p[i+dist]>=diff);
@@ -561,7 +560,7 @@ function<bool(Par &)> generateConditionsGeneralSchur2(vector<int> & params){
 						if((residue>>(j))&1)tmp=tmp||(p[i]%(diff)==j);
 					}
 					f=f&&tmp;
-				}
+        }
 			}
 		}
 		return f;
