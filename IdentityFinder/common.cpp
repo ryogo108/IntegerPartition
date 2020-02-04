@@ -10,7 +10,7 @@ using namespace std;
 
 const int PARTITION_LENGTH=100;
 
-typedef uint_fast8_t part; //size of max part in all partitions.
+typedef uint_fast8_t part;
 typedef vector<part> Par;
 
 part min(part l,part r){
@@ -57,7 +57,8 @@ template<class T> T sumVector(vector<T> & vec){
   }
   return re;
 }
-long long sizeOfPartition(int n){ //大きさnの分割を一列に列挙するのに十分な長さ
+long long sizeOfPartition(int n){
+  //大きさnの分割を一列に列挙するのに十分な長さ
   long long sum=0;
   for(int i=0;i<=n;i++){
     sum+=numOfPartition(i)*(PARTITION_LENGTH);
@@ -65,6 +66,7 @@ long long sizeOfPartition(int n){ //大きさnの分割を一列に列挙する�
   return sum; 
 }
 void generatePartition(int n,vector<part> & partitions){
+  //大きさn以下の分割を列挙するしてpartitionsに保存
   partitions.resize(sizeOfPartition(n));
   for(int i=1;i<=n;i++){
     long long head=sizeOfPartition(i-1);
@@ -93,6 +95,7 @@ void generatePartition(int n,vector<part> & partitions){
 }
 
 vector<long long>countPartitions(int n,vector<part> & ps,function<bool(Par &)>f){ 
+  //条件fを満たす分割の数を数える
   vector<long long>re;
   long long now=0;
   for(int l=0;l<=n;l++){
@@ -110,6 +113,7 @@ vector<long long>countPartitions(int n,vector<part> & ps,function<bool(Par &)>f)
   return re;
 }
 vector<vector<long long> >countRefinedPartitions(int n,vector<part> & ps,function<bool(Par &)>f){ 
+  //条件fを満たし長さも考慮して分割を数える
   vector<vector<long long> >re(PARTITION_LENGTH,vector<long long>(PARTITION_LENGTH,0));
   long long now=0;
   for(int i=0;i<=n;i++){
@@ -125,6 +129,7 @@ vector<vector<long long> >countRefinedPartitions(int n,vector<part> & ps,functio
   return re;
 }
 vector<vector<long long> >countRefinedPartitions2(int n,vector<part> & ps,function<bool(Par &)>f){ 
+  //条件fを満たし適当な重みを考慮して分割を数える
   vector<vector<long long> >re(PARTITION_LENGTH,vector<long long>(PARTITION_LENGTH*2,0));
   long long now=0;
   for(int i=0;i<=n;i++){
@@ -142,6 +147,7 @@ vector<vector<long long> >countRefinedPartitions2(int n,vector<part> & ps,functi
 }
 
 vector<long long> Factor(vector<long long> &  B){
+  //Eulerのアルゴリズム
   vector<long long> A;
   A.push_back(0);
   for(int i=1;i<B.size();i++){
@@ -162,6 +168,7 @@ vector<long long> Factor(vector<long long> &  B){
 }
 
 int detect(vector<long long> & A){
+  //列Aが周期的かどうか調べその周期を返す
   int n=A.size();
   for(int i=1;i<=n/2;i++){
     bool f=true;
@@ -176,6 +183,7 @@ int detect(vector<long long> & A){
   return 0;
 }
 void printPeriodOfSeq(vector<long long> & Seq){
+  //列Seqが周期的なときその1周期分の列を表示する
   int l=detect(Seq);
 	vector<long long>v;
 	for(int i=1;i<=l;i++){
@@ -260,7 +268,6 @@ function<bool(Par &)>generateConditionsOriginal1(vector<int> & params){
 			if(p[i+k]==0)break;
 			f=f&&((p[i]-p[i+k])>=1);
 		}
-	//	if(f)printPartition(p);
 		return f;
 	};
 }
@@ -313,7 +320,6 @@ function<bool(Par &)>generateConditionOriginal5(vector<int> & params){
 			if(p[i]%a==0)f=f&&(p[i]-p[i+dist]>=diff+b);
 			}
 		}	
-	//	if(f)printPartition(p);
 		return f;
 	};
 }
