@@ -114,8 +114,11 @@ void SearchSp_GeneralSchur2(int n){
   }
 }
 void SearchSp_GeneralGollnitz(int n){
-	rep(np,32)rep(dist,6)rep(diff,6)rep(m,6){
-		vector<int>params={np,dist,diff,m};
+	rep(np,32)rep(dist,2)rep(diff,7)rep(residue,64){ 
+    bool f = (diff>=1 && dist>=1);
+		f=f&&(residue<pow(2,diff));
+    if(!f)continue;
+		vector<int>params={np,dist,diff,residue};
 		vector<long long>count=countPartitions(n,partitions,generateConditionsGeneralGollnitz(params));
 		vector<long long>A=Factor(count);
 		printPeriodOfSeq(A);
@@ -147,5 +150,5 @@ void SearchSp_GeneralGollnitz2(int n){
 int main(int argc,char *argv[]){
   int n=atoi(argv[1]);
   generatePartition(n,partitions);
-	SearchSp_GeneralGollnitz2(n);
+	SearchSp_GeneralGollnitz(n);
 }
