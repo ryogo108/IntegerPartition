@@ -10,7 +10,7 @@ using namespace std;
 
 const int PARTITION_LENGTH=100;
 
-typedef uint_fast8_t part; //size of max part in all partitions.
+typedef uint_fast8_t part;
 typedef vector<part> Par;
 
 part min(part l,part r){
@@ -35,14 +35,14 @@ int lengthOfPartitionSp(const Par & p){
 	return l;
 }
 
-template<class T>void print_vector(vector<T> & vec){
+template<class T>void printVector(vector<T> & vec){
   for(int i=0;i<vec.size();i++){
     if(i>0)cout<<" ";
     cout<<vec[i];
   }
   cout<<endl;
 }
-void print_partition(Par & p){
+void printPartition(Par & p){
 	for(int i=0;i<p.size();i++){
 		if(i>0 && p[i]==0)break;
 		if(i>0)cout<<" ";
@@ -50,14 +50,15 @@ void print_partition(Par & p){
 	}
 	cout<<endl;
 }
-template<class T> T sum_vector(vector<T> & vec){
+template<class T> T sumVector(vector<T> & vec){
   T re=T(0);
   for(int i=0;i<vec.size();i++){
     re+=vec[i];
   }
   return re;
 }
-long long sizeOfPartition(int n){ //partition を一列に列挙するのに必要な容量
+long long sizeOfPartition(int n){
+  //大きさnの分割を一列に列挙するのに十分な長さ
   long long sum=0;
   for(int i=0;i<=n;i++){
     sum+=numOfPartition(i)*(PARTITION_LENGTH);
@@ -65,6 +66,7 @@ long long sizeOfPartition(int n){ //partition を一列に列挙するのに必�
   return sum; 
 }
 void generatePartition(int n,vector<part> & partitions){
+  //大きさn以下の分割を列挙するしてpartitionsに保存
   partitions.resize(sizeOfPartition(n));
   for(int i=1;i<=n;i++){
     long long head=sizeOfPartition(i-1);
@@ -74,16 +76,16 @@ void generatePartition(int n,vector<part> & partitions){
     while(!que.empty()){
       vector<part> v=que.front();
       que.pop();
-      int sum=sum_vector(v);
+      int sum=sumVector(v);
       if(sum==i){
         copy(v.begin(),v.end(),partitions.begin()+head+cnt*PARTITION_LENGTH);
         cnt++;
-        //print_vector(v);
       }
       else{
-        for(int k=min(v.back(),i-sum);k>=1;k--){ 
-          vector<part> v_new(v);
-          v_new.push_back(k);
+        for(int k=min(v.back(),i-sum);k>=1;k--){
+          vector<part> v_new(v.size()+1,0);
+          copy(v.begin(),v.end(),v_new.begin());
+          v_new[v.size()]=k;
           que.push(v_new);
         }
       }
@@ -93,6 +95,7 @@ void generatePartition(int n,vector<part> & partitions){
 }
 
 vector<long long>countPartitions(int n,vector<part> & ps,function<bool(Par &)>f){ 
+  //条件fを満たす分割の数を数える
   vector<long long>re;
   long long now=0;
   for(int l=0;l<=n;l++){
@@ -101,13 +104,16 @@ vector<long long>countPartitions(int n,vector<part> & ps,function<bool(Par &)>f)
     for(;now<cap;now+=PARTITION_LENGTH){
       vector<part>v;
       v.assign(ps.begin()+now,ps.begin()+now+PARTITION_LENGTH);
-      if(f(v))cnt++;
+      if(f(v)){
+        cnt++;
+      }
     }
     re.push_back(cnt);
   }
   return re;
 }
-vector<vector<long long> >countFinePartitions(int n,vector<part> & ps,function<bool(Par &)>f){ 
+vector<vector<long long> >countRefinedPartitions(int n,vector<part> & ps,function<bool(Par &)>f){ 
+  //条件fを満たし長さも考慮して分割を数える
   vector<vector<long long> >re(PARTITION_LENGTH,vector<long long>(PARTITION_LENGTH,0));
   long long now=0;
   for(int i=0;i<=n;i++){
@@ -122,7 +128,8 @@ vector<vector<long long> >countFinePartitions(int n,vector<part> & ps,function<b
   }
   return re;
 }
-vector<vector<long long> >countFinePartitions2(int n,vector<part> & ps,function<bool(Par &)>f){ 
+vector<vector<long long> >countRefinedPartitions2(int n,vector<part> & ps,function<bool(Par &)>f){ 
+  //条件fを満たし適当な重みを考慮して分割を数える
   vector<vector<long long> >re(PARTITION_LENGTH,vector<long long>(PARTITION_LENGTH*2,0));
   long long now=0;
   for(int i=0;i<=n;i++){
@@ -132,7 +139,6 @@ vector<vector<long long> >countFinePartitions2(int n,vector<part> & ps,function<
       v.assign(ps.begin()+now,ps.begin()+now+PARTITION_LENGTH);
       if(f(v)){
         cout<<lengthOfPartitionSp(v)<<" ";
-        print_partition(v);
 				re[i][lengthOfPartitionSp(v)]++;
 			}
     }
@@ -141,6 +147,7 @@ vector<vector<long long> >countFinePartitions2(int n,vector<part> & ps,function<
 }
 
 vector<long long> Factor(vector<long long> &  B){
+  //Eulerのアルゴリズム
   vector<long long> A;
   A.push_back(0);
   for(int i=1;i<B.size();i++){
@@ -161,6 +168,7 @@ vector<long long> Factor(vector<long long> &  B){
 }
 
 int detect(vector<long long> & A){
+  //列Aが周期的かどうか調べその周期を返す
   int n=A.size();
   for(int i=1;i<=n/2;i++){
     bool f=true;
@@ -175,6 +183,7 @@ int detect(vector<long long> & A){
   return 0;
 }
 void printPeriodOfSeq(vector<long long> & Seq){
+  //列Seqが周期的なときその1周期分の列を表示する
   int l=detect(Seq);
 	vector<long long>v;
 	for(int i=1;i<=l;i++){
@@ -182,7 +191,7 @@ void printPeriodOfSeq(vector<long long> & Seq){
 	}
   if(v.empty())return;
   cout<<"(mod  "<<l<<" ): ";
-  print_vector(v);
+  printVector(v);
 }
 
 
@@ -190,7 +199,7 @@ void printPeriodOfSeq(vector<long long> & Seq){
 
 function<bool(Par &)> generateConditionsKR1(vector<int> & params){
   cout<<"Condition(sp,dist,diff,A,B,C,D):";
-  print_vector(params);
+  printVector(params);
 	const int sp=params[0];
 	const int dist=params[1];
 	const int diff=params[2];
@@ -224,7 +233,7 @@ function<bool(Par &)> generateConditionsKR1(vector<int> & params){
 
 function<bool(Par &)>generateConditionsSchur(vector<int> & params){
 	cout<<"Condition(schur)(f1,f2,a,b,c,d):";
-	print_vector(params);
+	printVector(params);
 	return [&params](Par & p)->bool{
 		bool f=true;
 		int f1=params[0];
@@ -247,7 +256,7 @@ function<bool(Par &)>generateConditionsSchur(vector<int> & params){
 }
 function<bool(Par &)>generateConditionsOriginal1(vector<int> & params){
 	cout<<"Condition(Origin1):";
-	print_vector(params);
+	printVector(params);
 	return [&params](Par & p)->bool{
 		bool f=true;
 		int k=params[0];
@@ -259,7 +268,6 @@ function<bool(Par &)>generateConditionsOriginal1(vector<int> & params){
 			if(p[i+k]==0)break;
 			f=f&&((p[i]-p[i+k])>=1);
 		}
-	//	if(f)print_partition(p);
 		return f;
 	};
 }
@@ -267,7 +275,7 @@ function<bool(Par &)>generateConditionsOriginal1(vector<int> & params){
 function<bool(Par &)>generateConditionOriginal4(vector<int> & params){
 	//all product has x two
 	cout<<" Condition(sp,s,t,x,sw): ";
-	print_vector(params);
+	printVector(params);
 	return [&params](Par & p)->bool{
 		bool f=true;
 		int sp=params[0];
@@ -296,7 +304,7 @@ function<bool(Par &)>generateConditionOriginal4(vector<int> & params){
 
 function<bool(Par &)>generateConditionOriginal5(vector<int> & params){
 	cout<<"Condition(sp,dist,diff,a) :";
-	print_vector(params);
+	printVector(params);
 	return [&params](Par & p)->bool{
 		bool f=true;
 		int sp=params[0];
@@ -312,13 +320,12 @@ function<bool(Par &)>generateConditionOriginal5(vector<int> & params){
 			if(p[i]%a==0)f=f&&(p[i]-p[i+dist]>=diff+b);
 			}
 		}	
-	//	if(f)print_partition(p);
 		return f;
 	};
 }
 function<bool(Par &)> generateConditionsOriginal6(vector<int> & params){
   cout<<"Condition(sp,dist,diff,A1,B1,C1,D1,A2,B2,C2,D2):";
-  print_vector(params);
+  printVector(params);
 	const int sp=params[0];
 	const int dist=params[1];
 	const int diff=params[2];
@@ -362,7 +369,7 @@ function<bool(Par &)> generateConditionsOriginal6(vector<int> & params){
 
 function<bool(Par &)>generateConditionsGeneralMacMahon(vector<int> & params){
 	cout<<"Conditions(sp,k):";
-	print_vector(params);
+	printVector(params);
 	const int sp=params[0];
 	const int k=params[1];
 	return [=](Par & p)->bool{
@@ -382,7 +389,7 @@ function<bool(Par &)>generateConditionsGeneralMacMahon(vector<int> & params){
 
 function<bool(Par &)> generateConditionsOriginal6_1(vector<int> & params){
   cout<<"Condition(sp,dist,diff,A1,B1,C1,D1,2,0,0,4,1,0,4,5):";
-  print_vector(params);
+  printVector(params);
 	const int sp=params[0];
 	const int dist=params[1];
 	const int diff=params[2];
@@ -428,7 +435,7 @@ function<bool(Par &)> generateConditionsOriginal6_1(vector<int> & params){
 }
 function<bool(Par &)> generateConditionsOriginal7(vector<int> & params){
   cout<<"Condition(sp,dist,diff,A1,B1,C1,D1,A2,B2,C2,D2):";
-  print_vector(params);
+  printVector(params);
 	const int sp=params[0];
 	const int dist=params[1];
 	const int diff=params[2];
@@ -471,7 +478,7 @@ function<bool(Par &)> generateConditionsOriginal7(vector<int> & params){
 }
 function<bool(Par &)> generateConditionsGeneralSchur(vector<int> & params){
   cout<<"Condition(no appear(residue),no appear MOD,dist,diff,residue(bit)):";
-  print_vector(params);
+  printVector(params);
 	const int np=params[0];
 	const int D=params[1];
 	const int dist=params[2];
@@ -501,7 +508,7 @@ function<bool(Par &)> generateConditionsGeneralSchur(vector<int> & params){
 }
 function<bool(Par &)> generateConditionsGeneralGollnitz(vector<int> & params){
   cout<<"Condition(no appear(bit),dist,diff,m):";
-  print_vector(params);
+  printVector(params);
 	const int np=params[0];
 	const int dist=params[1];
 	const int diff=params[2];
@@ -531,7 +538,7 @@ function<bool(Par &)> generateConditionsGeneralGollnitz(vector<int> & params){
 }
 function<bool(Par &)> generateConditionsGeneralSchur2(vector<int> & params){
   cout<<"Condition(GeneralSchur2) k:";
-  print_vector(params);
+  printVector(params);
 	const int k=params[0];
 	const int D=2*k;
 	const int ap=(1<<1)|(1<<((1+k)%D))|(1<<((2+k)%D));
@@ -563,7 +570,7 @@ function<bool(Par &)> generateConditionsGeneralSchur2(vector<int> & params){
 
 function<bool(Par &)> generateConditionsOriginal8(vector<int> & params){
   cout<<"Condition(no appear(bit),dist,diff,residue(bit) , equal Mod):";
-  print_vector(params);
+  printVector(params);
 	const int np=params[0];
 	const int dist=params[1];
 	const int diff=params[2];

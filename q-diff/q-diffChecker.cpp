@@ -65,8 +65,8 @@ void test(Polynomial & p1,Polynomial & p2){
 int main(int argc,char *argv[]){
   int n=atoi(argv[1]);
   generatePartition(n,partitions);
-	Polynomial p=countFinePartitions2(n,partitions,checkConditions);
-  Polynomial q=countFinePartitions(n,partitions,checkConditions2);
+	Polynomial p=countRefinedPartitions2(n,partitions,checkConditions);
+  Polynomial q=countRefinedPartitions(n,partitions,checkConditions2);
 	//check_qdiff(p);
   Polynomial r=p-q;
   print_Polynomial(p);
