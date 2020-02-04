@@ -597,7 +597,7 @@ function<bool(Par &)> generateConditionsOriginal8(vector<int> & params){
 }
 function<bool(Par &)> generateConditions_GeneralGollnitz2(vector<int> & params){
   cout<<"Condition(M,r1,r2,r3):";
-  print_vector(params);
+  printVector(params);
 	const int M=params[0];
 	const int r1=params[1];
 	const int r2=params[2];
