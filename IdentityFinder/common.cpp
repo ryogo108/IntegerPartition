@@ -194,7 +194,64 @@ void printPeriodOfSeq(vector<long long> & Seq){
   printVector(v);
 }
 
-//Conditions
+//まだ結果を整理していない分割の条件
+function<bool(Par &)> generateConditions_GeneralGollnitz2(vector<int> & params){
+  cout<<"Condition(M,r1,r2,r3):";
+  printVector(params);
+	const int M=params[0];
+	const int r1=params[1];
+	const int r2=params[2];
+	const int r3=params[3];
+  return [=](Par & p)->bool{
+		bool f=true;
+		for(int i=0;i<p.size();i++){
+      bool tmp=false;
+			if(p[i]==0)break;
+			else{
+        if(p[i]>=r1+r2)tmp=tmp||(p[i]%M==(r1+r2)%M);
+        if(p[i]>=r2+r3)tmp=tmp||(p[i]%M==(r2+r3)%M);
+        if(p[i]>=r1+r3)tmp=tmp||(p[i]%M==(r1+r3)%M);
+				f=f&&(p[i]%M==r1 || p[i]%M==r2 || p[i]%M==r3 || tmp);
+			}
+			if(p[i+1]!=0){
+				f=f&&(p[i]-p[i+1]>=M);
+        if(tmp)f=f&&(p[i]-p[i+1]>M);
+			}
+		}
+		return f;
+  };
+}
+
+//論文中の結果を得た分割の条件
+function<bool(Par &)> generateConditionsGeneralGollnitz(vector<int> & params){
+  cout<<"Condition(no appear(bit),dist,diff,residue(bit)):";
+  printVector(params);
+	const int np=params[0];
+	const int dist=params[1];
+	const int diff=params[2];
+	const int residue=params[3];
+  return [=](Par & p)->bool{
+		if(diff==0)return true;
+		bool f=true;
+		for(int i=0;i<p.size();i++){
+			if(p[i]==0)break;
+			else{
+				f=f&&((np>>(p[i]-1)&1)!=1);
+			}
+			if(p[i+dist]!=0){
+				f=f&&(p[i]-p[i+dist]>=diff);
+				if(p[i]-p[i+dist]==diff){
+					bool tmp=false;
+					for(int j=0;j<=diff;j++){
+						if((residue>>(j))&1)tmp=tmp||(p[i]%(diff)==j);
+					}
+					f=f&&tmp;
+        }
+			}
+		}
+		return f;
+  };
+}
 function<bool(Par &)> generateConditionsGeneralSchur(vector<int> & params){
   cout<<"Condition(no appear(residue),no appear MOD,dist,diff,residue(bit)):";
   printVector(params);
@@ -256,8 +313,8 @@ function<bool(Par &)> generateConditionsGeneralSchur2(vector<int> & params){
 		return f;
   };
 }
-///Condiions
 
+//論文中の結果とは関係ないが他に試した分割の条件
 function<bool(Par &)> generateConditionsKR1(vector<int> & params){
   cout<<"Condition(sp,dist,diff,A,B,C,D):";
   printVector(params);
@@ -334,7 +391,7 @@ function<bool(Par &)>generateConditionsOriginal1(vector<int> & params){
 }
 
 function<bool(Par &)>generateConditionOriginal4(vector<int> & params){
-	//all product has x two
+	//all product has x twos.
 	cout<<" Condition(sp,s,t,x,sw): ";
 	printVector(params);
 	return [&params](Par & p)->bool{
@@ -537,35 +594,6 @@ function<bool(Par &)> generateConditionsOriginal7(vector<int> & params){
 		return f;
   };
 }
-function<bool(Par &)> generateConditionsGeneralGollnitz(vector<int> & params){
-  cout<<"Condition(no appear(bit),dist,diff,residue(bit)):";
-  printVector(params);
-	const int np=params[0];
-	const int dist=params[1];
-	const int diff=params[2];
-	const int residue=params[3];
-  return [=](Par & p)->bool{
-		if(diff==0)return true;
-		bool f=true;
-		for(int i=0;i<p.size();i++){
-			if(p[i]==0)break;
-			else{
-				f=f&&((np>>(p[i]-1)&1)!=1);
-			}
-			if(p[i+dist]!=0){
-				f=f&&(p[i]-p[i+dist]>=diff);
-				if(p[i]-p[i+dist]==diff){
-					bool tmp=false;
-					for(int j=0;j<=diff;j++){
-						if((residue>>(j))&1)tmp=tmp||(p[i]%(diff)==j);
-					}
-					f=f&&tmp;
-        }
-			}
-		}
-		return f;
-  };
-}
 
 function<bool(Par &)> generateConditionsOriginal8(vector<int> & params){
   cout<<"Condition(no appear(bit),dist,diff,residue(bit) , equal Mod):";
@@ -589,32 +617,6 @@ function<bool(Par &)> generateConditionsOriginal8(vector<int> & params){
 					bool tmp=false;
 					f=f&&(p[i]%D==1);
 				}
-			}
-		}
-		return f;
-  };
-}
-function<bool(Par &)> generateConditions_GeneralGollnitz2(vector<int> & params){
-  cout<<"Condition(M,r1,r2,r3):";
-  printVector(params);
-	const int M=params[0];
-	const int r1=params[1];
-	const int r2=params[2];
-	const int r3=params[3];
-  return [=](Par & p)->bool{
-		bool f=true;
-		for(int i=0;i<p.size();i++){
-      bool tmp=false;
-			if(p[i]==0)break;
-			else{
-        if(p[i]>=r1+r2)tmp=tmp||(p[i]%M==(r1+r2)%M);
-        if(p[i]>=r2+r3)tmp=tmp||(p[i]%M==(r2+r3)%M);
-        if(p[i]>=r1+r3)tmp=tmp||(p[i]%M==(r1+r3)%M);
-				f=f&&(p[i]%M==r1 || p[i]%M==r2 || p[i]%M==r3 || tmp);
-			}
-			if(p[i+1]!=0){
-				f=f&&(p[i]-p[i+1]>=M);
-        if(tmp)f=f&&(p[i]-p[i+1]>M);
 			}
 		}
 		return f;
