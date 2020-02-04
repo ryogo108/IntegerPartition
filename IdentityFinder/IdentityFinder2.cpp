@@ -114,7 +114,7 @@ void SearchSp_GeneralSchur2(int n){
   }
 }
 void SearchSp_GeneralGollnitz(int n){
-	rep(np,32)rep(dist,2)rep(diff,7)rep(residue,64){ 
+	rep(np,32)rep(dist,3)rep(diff,8)rep(residue,127){ 
     bool f = (diff>=1 && dist>=1);
 		f=f&&(residue<pow(2,diff));
     if(!f)continue;
