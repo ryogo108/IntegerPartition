@@ -16,8 +16,8 @@ int main(int argc,char *argv[]){
   int n=atoi(argv[1]);
   generatePartition(n,partitions);
 	vector<long long>v(countPartitions(n,partitions,checkConditions));
-	print_vector(v);
+	printVector(v);
 	vector<long long>A(Factor(v));
-	print_vector(A);
+	printVector(A);
 	printPeriodOfSeq(A);
 }
