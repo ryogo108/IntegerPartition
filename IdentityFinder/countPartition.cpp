@@ -6,7 +6,7 @@ const int COUNT_PARTITION_MAX_LENGTH=300;
 
 long long dp[COUNT_PARTITION_MAX_LENGTH+1];
 
-long long numOfPartition(int n){
+long long numOfPartition(int n){//Eulerの五角数定理から得られる分割数を数えるO(n*sqrt(n))のアルゴリズム
   if(dp[n]!=0)return dp[n];
   dp[0]=1;
   for(int i=1;i<=n;i++){
