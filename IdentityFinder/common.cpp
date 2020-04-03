@@ -112,6 +112,26 @@ vector<long long>countPartitions(int n,vector<part> & ps,function<bool(Par &)>f)
   }
   return re;
 }
+vector<long long>countColoredPartitions(int n,vector<part> & ps,function<int(Par &)>f){ 
+  //条件fを満たす分割の数を数える
+  vector<long long>re;
+  long long now=0;
+  for(int l=0;l<=n;l++){
+    long long cap=sizeOfPartition(l);
+    long long cnt=0;
+    for(;now<cap;now+=PARTITION_LENGTH){
+      vector<part>v;
+      v.assign(ps.begin()+now,ps.begin()+now+PARTITION_LENGTH);
+      cnt+=f(v);
+      if(f(v)>0){
+        cout<<f(v)<<" : ";printPartition(v);
+      }
+    }
+    re.push_back(cnt);
+    cout<<"Summary -- "<<l<<" :  "<<cnt<<endl;
+  }
+  return re;
+}
 vector<vector<long long> >countRefinedPartitions(int n,vector<part> & ps,function<bool(Par &)>f){ 
   //条件fを満たし長さも考慮して分割を数える
   vector<vector<long long> >re(PARTITION_LENGTH,vector<long long>(PARTITION_LENGTH,0));
