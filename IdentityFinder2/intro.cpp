@@ -65,27 +65,26 @@ void checkSeq(vector<long long>& Seq){
   printPeriodOfSeq(B);
 }
 
-const int MAX_N=1000;
-long long dp[MAX_N+5][MAX_N+5];
+const int MAX_N=30;
+const int MOD=3;
+long long dp[MAX_N+5][MAX_N+5][MOD];
 vector<long long>A(MAX_N+1);
 int main(){
-  dp[0][0]=1;
+  dp[0][0][0]=1;
+  int data[MOD][MOD]={
+    {6,8,4},{1,3,2},{5,7,3}
+  };
   for(int i=0;i<MAX_N+1;i++){
     for(int j=1;j<MAX_N+1;j++){
-      if(i>=j &&(j!=0 && j!=2)){
-        if(j%8==1)dp[i][j]=dp[i][j-1]+dp[i-j][max(j-5,0)];
-        if(j%8==2)dp[i][j]=dp[i][j-1]+dp[i-j][max(j-9,0)];
-        if(j%8==3)dp[i][j]=dp[i][j-1]+dp[i-j][max(j-6,0)];
-        if(j%8==4)dp[i][j]=dp[i][j-1]+(dp[i-j][max(j-5,0)]-dp[i-j][max(j-6,0)])+dp[i-j][max(j-7,0)];
-        if(j%8==5)dp[i][j]=dp[i][j-1]+(dp[i-j][max(j-6,0)]-dp[i-j][max(j-7,0)])+dp[i-j][max(j-8,0)];
-        if(j%8==6)dp[i][j]=dp[i][j-1]+(dp[i-j][max(j-7,0)]-dp[i-j][max(j-8,0)])+dp[i-j][max(j-9,0)];
-        if(j%8==7)dp[i][j]=dp[i][j-1]+dp[i-j][max(j-6,0)];
-        if(j%8==0)dp[i][j]=dp[i][j-1]+dp[i-j][max(j-7,0)];
+      for(int k=0;k<MOD;k++){
+        dp[i][j][k]=dp[i][j-1][k];
+        if(i>=j && j%MOD==k){
+          for(int r=0;r<MOD;r++)dp[i][j][k]+=dp[i-j][max(j-data[k][r],0)][r];
+        }
       }
-      else dp[i][j]=dp[i][j-1];
     }
-    cout<<i<<" : "<<dp[i][i]<<endl;
-    A[i]=dp[i][i];
+    for(int r=0;r<MOD;r++)A[i]+=dp[i][i][r];
+    cout<<i<<" : "<<A[i]<<endl;
   }
   checkSeq(A);
 }
