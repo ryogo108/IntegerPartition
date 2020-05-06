@@ -66,20 +66,27 @@ void checkSeq(vector<long long>& Seq){
 }
 
 const int MAX_N=30;
-const int MOD=3;
+const int MOD=6;
 long long dp[MAX_N+5][MAX_N+5][MOD];
 vector<long long>A(MAX_N+1);
 int main(){
   dp[0][0][0]=1;
   int data[MOD][MOD]={
-    {6,8,4},{1,3,2},{5,7,3}
+    {12,11,10,9,8,7},
+    {7,12,11,10,9,8},
+    {8,7,6,11,10,9},
+    {9,8,7,12,11,10},
+    {10,9,8,7,6,11},
+    {11,10,9,8,7,6}
   };
   for(int i=0;i<MAX_N+1;i++){
     for(int j=1;j<MAX_N+1;j++){
       for(int k=0;k<MOD;k++){
         dp[i][j][k]=dp[i][j-1][k];
         if(i>=j && j%MOD==k){
-          for(int r=0;r<MOD;r++)dp[i][j][k]+=dp[i-j][max(j-data[k][r],0)][r];
+          for(int r=0;r<MOD;r++){
+              if(j-data[k][k]>=-1*MOD)dp[i][j][k]+=dp[i-j][max(j-data[k][r],0)][r];
+            }
         }
       }
     }
