@@ -1,0 +1,91 @@
+#include<vector>
+#include<iostream>
+
+using namespace std;
+int max(int a,int b){
+  return a>b?a:b;
+}
+
+template<class T>void printVector(vector<T> & vec){
+  for(int i=0;i<vec.size();i++){
+    if(i>0)cout<<" ";
+    cout<<vec[i];
+  }
+  cout<<endl;
+}
+vector<long long> Factor(vector<long long> &  B){//今はここが律速
+  //Eulerのアルゴリズム
+  vector<long long> A;
+  A.push_back(0);
+  for(int i=1;i<B.size();i++){
+    long long t=i*B[i];
+    for(int d=1;d<i;d++){
+      if((i%d)==0)t-=d*A[d];
+    }
+    for(int j=1;j<i;j++){
+      long long tmp=0;
+      for(int d=1;d<=j;d++){
+       if((j%d)==0)tmp+=d*A[d];
+      }
+      t-=tmp*B[i-j];
+    }
+    A.push_back(t/i);
+  }
+  return A;
+}
+int detect(vector<long long> & A){
+  //列Aが周期的かどうか調べその周期を返す
+  int n=A.size();
+  for(int i=1;i<=n/2;i++){
+    bool f=true;
+    for(int j=1;j<n;j++){
+      if(A[j]!=A[j%i==0?i:j%i]){
+        f=false;
+        break;
+      }
+    }
+    if(f)return i;
+  }
+  return 0;
+}
+void printPeriodOfSeq(vector<long long> & Seq){
+  //列Seqが周期的なときその1周期分の列を表示する
+  int l=detect(Seq);
+	vector<long long>v;
+	for(int i=1;i<=l;i++){
+		if(Seq[i]!=0)v.push_back(Seq[i]*(i));
+	}
+  if(v.empty())return;
+  cout<<"(mod  "<<l<<" ): ";
+  printVector(v);
+}
+void checkSeq(vector<long long>& Seq){
+  printVector(Seq);
+  vector<long long>B=Factor(Seq);
+  printPeriodOfSeq(B);
+}
+
+const int MAX_N=1000;
+long long dp[MAX_N+5][MAX_N+5];
+vector<long long>A(MAX_N+1);
+int main(){
+  dp[0][0]=1;
+  for(int i=0;i<MAX_N+1;i++){
+    for(int j=1;j<MAX_N+1;j++){
+      if(i>=j &&(j!=0 && j!=2)){
+        if(j%8==1)dp[i][j]=dp[i][j-1]+dp[i-j][max(j-5,0)];
+        if(j%8==2)dp[i][j]=dp[i][j-1]+dp[i-j][max(j-9,0)];
+        if(j%8==3)dp[i][j]=dp[i][j-1]+dp[i-j][max(j-6,0)];
+        if(j%8==4)dp[i][j]=dp[i][j-1]+(dp[i-j][max(j-5,0)]-dp[i-j][max(j-6,0)])+dp[i-j][max(j-7,0)];
+        if(j%8==5)dp[i][j]=dp[i][j-1]+(dp[i-j][max(j-6,0)]-dp[i-j][max(j-7,0)])+dp[i-j][max(j-8,0)];
+        if(j%8==6)dp[i][j]=dp[i][j-1]+(dp[i-j][max(j-7,0)]-dp[i-j][max(j-8,0)])+dp[i-j][max(j-9,0)];
+        if(j%8==7)dp[i][j]=dp[i][j-1]+dp[i-j][max(j-6,0)];
+        if(j%8==0)dp[i][j]=dp[i][j-1]+dp[i-j][max(j-7,0)];
+      }
+      else dp[i][j]=dp[i][j-1];
+    }
+    cout<<i<<" : "<<dp[i][i]<<endl;
+    A[i]=dp[i][i];
+  }
+  checkSeq(A);
+}
