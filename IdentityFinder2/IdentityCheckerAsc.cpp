@@ -1,4 +1,5 @@
 #include<vector>
+#include"Matrix.cpp"
 #include<iostream>
 
 using namespace std;
@@ -48,48 +49,70 @@ int detect(vector<long long> & A){
   }
   return 0;
 }
-void printPeriodOfSeq(vector<long long> & Seq){
+bool printPeriodOfSeq(vector<long long> & Seq){
   //列Seqが周期的なときその1周期分の列を表示する
   int l=detect(Seq);
 	vector<long long>v;
 	for(int i=1;i<=l;i++){
 		if(Seq[i]!=0)v.push_back(Seq[i]*(i));
 	}
-  if(v.empty())return;
+  if(v.empty())return false;
   cout<<"(mod  "<<l<<" ): ";
   printVector(v);
+  return true;
 }
-void checkSeq(vector<long long>& Seq){
+bool checkSeq(vector<long long>& Seq){
   printVector(Seq);
   vector<long long>B=Factor(Seq);
-  printPeriodOfSeq(B);
+  if(printPeriodOfSeq(B))return true;
+  else return false;
 }
 
-const int MAX_N=30;
-const int MOD=3;
-long long dp[MAX_N+5][MAX_N+5][MOD];
+const int MAX_N=100;
+const int MAX_MOD=5;
+long long dp[MAX_N+5][MAX_N+5][MAX_MOD+1];
 vector<long long>A(MAX_N+1);
-int main(){
+
+void countPartition(Mat<int> ker,Mat<int> shift){
+  int mod=ker.size();
+  Mat<int>data=mod*ker+shift;
+  fill(A.begin(),A.end(),0);
+  for(int i=0;i<MAX_N+5;i++)for(int j=0;j<MAX_N+5;j++)for(int k=0;k<MAX_MOD+1;k++)dp[i][j][k]=0;
   dp[0][0][0]=1;
-  int data[MOD][MOD]={
-    {3,5,4},
-    {4,6,2},
-    {5,4,6}
-  };
   for(int i=0;i<MAX_N+1;i++){
     for(int j=1;j<MAX_N+1;j++){
-      for(int k=0;k<MOD;k++){
+      for(int k=0;k<mod;k++){
         dp[i][j][k]=dp[i][j-1][k];
-        if(i>=j && j%MOD==k){
-          for(int r=0;r<MOD;r++){
-              /*if(j-data[k][k]>=-1*MOD)*/
-              if(j!=1)dp[i][j][k]+=dp[i-j][max(j-data[k][r],0)][r];
+        if(i>=j && j%mod==k){
+          for(int r=0;r<mod;r++){
+              dp[i][j][k]+=dp[i-j][max(j-data[k][r],0)][r];
             }
         }
       }
     }
-    for(int r=0;r<MOD;r++)A[i]+=dp[i][i][r];
-    cout<<i<<" : "<<A[i]<<endl;
+    for(int r=0;r<mod;r++)A[i]+=dp[i][i][r];
+    //cout<<i<<" : "<<A[i]<<endl;
   }
-  checkSeq(A);
+  if(checkSeq(A)){
+    cout<<"dil : "<<mod<<endl;
+    cout<<"ker : "<<endl;
+    printMatrix(ker);
+    cout<<"shift : "<<endl;
+    printMatrix(shift);
+  }
+}
+int main(){
+
+Mat<int> ker,shift;
+  ker={
+    {1,3,2},
+    {0,1,1},
+    {1,3,1}
+  };
+  shift={
+    {0,-1,-2},
+    {1,0,-1},
+    {2,1,0}
+  };
+  countPartition(ker,shift);
 }
