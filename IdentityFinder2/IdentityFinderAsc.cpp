@@ -76,6 +76,7 @@ vector<long long>A(MAX_N+1);
 void countPartition(Mat<int> ker,Mat<int> shift){
   int mod=ker.size();
   Mat<int>data=mod*ker+shift;
+  for(int i=0;i<mod;i++)for(int j=0;j<mod;j++)if(data[i][j]<0)return;
   fill(A.begin(),A.end(),0);
   for(int i=0;i<MAX_N+5;i++)for(int j=0;j<MAX_N+5;j++)for(int k=0;k<MAX_MOD+1;k++)dp[i][j][k]=0;
   dp[0][0][0]=1;
@@ -102,10 +103,9 @@ void countPartition(Mat<int> ker,Mat<int> shift){
   }
 }
 Mat<int> shift={
-    {0,-1,-2,-3},
-    {1,0,-1,-2},
-    {2,1,0,-1},
-    {3,2,1,0}
+    {0,-1,-2},
+    {1,0,-1},
+    {2,1,0}
   };
 void dfs(int size,int max,int depth,Mat<int> now){
   if(depth==size*size)countPartition(now,shift);
@@ -117,6 +117,6 @@ void dfs(int size,int max,int depth,Mat<int> now){
   }
 }
 int main(){
-  Mat<int> now(4,vector<int>(4,0));
-  dfs(4,3,0,now);
+  Mat<int> now(3,vector<int>(3,0));
+  dfs(3,3,0,now);
 }

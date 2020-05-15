@@ -5,9 +5,9 @@ bool checkConditions(Par & p){
   for(int i=0;i<p.size();i++){
     if(p[i]==0)break;
     if(p[i+1]!=0){
-      if(p[i]%3==0)f=f&&(p[i]-p[i+1]==3||p[i]-p[i+1]>=5);
-      if(p[i]%3==1)f=f&&(p[i]-p[i+1]==3||p[i]-p[i+1]==4||p[i]-p[i+1]>=6);
-      if(p[i]%3==2)f=f&&(p[i]-p[i+1]>=2);
+      if(p[i]%3==0)f=f&&(p[i]-p[i+1]==2||p[i]-p[i+1]>=4);
+      if(p[i]%3==1)f=f&&(p[i]-p[i+1]==0||p[i]-p[i+1]>=2);
+      if(p[i]%3==2)f=f&&(p[i]-p[i+1]==0||p[i]-p[i+1]>=2);
     }
   }
   return f;
