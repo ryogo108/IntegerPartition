@@ -62,7 +62,7 @@ bool printPeriodOfSeq(vector<long long> & Seq){
   return true;
 }
 bool checkSeq(vector<long long>& Seq){
-  printVector(Seq);
+ // printVector(Seq);
   vector<long long>B=Factor(Seq);
   if(printPeriodOfSeq(B))return true;
   else return false;
@@ -76,7 +76,7 @@ vector<long long>A(MAX_N+1);
 void countPartition(Mat<int> ker,Mat<int> shift){
   int mod=ker.size();
   Mat<int>data=mod*ker+shift;
-  for(int i=0;i<mod;i++)for(int j=0;j<mod;j++)if(data[i][j]<0)return;
+  //printMatrix(data);
   fill(A.begin(),A.end(),0);
   for(int i=0;i<MAX_N+5;i++)for(int j=0;j<MAX_N+5;j++)for(int k=0;k<MAX_MOD+1;k++)dp[i][j][k]=0;
   dp[0][0][0]=1;
@@ -95,28 +95,33 @@ void countPartition(Mat<int> ker,Mat<int> shift){
     //cout<<i<<" : "<<A[i]<<endl;
   }
   if(checkSeq(A)){
-    cout<<"dil : "<<mod<<endl;
+    //cout<<"dil : "<<mod<<endl;
     cout<<"ker : "<<endl;
     printMatrix(ker);
-    cout<<"shift : "<<endl;
-    printMatrix(shift);
+    /*cout<<"shift : "<<endl;
+    printMatrix(shift);*/
   }
 }
-Mat<int> shift={
-    {0,-1,-2},
-    {1,0,-1},
-    {2,1,0}
-  };
+Mat<int> shift;
 void dfs(int size,int max,int depth,Mat<int> now){
   if(depth==size*size)countPartition(now,shift);
   else{
     for(int i=0;i<=max;i++){
+      if(4*i+shift[depth/size][depth%size]<0)continue;
       now[depth/size][depth%size]=i;
       dfs(size,max,depth+1,now);
     }
   }
 }
-int main(){
-  Mat<int> now(3,vector<int>(3,0));
-  dfs(3,3,0,now);
+int main(int argc, char *argv[]){
+  int s=atoi(argv[1]),m=atoi(argv[2]);
+  shift.resize(s);
+  for(int i=0;i<s;i++){
+    shift[i].resize(s);
+    for(int j=0;j<s;j++){
+      shift[i][j]=i-j;
+    }
+  }
+  Mat<int> now(s,vector<int>(s,0));
+  dfs(s,m,0,now);
 }
