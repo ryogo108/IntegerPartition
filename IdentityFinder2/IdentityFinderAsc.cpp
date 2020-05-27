@@ -1,16 +1,22 @@
 #include<vector>
 #include"Matrix.cpp"
 #include<iostream>
+#include<set>
 
 using namespace std;
 int max(int a,int b){
   return a>b?a:b;
 }
 
-template<class T>void printVector(vector<T> & vec){
-  for(int i=0;i<vec.size();i++){
-    if(i>0)cout<<" ";
+template<class T>void printVector(vector<T> & vec){ for(int i=0;i<vec.size();i++){ if(i>0)cout<<" ";
     cout<<vec[i];
+  }
+  cout<<endl;
+}
+template<class T>void printSet(set<T> & s){
+  for(set<int>::iterator itr=s.begin();itr!=s.end();itr++){
+    if(itr!=s.begin())cout<<" ";
+    cout<<*(itr);
   }
   cout<<endl;
 }
@@ -73,7 +79,7 @@ const int MAX_MOD=5;
 long long dp[MAX_N+5][MAX_N+5][MAX_MOD+1];
 vector<long long>A(MAX_N+1);
 
-void countPartition(Mat<int> ker,Mat<int> shift){
+void countPartition(Mat<int> ker,Mat<int> shift, set<int> forbidden=set<int>()){
   int mod=ker.size();
   Mat<int>data=mod*ker+shift;
   //printMatrix(data);
@@ -86,7 +92,7 @@ void countPartition(Mat<int> ker,Mat<int> shift){
         dp[i][j][k]=dp[i][j-1][k];
         if(i>=j && j%mod==k){
           for(int r=0;r<mod;r++){
-              dp[i][j][k]+=dp[i-j][max(j-data[k][r],0)][r];
+              if(forbidden.find(j)==forbidden.end())dp[i][j][k]+=dp[i-j][max(j-data[k][r],0)][r];
             }
         }
       }
@@ -96,6 +102,8 @@ void countPartition(Mat<int> ker,Mat<int> shift){
   }
   if(checkSeq(A)){
     //cout<<"dil : "<<mod<<endl;
+    cout<<"forbidden : ";
+    printSet(forbidden);
     cout<<"ker : "<<endl;
     printMatrix(ker);
     /*cout<<"shift : "<<endl;
@@ -103,13 +111,50 @@ void countPartition(Mat<int> ker,Mat<int> shift){
   }
 }
 Mat<int> shift;
+void dfs_forbidden(Mat<int> mat,int cnt,int max,set<int> now){
+  if(cnt==max){
+    countPartition(mat,shift,now);
+  }
+  else{
+    dfs_forbidden(mat,cnt+1,max,now);
+    now.insert(cnt);
+    dfs_forbidden(mat,cnt+1,max,now);
+  }
+}
 void dfs(int size,int max,int depth,Mat<int> now){
-  if(depth==size*size)countPartition(now,shift);
+  if(depth==size*size){
+    //countPartition(now,shift);
+    dfs_forbidden(now,1,5,set<int>());
+  }
   else{
     for(int i=0;i<=max;i++){
       if(4*i+shift[depth/size][depth%size]<0)continue;
       now[depth/size][depth%size]=i;
       dfs(size,max,depth+1,now);
+    }
+  }
+}
+void search2(int size,int max,int depth,Mat<int> now){
+  if(depth==size*size){
+    dfs_forbidden(now,1,5,set<int>());
+    //countPartition(now,shift,forbidden);
+  }
+  else{
+    int r=depth/size;
+    int c=depth%size;
+    if(r<c){
+      now[r][c]=2;
+      search2(size,max,depth+1,now);
+    }
+    else if(r>c){
+      now[r][c]=1;
+      search2(size,max,depth+1,now);
+    }
+    else{
+      for(int i=1;i<=max;i++){
+        now[r][c]=i;
+        search2(size,max,depth+1,now);
+      }
     }
   }
 }
