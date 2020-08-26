@@ -20,10 +20,9 @@ template<class T>void printSet(set<T> & s){
   }
   cout<<endl;
 }
-vector<long long> Factor(vector<long long> &  B){//今はここが律速
+vector<long long> Factor(vector<long long> &  B){
   //Eulerのアルゴリズム
-  vector<long long> A;
-  A.push_back(0);
+  vector<long long> A(B.size(),0);
   for(int i=1;i<B.size();i++){
     long long t=i*B[i];
     for(int d=1;d<i;d++){
@@ -36,7 +35,7 @@ vector<long long> Factor(vector<long long> &  B){//今はここが律速
       }
       t-=tmp*B[i-j];
     }
-    A.push_back(t/i);
+    A[i]=(t/i);
   }
   return A;
 }
