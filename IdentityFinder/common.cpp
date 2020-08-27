@@ -10,7 +10,7 @@ using namespace std;
 
 const int PARTITION_LENGTH=100;
 
-typedef uint_fast8_t part;
+typedef /*uint_fast8_t*/ short part; // printVectorで表示するため一時的にpartにshort型を使う.
 typedef vector<part> Par;
 
 part min(part l, part r){
