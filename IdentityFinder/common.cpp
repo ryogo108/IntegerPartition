@@ -94,7 +94,7 @@ void generatePartition(int maxSizeOfPartition, vector<part> & partitions){
   }
 }
 
-vector<long long>countSuitablePartitions(int maxSizeOfPartition,vector<part> & ps,function<bool(Par &)>isSuitable){
+vector<long long>countSuitablePartitions(int maxSizeOfPartition,vector<part> & rawPartitions,function<bool(Par &)>isSuitable){
   //条件fを満たす分割の数を数える
   vector<long long>numOfSuitablePartitionsBySize;
   long long accumulationOfParts=0;
@@ -103,7 +103,7 @@ vector<long long>countSuitablePartitions(int maxSizeOfPartition,vector<part> & p
     long long partitionCounter=0;
     for(;accumulationOfParts<cap;accumulationOfParts+=PARTITION_LENGTH){
       vector<part> tmpPartition;
-      tmpPartition.assign(ps.begin()+accumulationOfParts,ps.begin()+accumulationOfParts+PARTITION_LENGTH);
+      tmpPartition.assign(rawPartitions.begin()+accumulationOfParts,rawPartitions.begin()+accumulationOfParts+PARTITION_LENGTH);
       if(isSuitable(tmpPartition)){
         partitionCounter++;
       }
