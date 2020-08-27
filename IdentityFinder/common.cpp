@@ -83,10 +83,10 @@ void generatePartition(int n,vector<part> & partitions){
       }
       else{
         for(int appendingPart=min(leadingPartition.back(), i-sumOfLeadingPartition); appendingPart >= 1; appendingPart--){
-          vector<part> v_new(leadingPartition.size()+1,0);
-          copy(leadingPartition.begin(),leadingPartition.end(),v_new.begin());
-          v_new[leadingPartition.size()]=appendingPart;
-          queOfLeadingPartitions.push(v_new);
+          vector<part> newPartition(leadingPartition.size()+1,0);
+          copy(leadingPartition.begin(),leadingPartition.end(),newPartition.begin());
+          newPartition[leadingPartition.size()]=appendingPart;
+          queOfLeadingPartitions.push(newPartition);
         }
       }
     }
