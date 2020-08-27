@@ -71,32 +71,25 @@ long long numOfPartsOfAllPartition(int n){
   return sum; 
 }
 
-void generatePartition(int maxSizeOfPartition, vector<part> & partitions){
+void generatePartition(int maxSizeOfPartition, vector<part> & destPartitions){
   //大きさn以下の分割を列挙するしてpartitionsに保存
-  partitions.resize( numOfPartsOfAllPartition( maxSizeOfPartition ) );
-  for(int sizeOfPartition = 1; sizeOfPartition <= maxSizeOfPartition; sizeOfPartition++){
-    long long headSizeOfPartition = numOfPartsOfAllPartition( sizeOfPartition - 1 );
-    long long partitionCounter = 0;
-    queue<vector<part> > queOfLeadingPartitions;
-    for(int biggestPart = sizeOfPartition; biggestPart >= 1; biggestPart--) queOfLeadingPartitions.push( vector<part>( 1, biggestPart ) );
-    while( !queOfLeadingPartitions.empty() ){
-      vector<part> leadingPartition = queOfLeadingPartitions.front();
-      queOfLeadingPartitions.pop();
-      int sumOfLeadingPartition = sumVector( leadingPartition );
-      if(sumOfLeadingPartition == sizeOfPartition){
-        copy( leadingPartition.begin(), leadingPartition.end(), partitions.begin() + headSizeOfPartition + partitionCounter * PARTITION_LENGTH );
-        partitionCounter++;
-      }
-      else{
-        for(int appendingPart = min( leadingPartition.back(), sizeOfPartition - sumOfLeadingPartition ); appendingPart >= 1; appendingPart--){
-          vector<part> newPartition( leadingPartition.size() + 1, 0 );
-          copy( leadingPartition.begin(), leadingPartition.end(), newPartition.begin() );
-          newPartition[ leadingPartition.size() ] = appendingPart;
-          queOfLeadingPartitions.push( newPartition );
-        }
+  queue<Par> queOfLeadingPartitions;
+  for ( int biggestPart = maxSizeOfPartition; biggestPart >= 1; biggestPart--){
+    queOfLeadingPartitions.push( Par( 1, biggestPart ) );
+  }
+  while( !queOfLeadingPartitions.empty() ){
+    Par leadingPartition = queOfLeadingPartitions.front();
+    queOfLeadingPartitions.pop();
+    if(sumVector( leadingPartition ) < maxSizeOfPartition){
+      destPartitions.insert( destPartitions.end(), leadingPartition.begin(), leadingPartition.end() );
+      destPartitions.push_back( part(0) );
+      for(int appendingPart = min( leadingPartition.back(), maxSizeOfPartition - sumVector( leadingPartition ) ); appendingPart >= 1; appendingPart--){
+        Par newPartition(0);
+        newPartition.insert( newPartition.end(), leadingPartition.begin(), leadingPartition.end() );
+        newPartition.push_back( appendingPart );
+        queOfLeadingPartitions.push( newPartition );
       }
     }
-    cout << sizeOfPartition << " : " << partitionCounter << endl;
   }
 }
 
