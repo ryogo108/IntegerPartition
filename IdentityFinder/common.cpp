@@ -37,12 +37,13 @@ int lengthOfPartitionSp(const Par & p){
 	return lengthSp;
 }
 
-template<class T>void printVector(vector<T> & vec){
-  for(int i=0;i<vec.size();i++){
-    if(i>0)cout<<" ";
-    cout<<vec[i];
+template<class T>
+void printVector(vector<T> & vec){
+  for(int i = 0; i < vec.size(); i++){
+    if(i > 0) cout << " ";
+    cout << vec[i];
   }
-  cout<<endl;
+  cout << endl;
 }
 void printPartition(Par & p){
 	for(int i=0;i<p.size();i++){
