@@ -138,6 +138,7 @@ vector<long long> countPartitionsWithPirnt(int n,vector<part> & ps, function<boo
     re.push_back( cnt );
   }
   return re;
+}
 
 vector<vector<long long> > countRefinedPartitions(int n, vector<part> & ps, function<bool(Par &)> f){
   //条件fを満たし長さも考慮して分割を数える
