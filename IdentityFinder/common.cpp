@@ -102,9 +102,9 @@ vector<long long>countSuitablePartitions(int maxSizeOfPartition,vector<part> & p
     long long cap=numOfPartsOfAllPartition(sizeOfPartition);
     long long partitionCounter=0;
     for(;accumulationOfParts<cap;accumulationOfParts+=PARTITION_LENGTH){
-      vector<part>v;
-      v.assign(ps.begin()+accumulationOfParts,ps.begin()+accumulationOfParts+PARTITION_LENGTH);
-      if(isSuitable(v)){
+      vector<part> tmpPartition;
+      tmpPartition.assign(ps.begin()+accumulationOfParts,ps.begin()+accumulationOfParts+PARTITION_LENGTH);
+      if(isSuitable(tmpPartition)){
         partitionCounter++;
       }
     }
