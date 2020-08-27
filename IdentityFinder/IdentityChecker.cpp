@@ -18,29 +18,26 @@ int countSuitablePartitions(int requiredPartitionSize, int appendingPart, int su
   }
   return partitionCounter;
 }
-int countPartition(int n){
-  Par p;
-  return countSuitablePartitions(n,n,0,p);
+int numOfSuitablePartition(int requiredPartitionSize){
+  Par emptyPartition(0);
+  return countSuitablePartitions(requiredPartitionSize, requiredPartitionSize, 0, emptyPartition);
 }
 
-void enumPartition(int n){
-  vector<long long> B;
-  for(int i=0;i<=n;i++)B.push_back(countPartition(i));
-  bool f=false;
-  for(int i=0;i<B.size();i++)if(B[i]!=0)f=true;
-  if(!f)return;
-  vector<long long> A(Factor(B));
-  int l=detect(A);
-  printVector(B);
-  printVector(A);
-  if(l>2){
-    cout<<"n="<<l<<" ";
-    vector<long long>v(A.begin()+1,A.begin()+l+1);
-    printVector(v);
+void enumPartition(int maxPartitionSize){
+  vector<long long> generatingFunction;
+  for(int i=0;i<=maxPartitionSize;i++)generatingFunction.push_back(numOfSuitablePartition(i));
+  vector<long long> exponentSeqOfGeneratingFunction(Factor(generatingFunction));
+  int detectedLengthOfPeriodicSeq=detect(exponentSeqOfGeneratingFunction);
+  printVector(generatingFunction);
+  printVector(exponentSeqOfGeneratingFunction);
+  if(detectedLengthOfPeriodicSeq > 2){
+    cout<<"detectedLengthOfPeriodicSeq="<<detectedLengthOfPeriodicSeq<<" ";
+    vector<long long>onePeriod(exponentSeqOfGeneratingFunction.begin()+1,exponentSeqOfGeneratingFunction.begin()+detectedLengthOfPeriodicSeq+1);
+    printVector(onePeriod);
   }
 }
 
 int main(int argc,char *argv[]){
-  int n=atoi(argv[1]);
-  enumPartition(n);
+  int maxPartitionSize=atoi(argv[1]);
+  enumPartition(maxPartitionSize);
 }
