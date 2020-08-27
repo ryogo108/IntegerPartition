@@ -70,7 +70,7 @@ void generatePartition(int n,vector<part> & partitions){
   partitions.resize(sizeOfPartition(n));
   for(int i=1;i<=n;i++){
     long long headSizeOfPartition=sizeOfPartition(i-1);
-    long long cnt=0;
+    long long partitionCounter=0;
     queue<vector<part> > queOfLeadingPartitions;
     for(int j=i;j>=1;j--)queOfLeadingPartitions.push(vector<part>(1,j));
     while(!queOfLeadingPartitions.empty()){
@@ -78,8 +78,8 @@ void generatePartition(int n,vector<part> & partitions){
       queOfLeadingPartitions.pop();
       int sumOfLeadingPartition=sumVector(leadingPartition);
       if(sumOfLeadingPartition==i){
-        copy(leadingPartition.begin(), leadingPartition.end(), partitions.begin()+headSizeOfPartition+cnt*PARTITION_LENGTH);
-        cnt++;
+        copy(leadingPartition.begin(), leadingPartition.end(), partitions.begin()+headSizeOfPartition+partitionCounter*PARTITION_LENGTH);
+        partitionCounter++;
       }
       else{
         for(int k=min(leadingPartition.back(), i-sumOfLeadingPartition); k >= 1; k--){
@@ -90,7 +90,7 @@ void generatePartition(int n,vector<part> & partitions){
         }
       }
     }
-    cout<<i<<" : "<<cnt<<endl;
+    cout<<i<<" : "<<partitionCounter<<endl;
   }
 }
 
