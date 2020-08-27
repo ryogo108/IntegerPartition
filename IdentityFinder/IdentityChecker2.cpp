@@ -23,10 +23,10 @@ bool isSuitablePartition(Par & p){
 }
 
 int main(int argc,char *argv[]){
-  int n=atoi(argv[1]);
-  generatePartition(n,partitions);
+  int maxPartitionSize=atoi(argv[1]);
+  generatePartition(maxPartitionSize,partitions);
 	//vector<long long>v(countPartitions(n,partitions,checkConditions));
-	vector<long long>v(countPartitionsWithPirnt(n,partitions,isSuitablePartition));
+	vector<long long>v(countPartitionsWithPirnt(maxPartitionSize,partitions,isSuitablePartition));
 	printVector(v);
 	vector<long long>A(Factor(v));
 	printVector(A);
