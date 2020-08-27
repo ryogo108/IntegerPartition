@@ -26,9 +26,9 @@ int main(int argc,char *argv[]){
   int maxPartitionSize=atoi(argv[1]);
   generatePartition(maxPartitionSize,partitions);
 	//vector<long long>v(countPartitions(n,partitions,checkConditions));
-	vector<long long>v(countPartitionsWithPirnt(maxPartitionSize,partitions,isSuitablePartition));
-	printVector(v);
-	vector<long long>A(Factor(v));
+	vector<long long>numOfPartitionsBySize(countPartitionsWithPirnt(maxPartitionSize,partitions,isSuitablePartition));
+	printVector(numOfPartitionsBySize);
+	vector<long long>A(Factor(numOfPartitionsBySize));
 	printVector(A);
 	printPeriodOfSeq(A);
 }
