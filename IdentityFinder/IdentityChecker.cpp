@@ -1,6 +1,6 @@
 #include"common.cpp"
 
-bool checkConditions(Par & p){
+bool isSuitablePartition(Par & p){
   return diffAtDist(p,2,1)&&smallestPart(p,1)&&congruenceAtDist(p,1,0,0,3);
 }
 int generatePartition(int n,int tail,int sum,Par prev){
