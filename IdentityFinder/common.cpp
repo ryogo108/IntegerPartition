@@ -68,21 +68,21 @@ long long sizeOfPartition(int n){
 void generatePartition(int n,vector<part> & partitions){
   //大きさn以下の分割を列挙するしてpartitionsに保存
   partitions.resize(sizeOfPartition(n));
-  for(int i=1;i<=n;i++){
-    long long headSizeOfPartition=sizeOfPartition(i-1);
+  for(int sizeOfPartition = 1; sizeOfPartition <= n; sizeOfPartition++){
+    long long headSizeOfPartition=sizeOfPartition(sizeOfPartition-1);
     long long partitionCounter=0;
     queue<vector<part> > queOfLeadingPartitions;
-    for(int j=i;j>=1;j--)queOfLeadingPartitions.push(vector<part>(1,j));
+    for(int j=sizeOfPartition;j>=1;j--)queOfLeadingPartitions.push(vector<part>(1,j));
     while(!queOfLeadingPartitions.empty()){
       vector<part> leadingPartition=queOfLeadingPartitions.front();
       queOfLeadingPartitions.pop();
       int sumOfLeadingPartition=sumVector(leadingPartition);
-      if(sumOfLeadingPartition==i){
+      if(sumOfLeadingPartition==sizeOfPartition){
         copy(leadingPartition.begin(), leadingPartition.end(), partitions.begin()+headSizeOfPartition+partitionCounter*PARTITION_LENGTH);
         partitionCounter++;
       }
       else{
-        for(int appendingPart=min(leadingPartition.back(), i-sumOfLeadingPartition); appendingPart >= 1; appendingPart--){
+        for(int appendingPart=min(leadingPartition.back(), sizeOfPartition-sumOfLeadingPartition); appendingPart >= 1; appendingPart--){
           vector<part> newPartition(leadingPartition.size()+1,0);
           copy(leadingPartition.begin(),leadingPartition.end(),newPartition.begin());
           newPartition[leadingPartition.size()]=appendingPart;
@@ -90,7 +90,7 @@ void generatePartition(int n,vector<part> & partitions){
         }
       }
     }
-    cout<<i<<" : "<<partitionCounter<<endl;
+    cout<<sizeOfPartition<<" : "<<partitionCounter<<endl;
   }
 }
 
