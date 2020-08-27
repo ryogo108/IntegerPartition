@@ -51,11 +51,11 @@ void printPartition(Par & p){
 	cout<<endl;
 }
 template<class T> T sumVector(vector<T> & vec){
-  T re=T(0);
+  T sum=T(0);
   for(int i=0;i<vec.size();i++){
-    re+=vec[i];
+    sum+=vec[i];
   }
-  return re;
+  return sum;
 }
 long long sizeOfPartition(int n){
   //大きさnの分割を一列に列挙するのに十分な長さ
