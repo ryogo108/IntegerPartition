@@ -65,7 +65,7 @@ long long numOfPartsOfAllPartition(int n){
   }
   return sum; 
 }
-void generatePartition(int maxSizeOfPartition,vector<part> & partitions){
+void generatePartition(int maxSizeOfPartition, vector<part> & partitions){
   //大きさn以下の分割を列挙するしてpartitionsに保存
   partitions.resize(numOfPartsOfAllPartition(maxSizeOfPartition));
   for(int sizeOfPartition = 1; sizeOfPartition <= maxSizeOfPartition; sizeOfPartition++){
