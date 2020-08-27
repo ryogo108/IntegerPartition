@@ -28,7 +28,7 @@ int main(int argc,char *argv[]){
 	//vector<long long>v(countPartitions(n,partitions,checkConditions));
 	vector<long long>numOfPartitionsBySize(countPartitionsWithPirnt(maxPartitionSize,partitions,isSuitablePartition));
 	printVector(numOfPartitionsBySize);
-	vector<long long>A(Factor(numOfPartitionsBySize));
-	printVector(A);
-	printPeriodOfSeq(A);
+	vector<long long>exponentSeqOfFactoredGeneratingFunction(Factor(numOfPartitionsBySize));
+	printVector(exponentSeqOfFactoredGeneratingFunction);
+	printPeriodOfSeq(exponentSeqOfFactoredGeneratingFunction);
 }
