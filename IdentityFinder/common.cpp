@@ -17,10 +17,11 @@ part min(part l, part r){
   if(r > l) return l;
   else return r;
 }
+
 int lengthOfPartition(const Par & p){
-	int length=0;
-	for(int i=0;i<p.size();i++){
-		if(p[i]==0)break;
+	int length = 0;
+	for(int i = 0; i < p.size(); i++){
+		if(p[i] == 0) break;
 		length++;
 	}
 	return length;
