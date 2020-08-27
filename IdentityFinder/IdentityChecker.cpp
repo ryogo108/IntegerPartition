@@ -8,7 +8,7 @@ int countSuitablePartitions(int requiredPartitionSize, int appendingPart, int su
   if(sumOfLeadingPartition!=0)leadingPartition.push_back(appendingPart);
   Par nowParition(leadingPartition);
   if(requiredPartitionSize < sumOfLeadingPartition || !isSuitablePartition(nowParition))return 0;
-  if(requiredPartitionSize = =sumOfLeadingPartition){
+  if(requiredPartitionSize == sumOfLeadingPartition){
     //print_vector(now);
     return 1;
   }
