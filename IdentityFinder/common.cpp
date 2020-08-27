@@ -18,12 +18,12 @@ part min(part l,part r){
   else return r;
 }
 int lengthOfPartition(const Par & p){
-	int l=0;
+	int length=0;
 	for(int i=0;i<p.size();i++){
 		if(p[i]==0)break;
-		l++;
+		length++;
 	}
-	return l;
+	return length;
 }
 int lengthOfPartitionSp(const Par & p){
 	int l=0;
