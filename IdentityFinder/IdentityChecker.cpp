@@ -3,23 +3,23 @@
 bool isSuitablePartition(Par & p){
   return diffAtDist(p,2,1)&&smallestPart(p,1)&&congruenceAtDist(p,1,0,0,3);
 }
-int generatePartition(int n,int tail,int sum,Par prev){
-  if(sum!=0)prev.push_back(tail);
-  Par now(prev);
-  if(n<sum || !checkConditions(now))return 0;
-  if(n==sum){
+int countSuitablePartitions(int requiredPartitionSize, int appendingPart, int sumOfLeadingPartition, Par leadingPartition){
+  if(sumOfLeadingPartition!=0)leadingPartition.push_back(appendingPart);
+  Par nowParition(leadingPartition);
+  if(requiredPartitionSize < sumOfLeadingPartition || !isSuitablePartition(nowParition))return 0;
+  if(requiredPartitionSize = =sumOfLeadingPartition){
     //print_vector(now);
     return 1;
   }
-  int re=0;
-  for(int i=tail;i>=1;i--){
-     re+=generatePartition(n,i,sum+i,now);
+  int partitionCounter=0;
+  for(int i=appendingPart;i>=1;i--){
+     partitionCounter+=countSuitablePartitions(requiredPartitionSize, i, sumOfLeadingPartition+i,nowParition);
   }
-  return re;
+  return partitionCounter;
 }
 int countPartition(int n){
   Par p;
-  return generatePartition(n,n,0,p);
+  return countSuitablePartitions(n,n,0,p);
 }
 
 void enumPartition(int n){
