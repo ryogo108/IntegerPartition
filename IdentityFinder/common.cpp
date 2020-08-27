@@ -74,18 +74,18 @@ void generatePartition(int n,vector<part> & partitions){
     queue<vector<part> > que;
     for(int j=i;j>=1;j--)que.push(vector<part>(1,j));
     while(!que.empty()){
-      vector<part> v=que.front();
+      vector<part> leadingPartition=que.front();
       que.pop();
-      int sum=sumVector(v);
+      int sum=sumVector(leadingPartition);
       if(sum==i){
-        copy(v.begin(),v.end(),partitions.begin()+head+cnt*PARTITION_LENGTH);
+        copy(leadingPartition.begin(), leadingPartition.end(), partitions.begin()+head+cnt*PARTITION_LENGTH);
         cnt++;
       }
       else{
-        for(int k=min(v.back(),i-sum);k>=1;k--){
-          vector<part> v_new(v.size()+1,0);
-          copy(v.begin(),v.end(),v_new.begin());
-          v_new[v.size()]=k;
+        for(int k=min(leadingPartition.back(), i-sum); k >= 1; k--){
+          vector<part> v_new(leadingPartition.size()+1,0);
+          copy(leadingPartition.begin(),leadingPartition.end(),v_new.begin());
+          v_new[leadingPartition.size()]=k;
           que.push(v_new);
         }
       }
