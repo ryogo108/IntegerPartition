@@ -54,10 +54,11 @@ void printPartition(Par & p){
 	}
 	cout << endl;
 }
-template<class T> T sumVector(vector<T> & vec){
-  T sum=T(0);
-  for(int i=0;i<vec.size();i++){
-    sum+=vec[i];
+template<class T>
+T sumVector(vector<T> & vec){
+  T sum = T(0);
+  for(int i = 0; i < vec.size(); i++){
+    sum += vec[i];
   }
   return sum;
 }
