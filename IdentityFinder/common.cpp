@@ -58,7 +58,7 @@ template<class T> T sumVector(vector<T> & vec){
   return sum;
 }
 long long sizeOfPartition(int n){
-  //大きさnの分割を一列に列挙するのに十分な長さ
+  //大きさnの分割を一列に列挙するのに十分なpartの個数
   long long sum=0;
   for(int i=0;i<=n;i++){
     sum+=numOfPartition(i)*(PARTITION_LENGTH);
