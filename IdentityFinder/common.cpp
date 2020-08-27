@@ -64,9 +64,9 @@ T sumVector(vector<T> & vec){
 }
 long long numOfPartsOfAllPartition(int n){
   //大きさn以下の分割を一列に列挙するのに十分なpartの個数
-  long long sum=0;
-  for(int i=0;i<=n;i++){
-    sum+=numOfPartition(i)*(PARTITION_LENGTH);
+  long long sum = 0;
+  for(int i = 0; i <= n; i++){
+    sum += numOfPartition(i) * (PARTITION_LENGTH);
   }
   return sum; 
 }
