@@ -187,8 +187,9 @@ vector<long long> Factor(vector<long long> &  B){
   return A;
 }
 
-int detect(vector<long long> & A){
-  //列Aが周期的かどうか調べその周期を返す
+//列Aが周期的であれば一周期の長さ,
+//周期的でなければ 0 を返す.
+int detectLengthOfPeriodOfSeq(vector<long long> & A){
   int n=A.size();
   for(int i=1;i<=n/2;i++){
     bool f=true;
@@ -204,7 +205,7 @@ int detect(vector<long long> & A){
 }
 void printPeriodOfSeq(vector<long long> & Seq){
   //列Seqが周期的なときその1周期分の列を表示する
-  int l=detect(Seq);
+  int l=detectLengthOfPeriodOfSeq(Seq);
 	vector<long long>v;
 	for(int i=1;i<=l;i++){
 		if(Seq[i]!=0)v.push_back(Seq[i]*(i));
