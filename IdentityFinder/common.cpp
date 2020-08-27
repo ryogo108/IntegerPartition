@@ -70,102 +70,103 @@ long long numOfPartsOfAllPartition(int n){
   }
   return sum; 
 }
+
 void generatePartition(int maxSizeOfPartition, vector<part> & partitions){
   //大きさn以下の分割を列挙するしてpartitionsに保存
-  partitions.resize(numOfPartsOfAllPartition(maxSizeOfPartition));
+  partitions.resize( numOfPartsOfAllPartition( maxSizeOfPartition ) );
   for(int sizeOfPartition = 1; sizeOfPartition <= maxSizeOfPartition; sizeOfPartition++){
-    long long headSizeOfPartition=numOfPartsOfAllPartition(sizeOfPartition-1);
-    long long partitionCounter=0;
+    long long headSizeOfPartition = numOfPartsOfAllPartition( sizeOfPartition - 1 );
+    long long partitionCounter = 0;
     queue<vector<part> > queOfLeadingPartitions;
-    for(int biggestPart = sizeOfPartition; biggestPart >= 1; biggestPart--)queOfLeadingPartitions.push(vector<part>(1,biggestPart));
-    while(!queOfLeadingPartitions.empty()){
-      vector<part> leadingPartition=queOfLeadingPartitions.front();
+    for(int biggestPart = sizeOfPartition; biggestPart >= 1; biggestPart--) queOfLeadingPartitions.push( vector<part>( 1, biggestPart ) );
+    while( !queOfLeadingPartitions.empty() ){
+      vector<part> leadingPartition = queOfLeadingPartitions.front();
       queOfLeadingPartitions.pop();
-      int sumOfLeadingPartition=sumVector(leadingPartition);
-      if(sumOfLeadingPartition==sizeOfPartition){
-        copy(leadingPartition.begin(), leadingPartition.end(), partitions.begin()+headSizeOfPartition+partitionCounter*PARTITION_LENGTH);
+      int sumOfLeadingPartition = sumVector( leadingPartition );
+      if(sumOfLeadingPartition == sizeOfPartition){
+        copy( leadingPartition.begin(), leadingPartition.end(), partitions.begin() + headSizeOfPartition + partitionCounter * PARTITION_LENGTH );
         partitionCounter++;
       }
       else{
-        for(int appendingPart=min(leadingPartition.back(), sizeOfPartition-sumOfLeadingPartition); appendingPart >= 1; appendingPart--){
-          vector<part> newPartition(leadingPartition.size()+1,0);
-          copy(leadingPartition.begin(),leadingPartition.end(),newPartition.begin());
-          newPartition[leadingPartition.size()]=appendingPart;
-          queOfLeadingPartitions.push(newPartition);
+        for(int appendingPart = min( leadingPartition.back(), sizeOfPartition - sumOfLeadingPartition ); appendingPart >= 1; appendingPart--){
+          vector<part> newPartition( leadingPartition.size() + 1, 0 );
+          copy( leadingPartition.begin(), leadingPartition.end(), newPartition.begin() );
+          newPartition[ leadingPartition.size() ] = appendingPart;
+          queOfLeadingPartitions.push( newPartition );
         }
       }
     }
-    cout<<sizeOfPartition<<" : "<<partitionCounter<<endl;
+    cout << sizeOfPartition << " : " << partitionCounter << endl;
   }
 }
 
-vector<long long>countSuitablePartitions(int maxSizeOfPartition, vector<part> & rawPartitions, function<bool(Par &)> isSuitable, bool withPrint=false){
+vector<long long> countSuitablePartitions(int maxSizeOfPartition, vector<part> & rawPartitions, function<bool(Par &)> isSuitable, bool withPrint = false){
   //条件fを満たす分割の数を数える
   vector<long long> numOfSuitablePartitionsBySize;
   long long accumulationOfParts = 0;
   for(int sizeOfPartition = 0; sizeOfPartition <= maxSizeOfPartition; sizeOfPartition++){
-    long long cap=numOfPartsOfAllPartition(sizeOfPartition);
+    long long cap = numOfPartsOfAllPartition( sizeOfPartition );
     long long partitionCounter = 0;
     for(; accumulationOfParts<cap; accumulationOfParts += PARTITION_LENGTH){
       vector<part> tmpPartition;
       tmpPartition.assign(rawPartitions.begin() + accumulationOfParts, rawPartitions.begin() + accumulationOfParts + PARTITION_LENGTH);
-      if(isSuitable(tmpPartition)){
+      if( isSuitable( tmpPartition ) ){
         partitionCounter++;
-        if(withPrint)printPartition(tmpPartition);
+        if( withPrint )printPartition( tmpPartition );
       }
     }
-    numOfSuitablePartitionsBySize.push_back(partitionCounter);
+    numOfSuitablePartitionsBySize.push_back( partitionCounter );
   }
   return numOfSuitablePartitionsBySize;
 }
-vector<long long>countPartitionsWithPirnt(int n,vector<part> & ps,function<bool(Par &)>f){ 
+vector<long long> countPartitionsWithPirnt(int n,vector<part> & ps, function<bool(Par &)> f){
   //条件fを満たす分割の数を数える
-  vector<long long>re;
-  long long now=0;
-  for(int l=0;l<=n;l++){
-    long long cap=numOfPartsOfAllPartition(l);
-    long long cnt=0;
-    for(;now<cap;now+=PARTITION_LENGTH){
-      vector<part>v;
-      v.assign(ps.begin()+now,ps.begin()+now+PARTITION_LENGTH);
-      if(f(v)){
-        printPartition(v);
+  vector<long long> re;
+  long long now = 0;
+  for(int l = 0; l <= n; l++){
+    long long cap = numOfPartsOfAllPartition( l );
+    long long cnt = 0;
+    for(; now < cap; now += PARTITION_LENGTH){
+      vector<part> v;
+      v.assign(ps.begin() + now, ps.begin() + now+PARTITION_LENGTH);
+      if( f( v ) ){
+        printPartition( v );
         cnt++;
       }
     }
-    cout<<endl;
-    re.push_back(cnt);
+    cout << endl;
+    re.push_back( cnt );
   }
   return re;
-}
-vector<vector<long long> >countRefinedPartitions(int n,vector<part> & ps,function<bool(Par &)>f){ 
+
+vector<vector<long long> > countRefinedPartitions(int n, vector<part> & ps, function<bool(Par &)> f){
   //条件fを満たし長さも考慮して分割を数える
-  vector<vector<long long> >re(PARTITION_LENGTH,vector<long long>(PARTITION_LENGTH,0));
-  long long now=0;
-  for(int i=0;i<=n;i++){
-    long long cap=numOfPartsOfAllPartition(i);
-    for(;now<cap;now+=PARTITION_LENGTH){
-      vector<part>v;
-      v.assign(ps.begin()+now,ps.begin()+now+PARTITION_LENGTH);
-      if(f(v)){
-				re[i][lengthOfPartition(v)]++;
+  vector<vector<long long> > re( PARTITION_LENGTH, vector<long long> ( PARTITION_LENGTH, 0 ) );
+  long long now = 0;
+  for(int i = 0; i<=n; i++){
+    long long cap = numOfPartsOfAllPartition( i );
+    for(; now < cap; now += PARTITION_LENGTH){
+      vector<part> v;
+      v.assign(ps.begin() + now, ps.begin() + now+PARTITION_LENGTH);
+      if( f( v ) ){
+				re[ i ][ lengthOfPartition( v ) ]++;
 			}
     }
   }
   return re;
 }
-vector<vector<long long> >countRefinedPartitions2(int n,vector<part> & ps,function<bool(Par &)>f){ 
+vector<vector<long long> > countRefinedPartitions2(int n, vector<part> & ps, function<bool(Par &)> f){
   //条件fを満たし適当な重みを考慮して分割を数える
-  vector<vector<long long> >re(PARTITION_LENGTH,vector<long long>(PARTITION_LENGTH*2,0));
-  long long now=0;
-  for(int i=0;i<=n;i++){
-    long long cap=numOfPartsOfAllPartition(i);
-    for(;now<cap;now+=PARTITION_LENGTH){
-      vector<part>v;
-      v.assign(ps.begin()+now,ps.begin()+now+PARTITION_LENGTH);
-      if(f(v)){
-        cout<<lengthOfPartitionSp(v)<<" ";
-				re[i][lengthOfPartitionSp(v)]++;
+  vector<vector<long long> > re( PARTITION_LENGTH, vector<long long> (PARTITION_LENGTH * 2, 0) );
+  long long now = 0;
+  for(int i = 0; i <= n; i++){
+    long long cap = numOfPartsOfAllPartition( i );
+    for(; now < cap; now += PARTITION_LENGTH){
+      vector<part> v;
+      v.assign(ps.begin() + now, ps.begin() + now+PARTITION_LENGTH);
+      if( f( v ) ){
+        cout << lengthOfPartitionSp( v ) << " ";
+				re[ i ][ lengthOfPartitionSp( v ) ]++;
 			}
     }
   }
@@ -176,19 +177,19 @@ vector<long long> Factor(vector<long long> &  B){
   //Eulerのアルゴリズム
   vector<long long> A;
   A.push_back(0);
-  for(int i=1;i<B.size();i++){
-    long long t=i*B[i];
-    for(int d=1;d<i;d++){
-      if((i%d)==0)t-=d*A[d];
+  for(int i = 1; i < B.size(); i++){
+    long long t = i * B[i];
+    for(int d = 1; d < i; d++){
+      if((i % d) == 0)t -= d * A[d];
     }
-    for(int j=1;j<i;j++){
-      long long tmp=0;
-      for(int d=1;d<=j;d++){
-       if((j%d)==0)tmp+=d*A[d];
+    for(int j = 1; j < i; j++){
+      long long tmp = 0;
+      for(int d = 1; d <= j; d++){
+       if((j % d) == 0)tmp += d * A[d];
       }
-      t-=tmp*B[i-j];
+      t -= tmp * B[ i - j ];
     }
-    A.push_back(t/i);
+    A.push_back( t / i );
   }
   return A;
 }
@@ -196,29 +197,29 @@ vector<long long> Factor(vector<long long> &  B){
 //列Aが周期的であれば一周期の長さ,
 //周期的でなければ 0 を返す.
 int detectLengthOfPeriodOfSeq(vector<long long> & A){
-  int n=A.size();
-  for(int i=1;i<=n/2;i++){
-    bool f=true;
-    for(int j=1;j<n;j++){
-      if(A[j]!=A[j%i==0?i:j%i]){
-        f=false;
+  int n = A.size();
+  for(int i = 1; i <= n / 2; i++){
+    bool f = true;
+    for(int j = 1; j < n; j++){
+      if(A[j] != A[ j % i == 0 ? i : j % i]){
+        f = false;
         break;
       }
     }
-    if(f)return i;
+    if( f )return i;
   }
   return 0;
 }
 void printPeriodOfSeq(vector<long long> & Seq){
   //列Seqが周期的なときその1周期分の列を表示する
-  int l=detectLengthOfPeriodOfSeq(Seq);
-	vector<long long>v;
-	for(int i=1;i<=l;i++){
-		if(Seq[i]!=0)v.push_back(Seq[i]*(i));
+  int l = detectLengthOfPeriodOfSeq( Seq );
+	vector<long long> v;
+	for(int i = 1; i <= l; i++){
+		if( Seq[i] != 0 ) v.push_back( Seq[i] *( i ) );
 	}
-  if(v.empty())return;
-  cout<<"(mod  "<<l<<" ): ";
-  printVector(v);
+  if( v.empty() ) return;
+  cout << "(mod  " << l << " ): ";
+  printVector( v );
 }
 
 //まだ結果を整理していない分割の条件
