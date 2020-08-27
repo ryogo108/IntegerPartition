@@ -57,7 +57,7 @@ template<class T> T sumVector(vector<T> & vec){
   }
   return sum;
 }
-long long sizeOfPartition(int n){
+long long numOfPartsOfAllPartition(int n){
   //大きさn以下の分割を一列に列挙するのに十分なpartの個数
   long long sum=0;
   for(int i=0;i<=n;i++){
@@ -67,9 +67,9 @@ long long sizeOfPartition(int n){
 }
 void generatePartition(int n,vector<part> & partitions){
   //大きさn以下の分割を列挙するしてpartitionsに保存
-  partitions.resize(sizeOfPartition(n));
+  partitions.resize(numOfPartsOfAllPartition(n));
   for(int sizeOfPartition = 1; sizeOfPartition <= n; sizeOfPartition++){
-    long long headSizeOfPartition=sizeOfPartition(sizeOfPartition-1);
+    long long headSizeOfPartition=numOfPartsOfAllPartition(sizeOfPartition-1);
     long long partitionCounter=0;
     queue<vector<part> > queOfLeadingPartitions;
     for(int j=sizeOfPartition;j>=1;j--)queOfLeadingPartitions.push(vector<part>(1,j));
@@ -99,7 +99,7 @@ vector<long long>countPartitions(int n,vector<part> & ps,function<bool(Par &)>f)
   vector<long long>re;
   long long now=0;
   for(int l=0;l<=n;l++){
-    long long cap=sizeOfPartition(l);
+    long long cap=numOfPartsOfAllPartition(l);
     long long cnt=0;
     for(;now<cap;now+=PARTITION_LENGTH){
       vector<part>v;
@@ -117,7 +117,7 @@ vector<long long>countPartitionsWithPirnt(int n,vector<part> & ps,function<bool(
   vector<long long>re;
   long long now=0;
   for(int l=0;l<=n;l++){
-    long long cap=sizeOfPartition(l);
+    long long cap=numOfPartsOfAllPartition(l);
     long long cnt=0;
     for(;now<cap;now+=PARTITION_LENGTH){
       vector<part>v;
@@ -137,7 +137,7 @@ vector<vector<long long> >countRefinedPartitions(int n,vector<part> & ps,functio
   vector<vector<long long> >re(PARTITION_LENGTH,vector<long long>(PARTITION_LENGTH,0));
   long long now=0;
   for(int i=0;i<=n;i++){
-    long long cap=sizeOfPartition(i);
+    long long cap=numOfPartsOfAllPartition(i);
     for(;now<cap;now+=PARTITION_LENGTH){
       vector<part>v;
       v.assign(ps.begin()+now,ps.begin()+now+PARTITION_LENGTH);
@@ -153,7 +153,7 @@ vector<vector<long long> >countRefinedPartitions2(int n,vector<part> & ps,functi
   vector<vector<long long> >re(PARTITION_LENGTH,vector<long long>(PARTITION_LENGTH*2,0));
   long long now=0;
   for(int i=0;i<=n;i++){
-    long long cap=sizeOfPartition(i);
+    long long cap=numOfPartsOfAllPartition(i);
     for(;now<cap;now+=PARTITION_LENGTH){
       vector<part>v;
       v.assign(ps.begin()+now,ps.begin()+now+PARTITION_LENGTH);
