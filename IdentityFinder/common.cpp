@@ -98,8 +98,8 @@ vector<long long>countSuitablePartitions(int maxSizeOfPartition,vector<part> & p
   //条件fを満たす分割の数を数える
   vector<long long>numOfSuitablePartitionsBySize;
   long long accumulationOfParts=0;
-  for(int l=0;l<=maxSizeOfPartition;l++){
-    long long cap=numOfPartsOfAllPartition(l);
+  for(int sizeOfPartition=0; sizeOfPartition <= maxSizeOfPartition; sizeOfPartition++){
+    long long cap=numOfPartsOfAllPartition(sizeOfPartition);
     long long cnt=0;
     for(;accumulationOfParts<cap;accumulationOfParts+=PARTITION_LENGTH){
       vector<part>v;
