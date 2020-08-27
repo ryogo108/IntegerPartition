@@ -1,7 +1,8 @@
 #include"common.cpp"
 
 bool isSuitablePartition(Par & p){
-  return diffAtDist(p,2,1)&&smallestPart(p,1)&&congruenceAtDist(p,1,0,0,3);
+  return true;
+//  return diffAtDist(p,2,1)&&smallestPart(p,1)&&congruenceAtDist(p,1,0,0,3);
 }
 int countSuitablePartitions(int requiredPartitionSize, int appendingPart, int sumOfLeadingPartition, Par leadingPartition){
   if(sumOfLeadingPartition!=0)leadingPartition.push_back(appendingPart);
@@ -30,12 +31,12 @@ void enumPartition(int n){
   if(!f)return;
   vector<long long> A(Factor(B));
   int l=detect(A);
-  print_vector(B);
-  print_vector(A);
+  printVector(B);
+  printVector(A);
   if(l>2){
     cout<<"n="<<l<<" ";
     vector<long long>v(A.begin()+1,A.begin()+l+1);
-    print_vector(v); 
+    printVector(v);
   }
 }
 
