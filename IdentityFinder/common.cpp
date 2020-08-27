@@ -45,13 +45,14 @@ void printVector(vector<T> & vec){
   }
   cout << endl;
 }
+
 void printPartition(Par & p){
-	for(int i=0;i<p.size();i++){
-		if(i>0 && p[i]==0)break;
-		if(i>0)cout<<" ";
-		cout<<(short)p[i];
+	for(int i = 0; i < p.size(); i++){
+		if(i > 0 && p[i] == 0) break;
+		if(i > 0) cout << " ";
+		cout << (short) p[i];
 	}
-	cout<<endl;
+	cout << endl;
 }
 template<class T> T sumVector(vector<T> & vec){
   T sum=T(0);
