@@ -13,8 +13,8 @@ const int PARTITION_LENGTH=100;
 typedef uint_fast8_t part;
 typedef vector<part> Par;
 
-part min(part l,part r){
-  if(r>l)return l;
+part min(part l, part r){
+  if(r > l) return l;
   else return r;
 }
 int lengthOfPartition(const Par & p){
