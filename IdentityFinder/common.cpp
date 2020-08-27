@@ -76,13 +76,13 @@ void generatePartition(int n,vector<part> & partitions){
     while(!que.empty()){
       vector<part> leadingPartition=que.front();
       que.pop();
-      int sum=sumVector(leadingPartition);
-      if(sum==i){
+      int sumOfLeadingPartition=sumVector(leadingPartition);
+      if(sumOfLeadingPartition==i){
         copy(leadingPartition.begin(), leadingPartition.end(), partitions.begin()+head+cnt*PARTITION_LENGTH);
         cnt++;
       }
       else{
-        for(int k=min(leadingPartition.back(), i-sum); k >= 1; k--){
+        for(int k=min(leadingPartition.back(), i-sumOfLeadingPartition); k >= 1; k--){
           vector<part> v_new(leadingPartition.size()+1,0);
           copy(leadingPartition.begin(),leadingPartition.end(),v_new.begin());
           v_new[leadingPartition.size()]=k;
