@@ -69,7 +69,7 @@ void generatePartition(int n,vector<part> & partitions){
   //大きさn以下の分割を列挙するしてpartitionsに保存
   partitions.resize(sizeOfPartition(n));
   for(int i=1;i<=n;i++){
-    long long head=sizeOfPartition(i-1);
+    long long headSizeOfPartition=sizeOfPartition(i-1);
     long long cnt=0;
     queue<vector<part> > queOfLeadingPartitions;
     for(int j=i;j>=1;j--)queOfLeadingPartitions.push(vector<part>(1,j));
@@ -78,7 +78,7 @@ void generatePartition(int n,vector<part> & partitions){
       queOfLeadingPartitions.pop();
       int sumOfLeadingPartition=sumVector(leadingPartition);
       if(sumOfLeadingPartition==i){
-        copy(leadingPartition.begin(), leadingPartition.end(), partitions.begin()+head+cnt*PARTITION_LENGTH);
+        copy(leadingPartition.begin(), leadingPartition.end(), partitions.begin()+headSizeOfPartition+cnt*PARTITION_LENGTH);
         cnt++;
       }
       else{
