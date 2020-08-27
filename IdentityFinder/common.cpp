@@ -71,11 +71,11 @@ void generatePartition(int n,vector<part> & partitions){
   for(int i=1;i<=n;i++){
     long long head=sizeOfPartition(i-1);
     long long cnt=0;
-    queue<vector<part> > que;
-    for(int j=i;j>=1;j--)que.push(vector<part>(1,j));
-    while(!que.empty()){
-      vector<part> leadingPartition=que.front();
-      que.pop();
+    queue<vector<part> > queOfLeadingPartitions;
+    for(int j=i;j>=1;j--)queOfLeadingPartitions.push(vector<part>(1,j));
+    while(!queOfLeadingPartitions.empty()){
+      vector<part> leadingPartition=queOfLeadingPartitions.front();
+      queOfLeadingPartitions.pop();
       int sumOfLeadingPartition=sumVector(leadingPartition);
       if(sumOfLeadingPartition==i){
         copy(leadingPartition.begin(), leadingPartition.end(), partitions.begin()+head+cnt*PARTITION_LENGTH);
@@ -86,7 +86,7 @@ void generatePartition(int n,vector<part> & partitions){
           vector<part> v_new(leadingPartition.size()+1,0);
           copy(leadingPartition.begin(),leadingPartition.end(),v_new.begin());
           v_new[leadingPartition.size()]=k;
-          que.push(v_new);
+          queOfLeadingPartitions.push(v_new);
         }
       }
     }
