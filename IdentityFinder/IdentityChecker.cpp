@@ -27,12 +27,12 @@ void enumPartition(int maxPartitionSize){
   vector<long long> generatingFunction;
   for(int i=0;i<=maxPartitionSize;i++)generatingFunction.push_back(numOfSuitablePartition(i));
   vector<long long> exponentSeqOfGeneratingFunction(Factor(generatingFunction));
-  int detectedLengthOfPeriodicSeq=detect(exponentSeqOfGeneratingFunction);
+  int lengthOfPeriodicSeq=detectLengthOfPeriodOfSeq(exponentSeqOfGeneratingFunction);
   printVector(generatingFunction);
   printVector(exponentSeqOfGeneratingFunction);
-  if(detectedLengthOfPeriodicSeq > 2){
-    cout<<"detectedLengthOfPeriodicSeq="<<detectedLengthOfPeriodicSeq<<" ";
-    vector<long long>onePeriod(exponentSeqOfGeneratingFunction.begin()+1,exponentSeqOfGeneratingFunction.begin()+detectedLengthOfPeriodicSeq+1);
+  if(lengthOfPeriodicSeq > 2){
+    cout<<"lengthOfPeriodicSeq="<<lengthOfPeriodicSeq<<" ";
+    vector<long long>onePeriod(exponentSeqOfGeneratingFunction.begin()+1,exponentSeqOfGeneratingFunction.begin()+lengthOfPeriodicSeq+1);
     printVector(onePeriod);
   }
 }
