@@ -26,13 +26,13 @@ int lengthOfPartition(const Par & p){
 	return length;
 }
 int lengthOfPartitionSp(const Par & p){
-	int l=0;
+	int lengthSp=0;
 	for(int i=0;i<p.size();i++){
 		if(p[i]==0)break;
-		if(p[i]%3==2)l+=2;
-    else l+=1;
+		if(p[i]%3==2)lengthSp+=2;
+    else lengthSp+=1;
 	}
-	return l;
+	return lengthSp;
 }
 
 template<class T>void printVector(vector<T> & vec){
