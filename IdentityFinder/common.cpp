@@ -72,7 +72,7 @@ void generatePartition(int maxSizeOfPartition, vector<part> & partitions){
     long long headSizeOfPartition=numOfPartsOfAllPartition(sizeOfPartition-1);
     long long partitionCounter=0;
     queue<vector<part> > queOfLeadingPartitions;
-    for(int j=sizeOfPartition;j>=1;j--)queOfLeadingPartitions.push(vector<part>(1,j));
+    for(int biggestPart = sizeOfPartition; biggestPart >= 1; biggestPart--)queOfLeadingPartitions.push(vector<part>(1,biggestPart));
     while(!queOfLeadingPartitions.empty()){
       vector<part> leadingPartition=queOfLeadingPartitions.front();
       queOfLeadingPartitions.pop();
