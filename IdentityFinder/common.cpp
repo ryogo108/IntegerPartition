@@ -26,12 +26,13 @@ int lengthOfPartition(const Par & p){
 	}
 	return length;
 }
+
 int lengthOfPartitionSp(const Par & p){
-	int lengthSp=0;
-	for(int i=0;i<p.size();i++){
-		if(p[i]==0)break;
-		if(p[i]%3==2)lengthSp+=2;
-    else lengthSp+=1;
+	int lengthSp = 0;
+	for(int i = 0; i < p.size(); i++){
+		if(p[i] == 0) break;
+		if(p[i] % 3 == 2) lengthSp += 2;
+    else lengthSp += 1;
 	}
 	return lengthSp;
 }
