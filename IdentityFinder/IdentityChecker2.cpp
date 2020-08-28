@@ -3,7 +3,7 @@
 
 vector<part> partitions;
 
-const bool countWithPrint = true;
+const bool countWithPrint = false;
 const bool generateStrictPartitions = true;
 
 bool isSuitablePartition(Par & p){
@@ -31,7 +31,7 @@ bool isSuitablePartition(Par & p){
 int main(int argc,char *argv[]){
   int maxPartitionSize=atoi(argv[1]);
   generatePartition(maxPartitionSize,partitions,generateStrictPartitions);
-  printVector(partitions);
+  //printVector(partitions); // for debug
 	vector<long long> numOfPartitionsBySize( countSuitablePartitions( maxPartitionSize, partitions, isSuitablePartition, countWithPrint ) );
 	printVector(numOfPartitionsBySize);
 	vector<long long>exponentSeqOfFactoredGeneratingFunction(Factor(numOfPartitionsBySize));
