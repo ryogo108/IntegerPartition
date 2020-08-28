@@ -106,7 +106,9 @@ vector<long long> countSuitablePartitions(int maxSizeOfPartition, vector<part> &
       }
       examinedPartition.clear();
     }
-    examinedPartition.push_back( *itr );
+    else {
+      examinedPartition.push_back( *itr );
+    }
   }
   return numOfSuitablePartitionsBySize;
 }
