@@ -71,7 +71,7 @@ long long numOfPartsOfAllPartition(int n){
   return sum; 
 }
 
-void generatePartition(int maxSizeOfPartition, vector<part> & destPartitions, bool isStrict = true){
+void generatePartition(int maxSizeOfPartition, vector<part> & destPartitions, bool isStrict = false){
   //大きさn以下の分割を列挙するしてpartitionsに保存
   queue<Par> queOfLeadingPartitions;
   for ( part biggestPart = maxSizeOfPartition; biggestPart >= 1; biggestPart--){
