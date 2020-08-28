@@ -16,11 +16,10 @@ bool isSuitablePartition(Par & p){
   return isSuitable;
 }
 
-
 part sumPartitionAs2Color(Par & p){
   part sum = part(0);
   for(int i = 0; i < p.size(); i++){
-    sum += p[i]; // todo : ここを p[i] -> ceil( p[i] / 2 ) とする.
+    sum += p[i] / 2 + (p[i] % 2 != 0); // p[i] -> ceil( p[i] / 2 ) として和を計算している.
   }
   return sum;
 }
