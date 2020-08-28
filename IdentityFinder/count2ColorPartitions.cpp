@@ -9,7 +9,7 @@ const bool countWithPrint = false;
 
 // Strict 分割だけを生成するかどうかフラグ.
 // もし現れる分割が全て Strict ならこれを true にすると高速化される.
-const bool generateStrictPartitions = false;
+const bool generateStrictPartitions = true;
 
 bool isSuitablePartition(Par & p){
   bool isSuitable = true;
