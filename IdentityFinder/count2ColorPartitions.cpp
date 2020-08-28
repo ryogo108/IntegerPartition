@@ -31,6 +31,7 @@ part sumPartitionAs2Color(Par & p){
 }
 
 void printPartitionAs2Color(Par & p){
+  // todo : 2ColorPartitionとして分割を表示するようにする. ( 2k - 1 -> k_a, 2k -> k_b とする.)
 	for(int i = 0; i < p.size(); i++){
 		if(i > 0 && p[i] == 0) break;
 		if(i > 0) cout << " ";
