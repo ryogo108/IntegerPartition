@@ -3,7 +3,12 @@
 
 vector<part> partitions;
 
+//countSuitablePartitionsでSuitableな分割を表示するかどうかのフラグ
+//for debug
 const bool countWithPrint = false;
+
+//Strict分割だけを生成するかどうかフラグ.
+//もし現れる分割が全てStrictならこれをtrueにすると高速化される.
 const bool generateStrictPartitions = true;
 
 bool isSuitablePartition(Par & p){
