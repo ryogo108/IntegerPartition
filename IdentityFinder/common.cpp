@@ -96,6 +96,15 @@ void generatePartition(int maxSizeOfPartition, vector<part> & destPartitions, bo
 vector<long long> countSuitablePartitions(int maxSizeOfPartition, vector<part> & rawPartitions, function<bool(Par &)> isSuitable, bool withPrint = false){
   //条件fを満たす分割の数を数える
   vector<long long> numOfSuitablePartitionsBySize( maxSizeOfPartition );
+  Par examinedPartition;
+  examinedPartition.reserve( maxSizeOfPartition + 1 );
+  for(auto itr = rawPartitions.begin(); itr != rawPartitions.end(); itr++){
+    if(*itr == part(0)){
+      if( isSuitable( examinedPartition ) )numOfSuitablePartitionsBySize[ sumVector(examinedPartition) ]++;
+      examinedPartition.clear();
+    }
+    examinedPartition.push_back( *itr );
+  }
 //  long long accumulationOfParts = 0;
 //  for(int sizeOfPartition = 0; sizeOfPartition <= maxSizeOfPartition; sizeOfPartition++){
 //    long long cap = numOfPartsOfAllPartition( sizeOfPartition );
