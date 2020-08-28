@@ -65,7 +65,7 @@ int main(int argc, char * argv[]){
   // partitions を 2ColorPartitions とみなして( 2k - 1 -> k_a, 2k -> k_b とする.(ここで k >= 1, a, b は Color に対応する) )分割を大きさ( Color を忘れたパートの和 )ごとに数える.
   // 
   // Option : countWithPrint = true として分割を数え上げと同時に表示する( 通常の分割として表示する. ( 2k - 1 -> k_a, 2k -> k_b だと思うと 2ColorPartition だとみなせる) ).
-  //expectedOutput : 0 2 3 4 ...
+  //expectedOutput ( with Strict )  : 0 2 3 6 ...
   vector<long long> numOf2ColorPartitionsBySize( count2ColorPartitions( maxPartitionSize, partitions, isSuitablePartition, countWithPrint ) );
 
   // numOfPartitionsBySize を表示する.
