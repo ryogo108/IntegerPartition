@@ -59,7 +59,8 @@ int main(int argc, char * argv[]){
   // 和が maxPartitionSize 以下の分割を生成して partitions に一列で保存する.
   // 長さの短い順に保存されていて各分割の終端は 0 で区切られる.
   // Option : generateStrictPartitions = true にすると Strict な分割に限って生成する.
-  generatePartition( maxPartitionSize, partitions, generateStrictPartitions );
+  // 2ColorPartition を数える場合分割の大きさが 1 / 2 になるので maxPartitionSize を 2 倍して生成している.
+  generatePartition( 2 * maxPartitionSize, partitions, generateStrictPartitions );
 
   // printVector(partitions); // for debug
 
