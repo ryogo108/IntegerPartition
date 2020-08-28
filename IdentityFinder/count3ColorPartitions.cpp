@@ -12,9 +12,9 @@ const bool countWithPrint = true;
 const bool generateStrictPartitions = true;
 
 const part diffMatrix[3][3] = {
-  {0, 0, 0},
-  {0, 0, 0},
-  {0, 0, 0}
+  {1, 1, 1},
+  {2, 2, 2},
+  {2, 1, 1}
 };
 
 part absOf3ColorPart(part p){
@@ -33,6 +33,7 @@ bool isSuitablePartition(Par & p){
   bool isSuitable = true;
   for(int i = 0; i < p.size(); i++){
     if(p[ i ] == 0) break;
+    isSuitable &= !( absOf3ColorPart( p[ i ] ) == 1 && colorOf3ColorPart( p[ i ] ) == 1);
     if(p[ i + 1 ] != 0){
       isSuitable &= p[ i ] - p[ i + 1 ] >= 1;
       isSuitable &= checkDiff3ColorCondition( p[ i ] , p[ i + 1] );
