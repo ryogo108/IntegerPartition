@@ -100,6 +100,7 @@ vector<long long> countSuitablePartitions(int maxSizeOfPartition, vector<part> &
   examinedPartition.reserve( maxSizeOfPartition + 1 );
   for(auto itr = rawPartitions.begin(); itr != rawPartitions.end(); itr++){
     if(*itr == part(0)){
+      examinedPartition.push_back(part(0)); //0は分割の終端を表す.
       if( isSuitable( examinedPartition ) ){
         numOfSuitablePartitionsBySize[ sumVector(examinedPartition) ]++;
         if( withPrint ) printPartition( examinedPartition );
