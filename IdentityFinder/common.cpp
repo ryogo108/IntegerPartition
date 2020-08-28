@@ -100,7 +100,10 @@ vector<long long> countSuitablePartitions(int maxSizeOfPartition, vector<part> &
   examinedPartition.reserve( maxSizeOfPartition + 1 );
   for(auto itr = rawPartitions.begin(); itr != rawPartitions.end(); itr++){
     if(*itr == part(0)){
-      if( isSuitable( examinedPartition ) )numOfSuitablePartitionsBySize[ sumVector(examinedPartition) ]++;
+      if( isSuitable( examinedPartition ) ){
+        numOfSuitablePartitionsBySize[ sumVector(examinedPartition) ]++;
+        if( withPrint ) printPartition( examinedPartition );
+      }
       examinedPartition.clear();
     }
     examinedPartition.push_back( *itr );
