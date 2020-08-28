@@ -16,7 +16,7 @@ bool isSuitablePartition(Par & p){
   for(int i = 0; i < p.size(); i++){
     if(p[ i ] == 0) break;
     if(p[ i + 1 ] != 0){
-      isSuitable &= p[ i ] - p[ i+1 ] >= 2;
+      isSuitable &= p[ i ] - p[ i + 1 ] >= 2;
     }
   }
   return isSuitable;
