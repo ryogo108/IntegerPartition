@@ -11,6 +11,10 @@ const bool countWithPrint = true;
 // もし現れる分割が全て Strict ならこれを true にすると高速化される.
 const bool generateStrictPartitions = true;
 
+part absOf3ColorPart(part p){
+  return p /3 + (p % 3 != 0);
+}
+
 bool isSuitablePartition(Par & p){
   bool isSuitable = true;
   for(int i = 0; i < p.size(); i++){
@@ -25,7 +29,7 @@ bool isSuitablePartition(Par & p){
 part sumPartitionAs3Color(Par & p){
   part sum = part(0);
   for(int i = 0; i < p.size(); i++){
-    sum += p[i] / 3 + (p[i] % 3 != 0); // p[i] -> ceil( p[i] / 3 ) として和を計算している.
+    sum += absOf3ColorPart( p[i] ); // p[i] -> ceil( p[i] / 3 ) として和を計算している.
   }
   return sum;
 }
@@ -35,7 +39,7 @@ void printPartitionAs3Color(Par & p){
 	for(int i = 0; i < p.size(); i++){
 		if(i > 0 && p[i] == 0) break;
 		if(i > 0) cout << " ";
-		cout << (short) p[i] / 3 + (p[i] % 3 != 0) << "_";
+		cout << (short) absOf3ColorPart( p[i] ) << "_";
     switch( p[i] % 3){
       case 0 : cout<<"b"; break;
       case 1 : cout<<"c"; break;
