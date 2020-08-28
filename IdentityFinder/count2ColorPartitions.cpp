@@ -35,7 +35,7 @@ void printPartitionAs2Color(Par & p){
 	for(int i = 0; i < p.size(); i++){
 		if(i > 0 && p[i] == 0) break;
 		if(i > 0) cout << " ";
-		cout << (short) p[i];
+		cout << (short) p[i] / 2 + (p[i] % 2 != 0) << "_" << ((p[i] % 2 == 1) ? "a" : "b");
 	}
 	cout << endl;
 }
