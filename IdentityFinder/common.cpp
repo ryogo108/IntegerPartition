@@ -80,7 +80,7 @@ void generatePartition(int maxSizeOfPartition, vector<part> & destPartitions){
   while( !queOfLeadingPartitions.empty() ){
     Par leadingPartition = queOfLeadingPartitions.front();
     queOfLeadingPartitions.pop();
-    if(sumVector( leadingPartition ) < maxSizeOfPartition){
+    if(sumVector( leadingPartition ) <= maxSizeOfPartition){
       destPartitions.insert( destPartitions.end(), leadingPartition.begin(), leadingPartition.end() );
       destPartitions.push_back( part(0) );
       for(int appendingPart = min( leadingPartition.back(), maxSizeOfPartition - sumVector( leadingPartition ) ); appendingPart >= 1; appendingPart--){
