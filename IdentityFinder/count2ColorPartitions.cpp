@@ -37,8 +37,9 @@ vector<long long> count2ColorPartitions(int maxSizeOfPartition, vector<part> & r
   for(auto itr = rawPartitions.begin(); itr != rawPartitions.end(); itr++){
     if(*itr == part(0)){
       examinedPartition.push_back(part(0)); //0は分割の終端を表す.
-      if( isSuitable( examinedPartition ) ){
-        numOf2ColorStrictPartitionsBySize[ sumPartitionAs2Color(examinedPartition) ]++;
+      part sumOfExaminedPartition = sumPartitionAs2Color(examinedPartition);
+      if( isSuitable( examinedPartition ) && sumOfExaminedPartition <= maxSizeOfPartition ){
+        numOf2ColorStrictPartitionsBySize[ sumOfExaminedPartition ]++;
         if( withPrint ) printPartition( examinedPartition );
       }
       examinedPartition.clear();
