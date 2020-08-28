@@ -15,6 +15,10 @@ part absOf3ColorPart(part p){
   return p /3 + (p % 3 != 0);
 }
 
+part colorOf3ColorPart(part p){
+  return p % 3;
+}
+
 bool isSuitablePartition(Par & p){
   bool isSuitable = true;
   for(int i = 0; i < p.size(); i++){
@@ -40,7 +44,7 @@ void printPartitionAs3Color(Par & p){
 		if(i > 0 && p[i] == 0) break;
 		if(i > 0) cout << " ";
 		cout << (short) absOf3ColorPart( p[i] ) << "_";
-    switch( p[i] % 3){
+    switch( colorOf3ColorPart( p[i] ) ){
       case 0 : cout<<"b"; break;
       case 1 : cout<<"c"; break;
       case 2 : cout<<"a"; break;
