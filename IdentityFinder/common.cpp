@@ -71,7 +71,7 @@ long long numOfPartsOfAllPartition(int n){
   return sum; 
 }
 
-void generatePartition(int maxSizeOfPartition, vector<part> & destPartitions){
+void generatePartition(int maxSizeOfPartition, vector<part> & destPartitions, bool isStrict = true){
   //大きさn以下の分割を列挙するしてpartitionsに保存
   queue<Par> queOfLeadingPartitions;
   for ( part biggestPart = maxSizeOfPartition; biggestPart >= 1; biggestPart--){
@@ -83,7 +83,7 @@ void generatePartition(int maxSizeOfPartition, vector<part> & destPartitions){
     if(sumVector( leadingPartition ) <= maxSizeOfPartition){
       destPartitions.insert( destPartitions.end(), leadingPartition.begin(), leadingPartition.end() );
       destPartitions.push_back( part(0) );
-      for(part appendingPart = min( leadingPartition.back(), maxSizeOfPartition - sumVector( leadingPartition ) ); appendingPart >= 1; appendingPart--){
+      for(part appendingPart = min( leadingPartition.back() - ( isStrict ? 1 : 0 ), maxSizeOfPartition - sumVector( leadingPartition ) ); appendingPart >= 1; appendingPart--){
         Par newPartition(0);
         newPartition.insert( newPartition.end(), leadingPartition.begin(), leadingPartition.end() );
         newPartition.push_back( appendingPart );
