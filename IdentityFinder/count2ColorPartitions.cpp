@@ -5,7 +5,7 @@ vector< part > partitions;
 
 // countSuitablePartitions で Suitable な分割を表示するかどうかのフラグ
 // For debug
-const bool countWithPrint = false;
+const bool countWithPrint = true;
 
 // Strict 分割だけを生成するかどうかフラグ.
 // もし現れる分割が全て Strict ならこれを true にすると高速化される.
@@ -30,6 +30,15 @@ part sumPartitionAs2Color(Par & p){
   return sum;
 }
 
+void printPartitionAs2Color(Par & p){
+	for(int i = 0; i < p.size(); i++){
+		if(i > 0 && p[i] == 0) break;
+		if(i > 0) cout << " ";
+		cout << (short) p[i];
+	}
+	cout << endl;
+}
+
 vector<long long> count2ColorPartitions(int maxSizeOfPartition, vector<part> & rawPartitions, function<bool(Par &)> isSuitable, bool withPrint = false){
   vector<long long> numOf2ColorStrictPartitionsBySize( maxSizeOfPartition + 1 );
   Par examinedPartition;
@@ -40,7 +49,7 @@ vector<long long> count2ColorPartitions(int maxSizeOfPartition, vector<part> & r
       part sumOfExaminedPartition = sumPartitionAs2Color(examinedPartition);
       if( isSuitable( examinedPartition ) && sumOfExaminedPartition <= maxSizeOfPartition ){
         numOf2ColorStrictPartitionsBySize[ sumOfExaminedPartition ]++;
-        if( withPrint ) printPartition( examinedPartition );
+        if( withPrint ) printPartitionAs2Color( examinedPartition );
       }
       examinedPartition.clear();
     }
