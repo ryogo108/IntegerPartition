@@ -11,6 +11,12 @@ const bool countWithPrint = true;
 // もし現れる分割が全て Strict ならこれを true にすると高速化される.
 const bool generateStrictPartitions = true;
 
+const part diffMatrix[3][3] = {
+  {0, 0, 0},
+  {0, 0, 0},
+  {0, 0, 0}
+};
+
 part absOf3ColorPart(part p){
   return p /3 + (p % 3 != 0);
 }
@@ -19,12 +25,17 @@ part colorOf3ColorPart(part p){
   return p % 3;
 }
 
+bool checkDiff3ColorCondition(part l, part r){
+  return absOf3ColorPart( l ) - absOf3ColorPart( r ) >= diffMatrix [ colorOf3ColorPart( l ) ][colorOf3ColorPart( r ) ];
+}
+
 bool isSuitablePartition(Par & p){
   bool isSuitable = true;
   for(int i = 0; i < p.size(); i++){
     if(p[ i ] == 0) break;
     if(p[ i + 1 ] != 0){
       isSuitable &= p[ i ] - p[ i + 1 ] >= 1;
+      isSuitable &= checkDiff3ColorCondition( p[ i ] , p[ i + 1] );
     }
   }
   return isSuitable;
