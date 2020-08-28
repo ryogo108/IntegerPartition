@@ -97,19 +97,19 @@ vector<long long> countSuitablePartitions(int maxSizeOfPartition, vector<part> &
   //条件fを満たす分割の数を数える
   vector<long long> numOfSuitablePartitionsBySize;
   long long accumulationOfParts = 0;
-  for(int sizeOfPartition = 0; sizeOfPartition <= maxSizeOfPartition; sizeOfPartition++){
-    long long cap = numOfPartsOfAllPartition( sizeOfPartition );
-    long long partitionCounter = 0;
-    for(; accumulationOfParts<cap; accumulationOfParts += PARTITION_LENGTH){
-      vector<part> tmpPartition;
-      tmpPartition.assign(rawPartitions.begin() + accumulationOfParts, rawPartitions.begin() + accumulationOfParts + PARTITION_LENGTH);
-      if( isSuitable( tmpPartition ) ){
-        partitionCounter++;
-        if( withPrint )printPartition( tmpPartition );
-      }
-    }
-    numOfSuitablePartitionsBySize.push_back( partitionCounter );
-  }
+//  for(int sizeOfPartition = 0; sizeOfPartition <= maxSizeOfPartition; sizeOfPartition++){
+//    long long cap = numOfPartsOfAllPartition( sizeOfPartition );
+//    long long partitionCounter = 0;
+//    for(; accumulationOfParts<cap; accumulationOfParts += PARTITION_LENGTH){
+//      vector<part> tmpPartition;
+//      tmpPartition.assign(rawPartitions.begin() + accumulationOfParts, rawPartitions.begin() + accumulationOfParts + PARTITION_LENGTH);
+//      if( isSuitable( tmpPartition ) ){
+//        partitionCounter++;
+//        if( withPrint )printPartition( tmpPartition );
+//      }
+//    }
+//    numOfSuitablePartitionsBySize.push_back( partitionCounter );
+//  }
   return numOfSuitablePartitionsBySize;
 }
 vector<long long> countPartitionsWithPirnt(int n,vector<part> & ps, function<bool(Par &)> f){
