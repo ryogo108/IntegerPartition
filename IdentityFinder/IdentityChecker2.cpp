@@ -17,16 +17,6 @@ bool isSuitablePartition(Par & p){
     if(p[ i ] == 0) break;
     if(p[ i + 1 ] != 0){
       isSuitable &= p[ i ] - p[ i+1 ] >= 2;
-//      if(p[i]==p[i+1])isSuitable &= (p[i]%5==0);
-//      if(p[i]%5==3)isSuitable &= (p[i+1]!=p[i]-1);
-//      if(p[i]%5==1)isSuitable &= (p[i+1]!=p[i]-2);
-//      if(p[i+2]!=0){
-//        isSuitable &= (p[i]-p[i+2]>=5);
-//        if(p[i]%5==0)isSuitable &= (p[i]-p[i+2]>5);
-//        if(p[i+3]!=0){
-//          if(p[i]%5==1)isSuitable &= (!(p[i+3]==p[i]-7));
-//        }
-//      }
     }
   }
   return isSuitable;
