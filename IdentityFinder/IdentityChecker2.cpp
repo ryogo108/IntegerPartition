@@ -13,7 +13,6 @@ const bool generateStrictPartitions = true;
 
 bool isSuitablePartition(Par & p){
   bool isSuitable = true;
-  int length = lengthOfPartition( p );
   for(int i = 0; i < p.size(); i++){
     if(p[ i ] == 0) break;
     if(p[ i + 1 ] != 0){
