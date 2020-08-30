@@ -64,6 +64,7 @@ bool checkDiff6ColorCondition(part l, part r){
 // todo : 上の "おそらくこの weighted word は存在しない" を厳密に書き下す.
 // issue : 2_a2, 2_a1 がそれぞれ現れる. これらは S5 への変換で 2_a2 -> 5, 2_a1 -> 5 となり、#( 6ColorStrict & C )( 2 ) == #4ColorStrict( 2 ) + 1 である. 単純には 2_a2 もしくは 2_a1 を禁止列にすることが考えられる.
 //    Forbidden pattern memo : forbid 2_a1 を追加して It's OK under 15.
+//      issue : n = 3 で 25 > 24 (= #4ColorStrict( 3 ))
 //    Forbidden pattern memo : forbid 2_a2 を追加して It's OK under 15.
 bool isSuitablePartition(Par & p){
   bool isSuitable = true;
