@@ -11,6 +11,16 @@ const bool countWithPrint = true;
 // もし現れる分割が全て Strict ならこれを true にすると高速化される.
 const bool generateStrictPartitions = true;
 
+// colorOf6ColorPart に対応する Color の定数.
+// todo : 説明が適切か考える.
+// todo : color をハードコーディングしている箇所をこれらの定数で書き換える.
+const part a1 = 1;
+const part a2 = 2;
+const part a3 = 3;
+const part a4 = 4;
+const part a5 = 5;
+const part a6 = 0;
+
 // 4ColorStrictPartitionsの大きさ 30 以下のデータセット.
 // memo : 適当な 6ColorStrict の部分集合 C に対して #(6ColorStrict & C)( n ) がこれに一致すればそれが S5Weighted の候補になる.
 // memo : ある n で #(6ColorStrict & C)( n ) < #4ColorStrict( n ) となればそのような C を含むような部分集合は S5_weighted を定める禁止列として適当でない. (はず, 証明をしていない.)
