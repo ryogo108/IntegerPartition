@@ -44,13 +44,14 @@ bool checkDiff6ColorCondition(part l, part r){
 // memo : #( 6ColorStrict & (forbid a6, a1) ) == #4ColorStrict( n ), n = 1 ... 10 を直接確かめた.
 // Todo : 適当な禁止列を決めて #( 6ColorStrict & C ) ( n )=  #4ColorStrict( n ) となる 6ColorStrictの部分集合 C を決める.
 // memo : S5 の条件を weighted ( 1 -> 1_a3, 2 -> 1_a4, 3 -> 1_a5, 4-> 1_a6, 5 -> 2_a1 or 2_a2, ... ) として考える.
+// Forbidden pattern memo : forbid 1_a1 and 1_a2 として It's OK.
 // todo : Tsuchioka, Watanabe を参考に上の weighted における禁止パターンを追加したものを C_prototype として #( 6ColorStrict & C_prototype )( n ) >= #4ColorStrict( n ) であるかどうかを確かめる. これが成り立たなければおそらくこの weighted word は存在しない.
 // todo : 上の "おそらくこの weighted word は存在しない" を厳密に書き下す.
 bool isSuitablePartition(Par & p){
   bool isSuitable = true;
   for(int i = 0; i < p.size(); i++){
     if(p[ i ] == 0) break;
-    isSuitable &= (colorOf6ColorPart( p[ i ] ) != 1)&&(colorOf6ColorPart( p[ i ] ) != 2);
+    isSuitable &= !(colorOf6ColorPart( p[ i ] ) == 1 && absOf6ColorPart( p[ i ] ) == 1)&&!(colorOf6ColorPart( p[ i ] ) == 2 && absOf6ColorPart( p[ i ] ) == 1);
     if(p[ i + 1 ] != 0){
       isSuitable &= p[ i ] - p[ i + 1 ] >= 1;
       isSuitable &= checkDiff6ColorCondition( p[ i ] , p[ i + 1] );
