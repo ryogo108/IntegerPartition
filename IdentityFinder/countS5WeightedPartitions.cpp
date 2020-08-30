@@ -125,4 +125,20 @@ int main(int argc, char * argv[]){
   // numOfPartitionsBySize を表示する.
 	printVector( numOf6ColorPartitionsBySize );
   printVector( numsOf4ColorStrictPartitions );
+
+  bool isLarger = true;
+  bool isEqual = true;
+  for(int i = 0; i < min(numsOf4ColorStrictPartitions.size(), numOf6ColorPartitionsBySize.size() ); i++){
+    isLarger &= numOf6ColorPartitionsBySize[ i ] >= numsOf4ColorStrictPartitions[ i ];
+    isEqual &= numOf6ColorPartitionsBySize[ i ] == numsOf4ColorStrictPartitions[ i ];
+  }
+
+  // #(6ColorStrict & C )( n ) >= #4ColorStrict( n )であれば "It's OK." と表示する.そうでなければ "It's NOT OK." と表示する.
+  if( isLarger ) cout << "It's OK. Under " << min(numsOf4ColorStrictPartitions.size(), numOf6ColorPartitionsBySize.size()) - 1 << endl;
+  else cout << "It's NOT OK." << endl;
+
+  // #(6ColorStrict & C )( n ) >= #4ColorStrict( n )であれば "The number of this partitions is exactly equal to 4ColorStrict by size under hoge " と表示する.そうでなければ "The number of this partitions is NOT equal to 4ColorStrict by size." と表示する.
+  if( isEqual ) cout << "The number of this partitions is exactly equal to 4ColorStrict by size under "<< min(numsOf4ColorStrictPartitions.size(), numOf6ColorPartitionsBySize.size()) - 1 << endl;
+  else cout<<"The number of this partitions is NOT equal to 4ColorStrict by size." << endl;
+
 }
