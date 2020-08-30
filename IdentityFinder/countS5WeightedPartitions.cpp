@@ -57,7 +57,7 @@ bool checkDiff6ColorCondition(part l, part r){
 // Done : Color を定数として書き出す. ( 0 -> a_6, 1 -> a_1, 2 -> a_2, 3 -> a_3, 4 -> a_4, 5 -> a_5)
 // Forbidden pattern memo : forbid 1_a1 and 1_a2 として It's OK.
 // Forbidden pattern memo : forbid ( k_a5, k_a4 ) (k >= 1) を追加して It's OK.
-// Forbidden pattern todo : forbid absOf6ColorPart( p[ i ] ) - absOf6ColorPart(  p[ i + 2 ] ) >= 1 && colorOf6ColorPart( p[ i ] ) == a1 or a2 ならば >= は >. を追加して調べる.
+// Forbidden pattern memo : forbid absOf6ColorPart( p[ i ] ) - absOf6ColorPart(  p[ i + 2 ] ) >= 1 && colorOf6ColorPart( p[ i ] ) == a1 or a2 ならば >= は >. を追加して It's OK under 10.
 // Forbidden pattern todo : forbid ( (k + 1)_a3, (k)_a6 ) (k >= 1) を追加して調べる.
 // Forbidden pattern todo : forbid ( (k + 2)_a3, *, *, (k)_a6 ) (k >= 1) を追加して調べる.
 // todo : Tsuchioka, Watanabe を参考に上の weighted における禁止パターンを追加したものを C_prototype として #( 6ColorStrict & C_prototype )( n ) >= #4ColorStrict( n ) であるかどうかを確かめる. これが成り立たなければおそらくこの weighted word は存在しない.
@@ -71,6 +71,13 @@ bool isSuitablePartition(Par & p){
       isSuitable &= p[ i ] - p[ i + 1 ] >= 1;
       isSuitable &= !(absOf6ColorPart( p[ i ] ) == absOf6ColorPart( p[ i + 1 ]) && colorOf6ColorPart( p[ i ]) == a5 && colorOf6ColorPart( p[ i + 1] ) == a4);
       isSuitable &= checkDiff6ColorCondition( p[ i ] , p[ i + 1] );
+
+      if(p[ i + 2 ] != 0){
+        isSuitable &=  absOf6ColorPart( p[ i ] ) - absOf6ColorPart( p[ i + 2 ] ) >= 1;
+        if( colorOf6ColorPart( p[ i ] ) == a1 || colorOf6ColorPart( p[ i ] ) == a2 ){
+           isSuitable &= absOf6ColorPart( p[ i ] ) - absOf6ColorPart( p[ i + 2 ] ) >= 2;
+        }
+      }
     }
   }
   return isSuitable;
