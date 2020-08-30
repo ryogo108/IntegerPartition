@@ -55,8 +55,8 @@ bool checkDiff6ColorCondition(part l, part r){
 // Todo : 適当な禁止列を決めて #( 6ColorStrict & C ) ( n )=  #4ColorStrict( n ) となる 6ColorStrictの部分集合 C を決める.
 // memo : S5 の条件を weighted ( 1 -> 1_a3, 2 -> 1_a4, 3 -> 1_a5, 4-> 1_a6, 5 -> 2_a1 or 2_a2, ... ) として考える.
 // Done : Color を定数として書き出す. ( 0 -> a_6, 1 -> a_1, 2 -> a_2, 3 -> a_3, 4 -> a_4, 5 -> a_5)
-// Forbidden pattern memo : forbid 1_a1 and 1_a2 として It's OK.
-// Forbidden pattern memo : forbid ( k_a5, k_a4 ) (k >= 1) を追加して It's OK.
+// Forbidden pattern memo : forbid 1_a1 and 1_a2 として It's OK under 10.
+// Forbidden pattern memo : forbid ( k_a5, k_a4 ) (k >= 1) を追加して It's OK under 10.
 // Forbidden pattern memo : forbid absOf6ColorPart( p[ i ] ) - absOf6ColorPart(  p[ i + 2 ] ) >= 1 && colorOf6ColorPart( p[ i ] ) == a1 or a2 ならば >= は >. を追加して It's OK under 10.
 // Forbidden pattern todo : forbid ( (k + 1)_a3, (k)_a6 ) (k >= 1) を追加して調べる.
 // Forbidden pattern todo : forbid ( (k + 2)_a3, *, *, (k)_a6 ) (k >= 1) を追加して調べる.
