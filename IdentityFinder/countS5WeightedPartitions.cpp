@@ -40,7 +40,8 @@ bool checkDiff6ColorCondition(part l, part r){
 // Main purpose : isSuitablePartition として S5Weighted に適当な条件( 4ColorStrict に分割の集合として同型 )を見つける.
 // memo : ここで 分割の集合として同型とは, 分割の大きさを保存する全単射写像が存在することをいう.
 // memo : またそれぞれの分割の集合で分割に対して大きさを定める 分割 -> 自然数 の写像が定まっているものとする. ここでは S5Weighted の大きさを定める写像は Color を忘れたパートの和とする. また, 4ColorStrict の大きさについても同様に Color を忘れたパートの和とする.
-// todo : 単に Strict として 6ColorStrict これは #6ColorStrict( n ) >= #4ColorStrict( n ) ,n = 1 ... 10 を直接確かめる.
+// memo : 単に Strict として 6ColorStrict これは #6ColorStrict( n ) >= #4ColorStrict( n ) ,n = 1 ... 10 を直接確かめた.
+// memo : #( 6ColorStrict & (forbid a6, a1) ) == #4ColorStrict( n ), n = 1 ... 10 を直接確かめた.
 // Todo : 適当な禁止列を決めて #( 6ColorStrict & C ) ( n )=  #4ColorStrict( n ) となる 6ColorStrictの部分集合 C を決める.
 // memo : S5 の条件を weighted ( 1 -> 1_a3, 2 -> 1_a4, 3 -> 1_a5, 4-> 1_a6, 5 -> 2_a1 or 2_a2, ... ) として考える.
 // todo : Tsuchioka, Watanabe を参考に上の weighted における禁止パターンを追加したものを C_prototype として #( 6ColorStrict & C_prototype )( n ) >= #4ColorStrict( n ) であるかどうかを確かめる. これが成り立たなければおそらくこの weighted word は存在しない.
@@ -49,6 +50,7 @@ bool isSuitablePartition(Par & p){
   bool isSuitable = true;
   for(int i = 0; i < p.size(); i++){
     if(p[ i ] == 0) break;
+    isSuitable &= (colorOf6ColorPart( p[ i ] ) != 1)&&(colorOf6ColorPart( p[ i ] ) != 2);
     if(p[ i + 1 ] != 0){
       isSuitable &= p[ i ] - p[ i + 1 ] >= 1;
       isSuitable &= checkDiff6ColorCondition( p[ i ] , p[ i + 1] );
