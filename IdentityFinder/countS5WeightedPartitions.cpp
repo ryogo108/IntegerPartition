@@ -11,6 +11,11 @@ const bool countWithPrint = true;
 // もし現れる分割が全て Strict ならこれを true にすると高速化される.
 const bool generateStrictPartitions = true;
 
+// 4ColorStrictPartitionsの大きさ 30 以下のデータセット.
+// memo : 適当な 6ColorStrict の部分集合 C に対して #(6ColorStrict & C)( n ) がこれに一致すればそれが S5Weighted の候補になる.
+// memo : ある n で #(6ColorStrict & C)( n ) < #4ColorStrict( n ) となればそのような C を含むような部分集合は S5_weighted を定める禁止列として適当でない. (はず, 証明をしていない.)
+vector< long long> numsOf4ColorStrictPartitions = {0, 4, 10, 24, 51, 100, 190, 344, 601, 1024, 1702, 2768, 4422, 6948, 10752, 16424, 24782, 36972, 54602, 79872, 115805, 166540, 237664, 336720, 473856, 662596, 920934, 1272728, 1749407, 2392268, 3255410};
+
 const part diffMatrix[6][6] = {
   {0, 0, 0, 0, 0, 0},
   {0, 0, 0, 0, 0, 0},
@@ -119,4 +124,5 @@ int main(int argc, char * argv[]){
 
   // numOfPartitionsBySize を表示する.
 	printVector( numOf6ColorPartitionsBySize );
+  printVector( numsOf4ColorStrictPartitions );
 }
