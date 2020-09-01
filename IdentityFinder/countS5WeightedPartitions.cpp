@@ -66,6 +66,7 @@ bool checkDiff6ColorCondition(part l, part r){
 //    Forbidden pattern memo : forbid 2_a1 を追加して It's OK under 15.
 //      issue : n = 3 で 25 > 24 (= #4ColorStrict( 3 ))
 //    Forbidden pattern memo : forbid 2_a2 を追加して It's OK under 15.
+//    Forbidden pattern remark : 2_a1, 2_a2 の対称性から 2_a1 の禁止 だけを考える.
 bool isSuitablePartition(Par & p){
   bool isSuitable = true;
   for(int i = 0; i < p.size(); i++){
