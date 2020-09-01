@@ -67,6 +67,7 @@ bool checkDiff6ColorCondition(part l, part r){
 //      issue : n = 3 で 25 > 24 (= #4ColorStrict( 3 ))
 //      Forbidden pattern memo : forbid 3_a1 を追加して It's OK under 15..
 //         issue : n = 4 で 52 > 51
+//         Forbidden patterm memo : forbid 4_a1 を追加して It's OK under 15.
 //    Forbidden pattern memo : forbid 2_a2 を追加して It's OK under 15.
 //    Forbidden pattern remark : 2_a1, 2_a2 の対称性から 2_a1 の禁止 だけを考える.
 bool isSuitablePartition(Par & p){
@@ -76,6 +77,7 @@ bool isSuitablePartition(Par & p){
     isSuitable &= !(colorOf6ColorPart( p[ i ] ) == a1 && absOf6ColorPart( p[ i ] ) == 1)&&!(colorOf6ColorPart( p[ i ] ) == a2 && absOf6ColorPart( p[ i ] ) == 1);
     isSuitable &= !(colorOf6ColorPart( p[ i ] ) == a1 && absOf6ColorPart( p[ i ] ) == 2);
     isSuitable &= !(colorOf6ColorPart( p[ i ] ) == a1 && absOf6ColorPart( p[ i ] ) == 3);
+    isSuitable &= !(colorOf6ColorPart( p[ i ] ) == a1 && absOf6ColorPart( p[ i ] ) == 4);
     if(p[ i + 1 ] != 0){
       isSuitable &= p[ i ] - p[ i + 1 ] >= 1;
       isSuitable &= !(absOf6ColorPart( p[ i ] ) == absOf6ColorPart( p[ i + 1 ]) && colorOf6ColorPart( p[ i ]) == a5 && colorOf6ColorPart( p[ i + 1] ) == a4);
