@@ -82,11 +82,11 @@ bool checkDiff6ColorCondition(part l, part r){
 //     Forbidden pattern issue : (2_a5, 2_a2), (2_a5, 2_a1)が それぞれ現れる.
 //     Forbidden pattern issue : (2_a4, 2_a2), (2_a4, 2_a1)が それぞれ現れる.
 //     Forbidden pattern issue : (2_a3, 2_a2), (2_a3, 2_a1)が それぞれ現れる.
-//     Forbidden pattern memo :  forbid ( *, 2_a1 ) ( この場合 2_a1 -> (1_a6, 1_a3) として S5 の元が存在する.) を追加して It's OK under 15.
-//     Forbidden pattern issue : (3_a2, 1_a6), (3_a1, 1_a6)が それぞれ現れる.
-//     Forbidden pattern issue : (3_a2, 1_a5), (3_a1, 1_a5)が それぞれ現れる.
-//     Forbidden pattern issue : (3_a2, 1_a4), (3_a1, 1_a4)が それぞれ現れる.
-//     Forbidden pattern issue : (3_a2, 1_a3), (3_a1, 1_a3)が それぞれ現れる.
+//     Forbidden pattern memo :  forbid ( 2_a6 or 2_a5 or 2_a4 or 2_a3, 2_a1 ) ( この場合 2_a1 -> (1_a6, 1_a3) として S5 の元が存在する.) を追加して It's OK under 15.
+//     Forbidden pattern issue : (3_a2, 1_a6), /(3_a1, 1_a6)が それぞれ現れる.
+//     Forbidden pattern issue : /(3_a2, 1_a5), (3_a1, 1_a5)が それぞれ現れる.
+//     Forbidden pattern issue : (3_a2, 1_a4), /(3_a1, 1_a4)が それぞれ現れる.
+//     Forbidden pattern issue : (3_a2, 1_a3), /(3_a1, 1_a3)が それぞれ現れる.
 //     Forbidden pattern todo : forbid (3_a1, 1_a6) and (3_a1, 1_a3)
 //     Forbidden pattern todo : forbid (3_a2, 1_a5) and (3_a2, 1_a4).
 bool isSuitablePartition(Par & p){
@@ -96,10 +96,6 @@ bool isSuitablePartition(Par & p){
     isSuitable &= !(colorOf6ColorPart( p[ i ] ) == a1 && absOf6ColorPart( p[ i ] ) == 1)&&!(colorOf6ColorPart( p[ i ] ) == a2 && absOf6ColorPart( p[ i ] ) == 1);
     isSuitable &= !(colorOf6ColorPart( p[ i ] ) == a1 && absOf6ColorPart( p[ i ] ) % 2 == 0 && lengthOfPartition( p ) == 1);
     isSuitable &= !(colorOf6ColorPart( p[ i ] ) == a2 && absOf6ColorPart( p[ i ] ) % 2 == 1 && lengthOfPartition( p ) == 1);
-    if(p[ i + 1 ] == 0){
-      // forbid ( *, 2_a1)
-      isSuitable &= !(absOf6ColorPart( p[ i ] ) == 2 && colorOf6ColorPart( p[ i ] ) == a1 );
-    }
     if(p[ i + 1 ] != 0){
       isSuitable &= p[ i ] - p[ i + 1 ] >= 1;
       isSuitable &= !(absOf6ColorPart( p[ i ] ) == absOf6ColorPart( p[ i + 1 ]) && colorOf6ColorPart( p[ i ]) == a5 && colorOf6ColorPart( p[ i + 1] ) == a4);
@@ -111,6 +107,13 @@ bool isSuitablePartition(Par & p){
       // forbid (2_a1, (1_a6 or 1_a3))
       isSuitable &= !(colorOf6ColorPart( p[ i ] ) == a1 && absOf6ColorPart( p[ i  ] ) == 2
                   && absOf6ColorPart( p[ i + 1 ] ) == 1 && (colorOf6ColorPart( p[ i + 1 ] ) == a6 || colorOf6ColorPart( p[ i + 1 ] ) == a3 ));
+      // forbid ( 2_a6 or 2_a5 or 2_a4 or 2_a3, 2_a1 )
+      isSuitable &= !(colorOf6ColorPart( p[ i  + 1 ] ) == a1 && absOf6ColorPart( p[ i + 1 ] ) == 2
+                  && absOf6ColorPart( p[ i  ] ) == 2
+                  && (colorOf6ColorPart( p[ i ] ) == a6
+                  ||  colorOf6ColorPart( p[ i ] ) == a5
+                  ||  colorOf6ColorPart( p[ i ] ) == a4
+                  ||  colorOf6ColorPart( p[ i ] ) == a3));
       if(p[ i + 2 ] != 0){
         isSuitable &= checkDiff6ColorCondition( p[ i ] , p[ i + 2 ] );
         if(p[ i + 3 ] != 0){
