@@ -26,13 +26,14 @@ const part a6 = 0;
 // memo : ある n で #(6ColorStrict & C)( n ) < #4ColorStrict( n ) となればそのような C を含むような部分集合は S5_weighted を定める禁止列として適当でない. (はず, 証明をしていない.)
 vector< long long> numsOf4ColorStrictPartitions = {0, 4, 10, 24, 51, 100, 190, 344, 601, 1024, 1702, 2768, 4422, 6948, 10752, 16424, 24782, 36972, 54602, 79872, 115805, 166540, 237664, 336720, 473856, 662596, 920934, 1272728, 1749407, 2392268, 3255410};
 
-const part diffMatrix[6][6] = {
-  {0, 0, 0, 0, 0, 0},
-  {0, 0, 0, 0, 0, 0},
-  {0, 0, 0, 0, 0, 0},
-  {0, 0, 0, 0, 0, 0},
-  {0, 0, 0, 0, 0, 0},
-  {0, 0, 0, 0, 0, 0}
+const part diffMatrixByColor[6][6] = {
+  //       a6, a1, a2, a3, a4, a5
+  /* a6 */ {1,  1,  1,  1,  1,  1},
+  /* a1 */ {2,  2,  2,  2,  2,  2},
+  /* a2 */ {2,  2,  2,  2,  2,  2},
+  /* a3 */ {2,  1,  1,  1,  2,  2},
+  /* a4 */ {2,  1,  1,  1,  1,  2},
+  /* a5 */ {2,  1,  1,  1,  1,  1}
 };
 
 part absOf6ColorPart(part p){
@@ -44,7 +45,7 @@ part colorOf6ColorPart(part p){
 }
 
 bool checkDiff6ColorCondition(part l, part r){
-  return absOf6ColorPart( l ) - absOf6ColorPart( r ) >= diffMatrix [ colorOf6ColorPart( l ) ][colorOf6ColorPart( r ) ];
+  return absOf6ColorPart( l ) - absOf6ColorPart( r ) >= diffMatrixByColor [ colorOf6ColorPart( l ) ][colorOf6ColorPart( r ) ];
 }
 
 // Main purpose : isSuitablePartition として S5Weighted に適当な条件( 4ColorStrict に分割の集合として同型 )を見つける.
