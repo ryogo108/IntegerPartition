@@ -82,11 +82,13 @@ bool checkDiff6ColorCondition(part l, part r){
 //     Forbidden pattern issue : (2_a5, 2_a2), (2_a5, 2_a1)が それぞれ現れる.
 //     Forbidden pattern issue : (2_a4, 2_a2), (2_a4, 2_a1)が それぞれ現れる.
 //     Forbidden pattern issue : (2_a3, 2_a2), (2_a3, 2_a1)が それぞれ現れる.
-//     Forbidden pattern todo :  forbid ( *, 2_a1 ) ( この場合 2_a1 -> (1_a6, 1_a3) として S5 の元が存在する.)
+//     Forbidden pattern memo :  forbid ( *, 2_a1 ) ( この場合 2_a1 -> (1_a6, 1_a3) として S5 の元が存在する.) を追加して It's OK under 15.
 //     Forbidden pattern issue : (3_a2, 1_a6), (3_a1, 1_a6)が それぞれ現れる.
 //     Forbidden pattern issue : (3_a2, 1_a5), (3_a1, 1_a5)が それぞれ現れる.
 //     Forbidden pattern issue : (3_a2, 1_a4), (3_a1, 1_a4)が それぞれ現れる.
 //     Forbidden pattern issue : (3_a2, 1_a3), (3_a1, 1_a3)が それぞれ現れる.
+//     Forbidden pattern todo : forbid (3_a1, 1_a6) and (3_a1, 1_a3)
+//     Forbidden pattern todo : forbid (3_a2, 1_a5) and (3_a2, 1_a4).
 bool isSuitablePartition(Par & p){
   bool isSuitable = true;
   for(int i = 0; i < p.size(); i++){
