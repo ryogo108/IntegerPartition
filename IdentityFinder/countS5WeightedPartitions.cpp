@@ -67,11 +67,14 @@ bool checkDiff6ColorCondition(part l, part r){
 // todo : 上の "おそらくこの weighted word は存在しない" を厳密に書き下す.
 // issue : 2_a2, 2_a1 がそれぞれ現れる. これらは S5 への変換で 2_a2 -> 5, 2_a1 -> 5 となり、#( 6ColorStrict & C )( 2 ) == #4ColorStrict( 2 ) + 1 である. 単純には 2_a2 もしくは 2_a1 を禁止列にすることが考えられる.
 // Forbidden pattern memo : k_a1 を全て禁止列にすると n >= 4 で It's NOT OK. ( ( 2_a2, 2_a1 ) が禁止列になってしまう. )
+// Forbidden pattern issue : n = 2 で 2_a2, 2_a1 がそれぞれ現れる.
+// Forbidden pattern memo : 2_a1 だけからなる分割を禁止する. を追加して It's OK under 15. で n = 2 まで #4ColorStrict( n ) に一致.
 bool isSuitablePartition(Par & p){
   bool isSuitable = true;
   for(int i = 0; i < p.size(); i++){
     if(p[ i ] == 0) break;
     isSuitable &= !(colorOf6ColorPart( p[ i ] ) == a1 && absOf6ColorPart( p[ i ] ) == 1)&&!(colorOf6ColorPart( p[ i ] ) == a2 && absOf6ColorPart( p[ i ] ) == 1);
+    isSuitable &= !(colorOf6ColorPart( p[ i ] ) == a1 && absOf6ColorPart( p[ i ] ) == 2 && lengthOfPartition( p ) == 1);
     if(p[ i + 1 ] != 0){
       isSuitable &= p[ i ] - p[ i + 1 ] >= 1;
       isSuitable &= !(absOf6ColorPart( p[ i ] ) == absOf6ColorPart( p[ i + 1 ]) && colorOf6ColorPart( p[ i ]) == a5 && colorOf6ColorPart( p[ i + 1] ) == a4);
