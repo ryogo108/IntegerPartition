@@ -89,7 +89,6 @@ bool isSuitablePartition(Par & p){
       isSuitable &= p[ i ] - p[ i + 1 ] >= 1;
       isSuitable &= !(absOf6ColorPart( p[ i ] ) == absOf6ColorPart( p[ i + 1 ]) && colorOf6ColorPart( p[ i ]) == a5 && colorOf6ColorPart( p[ i + 1] ) == a4);
       isSuitable &= !(absOf6ColorPart( p[ i ] ) - absOf6ColorPart( p[ i + 1 ]) == 1 && colorOf6ColorPart( p[ i ]) == a3 && colorOf6ColorPart( p[ i + 1] ) == a6);
-      isSuitable &= checkDiff6ColorCondition( p[ i ] , p[ i + 1] );
 
       if(p[ i + 2 ] != 0){
         isSuitable &=  absOf6ColorPart( p[ i ] ) - absOf6ColorPart( p[ i + 2 ] ) >= 1;
