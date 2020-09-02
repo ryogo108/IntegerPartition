@@ -69,6 +69,13 @@ bool checkDiff6ColorCondition(part l, part r){
 // Forbidden pattern memo : k_a1 を全て禁止列にすると n >= 4 で It's NOT OK. ( ( 2_a2, 2_a1 ) が禁止列になってしまう. )
 // Forbidden pattern issue : n = 2 で 2_a2, 2_a1 がそれぞれ現れる.
 // Forbidden pattern memo : 2_a1 だけからなる分割を禁止する. を追加して It's OK under 15. で n = 2 まで #4ColorStrict( n ) に一致.
+//   Forbidden pattern issue : 3_a2, 3_a1 が それぞれ現れる.
+//   Forbidden pattern issue : (2_a2, 1_a6), (2_a1, 1_a6)が それぞれ現れる.
+//   Forbidden pattern issue : (2_a2, 1_a5), (2_a1, 1_a5)が それぞれ現れる.
+//   Forbidden pattern issue : (2_a2, 1_a4), (2_a1, 1_a4)が それぞれ現れる.
+//   Forbidden pattern issue : (2_a2, 1_a3), (2_a1, 1_a3)が それぞれ現れる.
+//   Forbidden pattern todo : 3_a2 で 長さ 1 の禁止
+//   Forbidden pattern todo : 3_a1 で 長さ 1 の禁止
 bool isSuitablePartition(Par & p){
   bool isSuitable = true;
   for(int i = 0; i < p.size(); i++){
