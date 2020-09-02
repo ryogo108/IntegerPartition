@@ -76,6 +76,8 @@ bool checkDiff6ColorCondition(part l, part r){
 //   Forbidden pattern issue : (2_a2, 1_a3), (2_a1, 1_a3)が それぞれ現れる.
 //   Forbidden pattern todo : 3_a2 で 長さ 1 の禁止
 //   Forbidden pattern todo : 3_a1 で 長さ 1 の禁止
+//   Forbidden pattern todo : forbid (2k)_a1, ( 2k + 1 )_a2 で長さ 1 の禁止.
+//   Forbidden pattern todo : forbid ( 2_a1 , ( 1_a5 or 1_a4 ) ) and ( 2_a2 , ( 1_a6 or 1_a3 ) )
 bool isSuitablePartition(Par & p){
   bool isSuitable = true;
   for(int i = 0; i < p.size(); i++){
