@@ -59,7 +59,7 @@ bool checkDiff6ColorCondition(part l, part r){
 // Forbidden pattern memo : forbid ( k_a5, k_a4 ) (k >= 1) を追加して It's OK under 15.
 // Forbidden pattern memo : forbid absOf6ColorPart( p[ i ] ) - absOf6ColorPart(  p[ i + 2 ] ) >= 1 && colorOf6ColorPart( p[ i ] ) == a1 or a2 ならば >= は >. を追加して It's OK under 15.
 // issue : 上の条件は不十分. s.t. ( 2_a4, 1_a6, 1_a5 ) が禁止されていない. これは特殊化すると( 7, 4, 3) だが, 7 - 3 = 4 < 5 より S5 の元ではない.
-// Forbidden pattern todo : add difference condition absOf6ColorPart( p[ i ] ) - absOf6ColorPart( p[ i + 2 ] ) >= 1 && colorOf6ColorPart( p[ i ] ) > colorOf6ColorPart( p[ i + 2 ] ) ( colorOf6ColorPart( p[ i ] ) == a1 or a2 の時は > は >= )の時 ( a1 < a2 < a3 < a4 < a5 < a6 とする.) >= 1 は >= 2
+// Forbidden pattern todo : add difference condition absOf6ColorPart( p[ i ] ) - absOf6ColorPart( p[ i + 2 ] ) >= 1 && colorOf6ColorPart( p[ i ] ) < colorOf6ColorPart( p[ i + 2 ] ) の時 ( a1 < a2 < a3 < a4 < a5 < a6 とする.) >= 1 は >= 2. また colorOf6ColorPart( p[ i ] ) == a1 or a2 の時 >=1 は >= 2.
 // Forbidden pattern memo : forbid ( (k + 1)_a3, (k)_a6 ) (k >= 1) を追加して It's OK under 15.
 // Forbidden pattern memo : forbid ( (k + 2)_a3, *, *, (k)_a6 ) (k >= 1) を追加して It's OK under 15.
 // Done : Tsuchioka, Watanabe を参考に上の weighted における禁止パターンを追加したものを C_prototype として #( 6ColorStrict & C_prototype )( n ) >= #4ColorStrict( n ) であるかどうかを確かめた. これが成り立たなければおそらくこの weighted word は存在しない.
