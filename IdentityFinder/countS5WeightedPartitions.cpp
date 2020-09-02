@@ -66,18 +66,7 @@ bool checkDiff6ColorCondition(part l, part r){
 // Done : Tsuchioka, Watanabe を参考に上の weighted における禁止パターンを追加したものを C_prototype として #( 6ColorStrict & C_prototype )( n ) >= #4ColorStrict( n ) であるかどうかを確かめた. これが成り立たなければおそらくこの weighted word は存在しない.
 // todo : 上の "おそらくこの weighted word は存在しない" を厳密に書き下す.
 // issue : 2_a2, 2_a1 がそれぞれ現れる. これらは S5 への変換で 2_a2 -> 5, 2_a1 -> 5 となり、#( 6ColorStrict & C )( 2 ) == #4ColorStrict( 2 ) + 1 である. 単純には 2_a2 もしくは 2_a1 を禁止列にすることが考えられる.
-
-// Forbidden pattern memo : k_a1 を全て禁止列にすると少なくとも n = 7 で It's NOT OK.
-// 以下  " Forbidden pattern memo( to be removed) : forbid absOf6ColorPart( p[ i ] ) - absOf6ColorPart(  p[ i + 2 ] ) >= 1 && colorOf6ColorPart( p[ i ] ) == a1 or a2 ならば >= は >. を追加して It's OK under 15. " 採用時の Forbidden pattern log. 全て to be removed.
-//    Forbidden pattern memo : forbid 2_a1 を追加して It's OK under 15.
-//      issue : n = 3 で 25 > 24 (= #4ColorStrict( 3 ))
-//      Forbidden pattern memo : forbid 3_a1 を追加して It's OK under 15..
-//         issue : n = 4 で 52 > 51
-//         Forbidden patterm memo : forbid 4_a1 を追加して It's OK under 15.
-//         Forbidden pattern memo : forbid 5_a1, 6_a1 を追加して It's OK.
-//         Forbidden pattern memo : forbid 7_a1 を追加して It's NOT OK.
-//    Forbidden pattern memo : forbid 2_a2 を追加して It's OK under 15.
-//    Forbidden pattern remark : 2_a1, 2_a2 の対称性から 2_a1 の禁止 だけを考える.
+// Forbidden pattern memo : k_a1 を全て禁止列にすると n >= 4 で It's NOT OK. ( ( 2_a2, 2_a1 ) が禁止列になってしまう. )
 bool isSuitablePartition(Par & p){
   bool isSuitable = true;
   for(int i = 0; i < p.size(); i++){
