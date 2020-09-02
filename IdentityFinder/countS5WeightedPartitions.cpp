@@ -82,11 +82,6 @@ bool isSuitablePartition(Par & p){
   for(int i = 0; i < p.size(); i++){
     if(p[ i ] == 0) break;
     isSuitable &= !(colorOf6ColorPart( p[ i ] ) == a1 && absOf6ColorPart( p[ i ] ) == 1)&&!(colorOf6ColorPart( p[ i ] ) == a2 && absOf6ColorPart( p[ i ] ) == 1);
-    isSuitable &= !(colorOf6ColorPart( p[ i ] ) == a1 && absOf6ColorPart( p[ i ] ) == 2);
-    isSuitable &= !(colorOf6ColorPart( p[ i ] ) == a1 && absOf6ColorPart( p[ i ] ) == 3);
-    isSuitable &= !(colorOf6ColorPart( p[ i ] ) == a1 && absOf6ColorPart( p[ i ] ) == 4);
-    isSuitable &= !(colorOf6ColorPart( p[ i ] ) == a1 && absOf6ColorPart( p[ i ] ) == 5);
-    isSuitable &= !(colorOf6ColorPart( p[ i ] ) == a1);
     if(p[ i + 1 ] != 0){
       isSuitable &= p[ i ] - p[ i + 1 ] >= 1;
       isSuitable &= !(absOf6ColorPart( p[ i ] ) == absOf6ColorPart( p[ i + 1 ]) && colorOf6ColorPart( p[ i ]) == a5 && colorOf6ColorPart( p[ i + 1] ) == a4);
