@@ -96,6 +96,7 @@ bool isSuitablePartition(Par & p){
   bool isSuitable = true;
   for(int i = 0; i < p.size(); i++){
     if(p[ i ] == 0) break;
+    // forbid 1_a1 and 1_a2
     isSuitable &= !EQ6CP( p[ i ], 1, a1 )&&!EQ6CP( p[ i ], 1, a2);
     isSuitable &= !(colorOf6ColorPart( p[ i ] ) == a1 && absOf6ColorPart( p[ i ] ) % 2 == 0 && lengthOfPartition( p ) == 1);
     isSuitable &= !(colorOf6ColorPart( p[ i ] ) == a2 && absOf6ColorPart( p[ i ] ) % 2 == 1 && lengthOfPartition( p ) == 1);
