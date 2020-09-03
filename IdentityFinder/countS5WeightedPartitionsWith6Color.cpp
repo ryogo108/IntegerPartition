@@ -92,7 +92,7 @@ bool checkDiff6ColorCondition(part l, part r){
 bool isSuitablePartition(Par & p){
   // EQ6CP( 1_a3, 1, a3 ) -> true (ここで 1_a3 = 0 + 3 )
   // EQ6CP( 2_a3, 1, a3 ) -> false ( ここで 2_a3 = 6 + 3 )
-  #define EQ6CP( part, value, color ) ( absOf6ColorPart( part ) == value ) && ( colorOf6ColorPart( part ) == color )
+  #define EQ6CP( part, value, color ) ( ( absOf6ColorPart( part ) == value ) && ( colorOf6ColorPart( part ) == color ) )
   bool isSuitable = true;
   for(int i = 0; i < p.size(); i++){
     if(p[ i ] == 0) break;
