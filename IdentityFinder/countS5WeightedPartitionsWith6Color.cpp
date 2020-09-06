@@ -96,32 +96,66 @@ bool isSuitablePartition(Par & p){
   bool isSuitable = true;
   for(int i = 0; i < p.size(); i++){
     if(p[ i ] == 0) break;
+
     // forbid 1_a1 and 1_a2
     isSuitable &= !EQ6CP( p[ i ], 1, a1 )&&!EQ6CP( p[ i ], 1, a2);
-    isSuitable &= !(colorOf6ColorPart( p[ i ] ) == a1 && absOf6ColorPart( p[ i ] ) % 2 == 0 && lengthOfPartition( p ) == 1);
-    isSuitable &= !(colorOf6ColorPart( p[ i ] ) == a2 && absOf6ColorPart( p[ i ] ) % 2 == 1 && lengthOfPartition( p ) == 1);
+
+    // forbid ( 2k )_a1
+    isSuitable &= !(colorOf6ColorPart( p[ i ] ) == a1
+                   && absOf6ColorPart( p[ i ] ) % 2 == 0
+                   && lengthOfPartition( p ) == 1);
+
+    // forbid ( 2k + 1 )_a2
+    isSuitable &= !(colorOf6ColorPart( p[ i ] ) == a2
+                  && absOf6ColorPart( p[ i ] ) % 2 == 1
+                  && lengthOfPartition( p ) == 1);
+
     if(p[ i + 1 ] != 0){
       isSuitable &= p[ i ] - p[ i + 1 ] >= 1;
-      isSuitable &= !(absOf6ColorPart( p[ i ] ) == absOf6ColorPart( p[ i + 1 ]) && colorOf6ColorPart( p[ i ]) == a5 && colorOf6ColorPart( p[ i + 1] ) == a4);
-      isSuitable &= !(absOf6ColorPart( p[ i ] ) - absOf6ColorPart( p[ i + 1 ]) == 1 && colorOf6ColorPart( p[ i ]) == a3 && colorOf6ColorPart( p[ i + 1] ) == a6);
+
+      // original condition of S5, forbid ( k_a5 , k_a4 )
+      isSuitable &= !(absOf6ColorPart( p[ i ] ) == absOf6ColorPart( p[ i + 1 ])
+                    && colorOf6ColorPart( p[ i ]) == a5
+                    && colorOf6ColorPart( p[ i + 1] ) == a4);
+
+      // original condition of S5, forbid ( ( k + 1 )_a3 , k_a6 )
+      isSuitable &= !(absOf6ColorPart( p[ i ] ) - absOf6ColorPart( p[ i + 1 ]) == 1
+                    && colorOf6ColorPart( p[ i ]) == a3
+                    && colorOf6ColorPart( p[ i + 1] ) == a6);
 
       // forbid (2_a2, (1_a5 or 1_a4))
-      isSuitable &= !(colorOf6ColorPart( p[ i ] ) == a2 && absOf6ColorPart( p[ i ] ) == 2
-                  && absOf6ColorPart( p[ i + 1 ] ) == 1 && (colorOf6ColorPart( p[ i + 1 ] ) == a5 || colorOf6ColorPart( p[ i + 1 ] ) == a4 ));
+      isSuitable &= !(colorOf6ColorPart( p[ i ] ) == a2 
+                    && absOf6ColorPart( p[ i ] ) == 2
+                    && absOf6ColorPart( p[ i + 1 ] ) == 1
+                    && (colorOf6ColorPart( p[ i + 1 ] ) == a5
+                        || colorOf6ColorPart( p[ i + 1 ] ) == a4 ));
+
       // forbid (2_a1, (1_a6 or 1_a3))
-      isSuitable &= !(colorOf6ColorPart( p[ i ] ) == a1 && absOf6ColorPart( p[ i  ] ) == 2
-                  && absOf6ColorPart( p[ i + 1 ] ) == 1 && (colorOf6ColorPart( p[ i + 1 ] ) == a6 || colorOf6ColorPart( p[ i + 1 ] ) == a3 ));
+      isSuitable &= !(colorOf6ColorPart( p[ i ] ) == a1 
+                    && absOf6ColorPart( p[ i ] ) == 2
+                    && absOf6ColorPart( p[ i + 1 ] ) == 1
+                    && (colorOf6ColorPart( p[ i + 1 ] ) == a6 
+                        || colorOf6ColorPart( p[ i + 1 ] ) == a3 ));
+
       // forbid ( 2_a6 or 2_a5 or 2_a4 or 2_a3, 2_a1 )
-      isSuitable &= !(colorOf6ColorPart( p[ i  + 1 ] ) == a1 && absOf6ColorPart( p[ i + 1 ] ) == 2
-                  && absOf6ColorPart( p[ i  ] ) == 2
-                  && (colorOf6ColorPart( p[ i ] ) == a6
-                  ||  colorOf6ColorPart( p[ i ] ) == a5
-                  ||  colorOf6ColorPart( p[ i ] ) == a4
-                  ||  colorOf6ColorPart( p[ i ] ) == a3));
+      isSuitable &= !(colorOf6ColorPart( p[ i  + 1 ] ) == a1
+                    && absOf6ColorPart( p[ i + 1 ] ) == 2
+                    && absOf6ColorPart( p[ i  ] ) == 2
+                    && (colorOf6ColorPart( p[ i ] ) == a6
+                        ||  colorOf6ColorPart( p[ i ] ) == a5
+                        ||  colorOf6ColorPart( p[ i ] ) == a4
+                        ||  colorOf6ColorPart( p[ i ] ) == a3));
+
       if(p[ i + 2 ] != 0){
+
+        // difference condition p[ i ] - p[ i + 2 ] >= diffMatrix
         isSuitable &= checkDiff6ColorCondition( p[ i ] , p[ i + 2 ] );
+
         if(p[ i + 3 ] != 0){
-          isSuitable &= !(absOf6ColorPart( p[ i ] ) - absOf6ColorPart( p[ i + 3 ]) == 2 && colorOf6ColorPart( p[ i ]) == a3 && colorOf6ColorPart( p[ i + 3] ) == a6);
+          // original Condition of S5, forbid ( ( k + 2 )_a3 , * , * , k_a6 )
+          isSuitable &= !(absOf6ColorPart( p[ i ] ) - absOf6ColorPart( p[ i + 3 ]) == 2
+                          && colorOf6ColorPart( p[ i ]) == a3
+                          && colorOf6ColorPart( p[ i + 3] ) == a6);
         }
       }
     }
