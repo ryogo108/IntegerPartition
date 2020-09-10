@@ -5,7 +5,7 @@ vector< part > partitions;
 
 // countSuitablePartitions で Suitable な分割を表示するかどうかのフラグ
 // For debug
-const bool countWithPrint = false;
+const bool countWithPrint = true;
 
 // Strict 分割だけを生成するかどうかフラグ.
 // もし現れる分割が全て Strict ならこれを true にすると高速化される.
@@ -25,13 +25,15 @@ const part a5 = 0;
 // memo : ある n で #(5ColorStrict & C)( n ) < #4ColorStrict( n ) となればそのような C を含むような部分集合は S5_weighted を定める禁止列として適当でない. (はず, 証明をしていない.)
 vector< long long> numsOf4ColorStrictPartitions = {0, 4, 10, 24, 51, 100, 190, 344, 601, 1024, 1702, 2768, 4422, 6948, 10752, 16424, 24782, 36972, 54602, 79872, 115805, 166540, 237664, 336720, 473856, 662596, 920934, 1272728, 1749407, 2392268, 3255410};
 
+// issue : 以下のように( 1_a2 < 1_a3 < 2_a1 < 1_a4 < 1_a5 として)差の条件を変えただけでは n = 5 で 4ColorStrict の個数を下回る.
+// todo : 1_a2 < 1_a3 < 2_a1 < 1_a4 < 1_a5 とした時に禁止列も変えなくてはならない.
 const part diffMatrixByColor[5][5] = {
   //       a5, a1, a2, a3, a4
-  /* a5 */ {1,  1,  1,  1,  1},
-  /* a1 */ {2,  2,  2,  3,  2},
+  /* a5 */ {1,  0,  1,  1,  1},
+  /* a1 */ {3,  2,  2,  2,  3},
   /* a2 */ {2,  1,  1,  2,  2},
   /* a3 */ {2,  1,  1,  1,  2},
-  /* a4 */ {2,  1,  1,  1,  1}
+  /* a4 */ {2,  0,  1,  1,  1}
 };
 
 part absOf5ColorPart(part p){
