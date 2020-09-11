@@ -23,17 +23,17 @@ bool isSuitablePartition(Par & p){
   return isSuitable;
 }
 
+// partition を Σceil( λ_i + 1 / 3 ) として計算する.
 part roughSumOfPartition(Par partition){
   part sum = part(0);
   for(int i = 0; i < partition.size(); i++){
     if(partition[i] == 0)break;
     sum += (partition[ i ] + 1 ) / 3 + ( ( ( partition[ i ] + 1 ) % 3 )  != 0 );
   }
-  cout<<sum<<" ";
-  printVector(partition);
   return sum;
 }
 
+// roughSumOfPartition を使って分割を数え上げる.
 vector<long long> countSuitablePartitionsByRoghWeight(int maxSizeOfPartition, vector<part> rawPartitions){
   vector<long long> numOfSuitablePartitionsBySize( maxSizeOfPartition + 1 );
   Par examinedPartition;
@@ -41,8 +41,9 @@ vector<long long> countSuitablePartitionsByRoghWeight(int maxSizeOfPartition, ve
   for(auto itr = rawPartitions.begin(); itr != rawPartitions.end(); itr++){
     if(*itr == part(0)){
       examinedPartition.push_back(part(0)); //0は分割の終端を表す.
-      if( isSuitablePartition( examinedPartition ) ){
-        numOfSuitablePartitionsBySize[ roughSumOfPartition(examinedPartition) ]++;
+      part sumOfExaminedPartition = roughSumOfPartition(examinedPartition);
+      if( isSuitablePartition( examinedPartition ) && sumOfExaminedPartition <= maxSizeOfPartition){
+        numOfSuitablePartitionsBySize[ sumOfExaminedPartition ]++;
         //if( withPrint ) printPartition( examinedPartition );
       }
       examinedPartition.clear();
@@ -61,7 +62,8 @@ int main(int argc, char * argv[]){
   // 和が maxPartitionSize 以下の分割を生成して partitions に一列で保存する.
   // 長さの短い順に保存されていて各分割の終端は 0 で区切られる.
   // Option : generateStrictPartitions = true にすると Strict な分割に限って生成する.
-  generatePartition( maxPartitionSize, partitions, generateStrictPartitions );
+  // roughSumOfPartition で分割の大きさが 1 / 3 になるので 3 倍の大きさで分割を生成する.
+  generatePartition( 3 *  maxPartitionSize, partitions, generateStrictPartitions );
 
   // printVector(partitions); // for debug
 
