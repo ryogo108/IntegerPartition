@@ -23,6 +23,10 @@ bool isSuitablePartition(Par & p){
   return isSuitable;
 }
 
+vector<long long> countSuitablePartitionsByRoghWeight(int maxPartitionSize, vector<part> partitions){
+  return countSuitablePartitions(maxPartitionSize, partitions, isSuitablePartition, countWithPrint);
+}
+
 int main(int argc, char * argv[]){
   // 実行時に生成する分割の大きさの上限をコマンドライン引数にとる.
   int maxPartitionSize = atoi( argv[1] );
@@ -36,7 +40,7 @@ int main(int argc, char * argv[]){
 
   // partitions のうちで Suitable な分割を大きさごとに数える
   // Option : countWithPrint = true として Suitable な分割を数え上げと同時に表示する.
-  vector<long long> numOfPartitionsBySize( countSuitablePartitions( maxPartitionSize, partitions, isSuitablePartition, countWithPrint ) );
+  vector<long long> numOfPartitionsBySize( countSuitablePartitionsByRoghWeight( maxPartitionSize, partitions) );
 
   // numOfPartitionsBySize を表示する.
 	printVector( numOfPartitionsBySize );
