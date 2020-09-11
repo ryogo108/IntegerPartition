@@ -23,8 +23,35 @@ bool isSuitablePartition(Par & p){
   return isSuitable;
 }
 
-vector<long long> countSuitablePartitionsByRoghWeight(int maxPartitionSize, vector<part> partitions){
-  return countSuitablePartitions(maxPartitionSize, partitions, isSuitablePartition, countWithPrint);
+part roughSumOfPartition(Par partition){
+  part sum = part(0);
+  for(int i = 0; i < partition.size(); i++){
+    if(partition[i] == 0)break;
+    sum += (partition[ i ] + 1 ) / 3 + ( ( ( partition[ i ] + 1 ) % 3 )  != 0 );
+  }
+  cout<<sum<<" ";
+  printVector(partition);
+  return sum;
+}
+
+vector<long long> countSuitablePartitionsByRoghWeight(int maxSizeOfPartition, vector<part> rawPartitions){
+  vector<long long> numOfSuitablePartitionsBySize( maxSizeOfPartition + 1 );
+  Par examinedPartition;
+  examinedPartition.reserve( maxSizeOfPartition + 1 );
+  for(auto itr = rawPartitions.begin(); itr != rawPartitions.end(); itr++){
+    if(*itr == part(0)){
+      examinedPartition.push_back(part(0)); //0は分割の終端を表す.
+      if( isSuitablePartition( examinedPartition ) ){
+        numOfSuitablePartitionsBySize[ roughSumOfPartition(examinedPartition) ]++;
+        //if( withPrint ) printPartition( examinedPartition );
+      }
+      examinedPartition.clear();
+    }
+    else {
+      examinedPartition.push_back( *itr );
+    }
+  }
+  return numOfSuitablePartitionsBySize;
 }
 
 int main(int argc, char * argv[]){
