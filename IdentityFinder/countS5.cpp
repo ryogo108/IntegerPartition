@@ -43,19 +43,7 @@ int main(int argc, char * argv[]){
   // 長さの短い順に保存されていて各分割の終端は 0 で区切られる.
   generatePartition( maxPartitionSize, partitions, generateStrictPartitions );
 
-  // partitions のうちで Suitable な分割を大きさごとに数える
-  // Option : countWithPrint = true として Suitable な分割を数え上げと同時に表示する.
-  vector<long long> numOfPartitionsBySize( countSuitablePartitions( maxPartitionSize, partitions, isSuitablePartition, countWithPrint) );
+  // partitions のうちで Suitable な分割を大きさごとに表示する
+  printSuitablePartitionsBySize( maxPartitionSize, partitions, isSuitablePartition);
 
-  // numOfPartitionsBySize を表示する.
-	printVector( numOfPartitionsBySize );
-
-  //分割の母関数の最初の n ( = maxPartitionSize ) 項 ( 1 + b_1 * q + b_2 * q ^ 2 + ... b_n * q ^ n ) を ( 1 - q ^ i ) ^ ( -a_i ) で因数分解した時の a_i の列. ( -a_i としていることに注意)
-	vector<long long> exponentSeqOfFactoredGeneratingFunction( Factor( numOfPartitionsBySize ) );
-
-  // exponentSeqOfFactoredGeneratingFunction を表示する.
-	printVector( exponentSeqOfFactoredGeneratingFunction );
-
-  // 上の a_i の列が周期列であればその周期と一周期ないで a_i = 1 となっている i を表示する. ( a_i = -1 なら -i　を表示する)
-	printPeriodOfSeq( exponentSeqOfFactoredGeneratingFunction );
 }
