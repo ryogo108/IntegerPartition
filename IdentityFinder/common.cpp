@@ -113,6 +113,50 @@ vector<long long> countSuitablePartitions(int maxSizeOfPartition, vector<part> &
   }
   return numOfSuitablePartitionsBySize;
 }
+
+void printSuitablePartitionsBySize(int maxSizeOfPartition, vector<part> & rawPartitions, function<bool(Par &)> isSuitable){
+  // 条件 isSuitable を満たす分割を 大きさ ごとに表示する.
+
+  // 条件 isSuitable を満たす分割を列挙する.
+  vector< part > suitablePartitions;
+  Par examinedPartition;
+  examinedPartition.reserve( maxSizeOfPartition + 1 );
+  for(auto itr = rawPartitions.begin(); itr != rawPartitions.end(); itr++){
+    if(*itr == part(0)){
+      examinedPartition.push_back(part(0)); //0は分割の終端を表す.
+      if( isSuitable( examinedPartition ) ){
+        suitablePartitions.reserve( suitablePartitions.size() + examinedPartition.size() );
+        suitablePartitions.insert( suitablePartitions.end(), examinedPartition.begin(), examinedPartition.end());
+      }
+      examinedPartition.clear();
+    }
+    else {
+      examinedPartition.push_back( *itr );
+    }
+  }
+
+  // 列挙した分割を大きさ毎に表示する.
+  for(part i = 0 ; i <= maxSizeOfPartition; i++){
+
+    if( i > 0)cout<<endl;
+
+    cout<<"Size : "<< i <<endl;
+
+    Par examinedPartition;
+    examinedPartition.reserve( maxSizeOfPartition + 1 );
+
+    for(auto itr = suitablePartitions.begin(); itr != suitablePartitions.end(); itr++){
+      if(*itr == part(0)){
+        if(sumVector(examinedPartition) == i)printPartition(examinedPartition);
+        examinedPartition.clear();
+      }
+      else {
+        examinedPartition.push_back( *itr );
+      }
+    }
+  }
+}
+
 vector<long long> countPartitionsWithPirnt(int n,vector<part> & ps, function<bool(Par &)> f){
   //条件fを満たす分割の数を数える
   vector<long long> re;
