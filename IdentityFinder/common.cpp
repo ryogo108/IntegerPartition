@@ -97,6 +97,7 @@ void filterSuitablePartitions(int maxSizeOfPartition, vector<part> & rawPartitio
   // Init destPartitions.
   destPartitions.clear();
 
+  // isSuitable を満たす分割を destPartition に保存する.
   Par examinedPartition;
   examinedPartition.reserve(maxSizeOfPartition + 1);
   for(auto itr = rawPartitions.begin(); itr != rawPartitions.end(); itr++){
