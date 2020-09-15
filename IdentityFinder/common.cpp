@@ -93,6 +93,27 @@ void generatePartition(int maxSizeOfPartition, vector<part> & destPartitions, bo
   }
 }
 
+void filterSuitablePartitions(int maxSizeOfPartition, vector<part> & rawPartitions, vector<part> & destPartitions, function<bool(Par &)> isSuitable){
+  // Init destPartitions.
+  destPartitions.clear();
+
+  Par examinedPartition;
+  examinedPartition.reserve(maxSizeOfPartition + 1);
+  for(auto itr = rawPartitions.begin(); itr != rawPartitions.end(); itr++){
+    if(*itr == part(0)){
+      examinedPartition.push_back(part(0)); //0は分割の終端を表す.
+      if( isSuitable( examinedPartition ) ){
+        destPartitions.reserve( destPartitions.size() + examinedPartition.size() );
+        destPartitions.insert( destPartitions.end(), examinedPartition.begin(), examinedPartition.end());
+      }
+      examinedPartition.clear();
+    }
+    else {
+      examinedPartition.push_back( *itr );
+    }
+  }
+}
+
 vector<long long> countSuitablePartitions(int maxSizeOfPartition, vector<part> & rawPartitions, function<bool(Par &)> isSuitable, bool withPrint = false){
   //条件fを満たす分割の数を数える
   vector<long long> numOfSuitablePartitionsBySize( maxSizeOfPartition + 1 );
