@@ -73,24 +73,25 @@ template<class T> int detectPeriod(const vector<T> & seq){
   return 0;
 }
 
-bool printPeriodOfSeq(vector<long long> & Seq){
-  //列Seqが周期的なときその1周期分の列を表示する
-  int l = detectPeriod(Seq);
-	vector<long long> v;
-	for(int i = 1; i <= l; i++){
-		if(Seq[i] != 0) v.push_back(Seq[i] * i);
+// seq が seq[1] から始めて周期的なときその周期列を表示する
+void printTermOfPeriodicSeq(const vector<long long> & seq){
+  int peoriod = detectPeriod(seq);
+	vector<long long> term;
+	for(int i = 1; i <= peoriod; i++){
+		term.push_back(seq[i]);
 	}
-  if(v.empty()) return false;
-
-  cout << "(mod  " << l << " ): ";
-  printVector(v);
-  return true;
+  cout<<"peoriod = " << term.size() << " : ";
+  printVector(term);
 }
 
 bool checkSeq(vector<long long> & Seq){
   printVector(Seq);
   vector<long long> B = Factor(Seq);
-  if(printPeriodOfSeq(B))return true;
+  if(detectPeriod(B) > 0){
+   printTermOfPeriodicSeq(B);
+   return true;
+  }
+
   return false;
 }
 
