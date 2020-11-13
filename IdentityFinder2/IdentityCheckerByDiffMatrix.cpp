@@ -84,17 +84,6 @@ void printTermOfPeriodicSeq(const vector<long long> & seq){
   printVector(term);
 }
 
-bool checkSeq(vector<long long> & Seq){
-  printVector(Seq);
-  vector<long long> B = Factor(Seq);
-  if(detectPeriod(B) > 0){
-   printTermOfPeriodicSeq(B);
-   return true;
-  }
-
-  return false;
-}
-
 vector<long long> countPartitionsByDiffMatrix(const Mat<int> & diffMatrix, const vector<int> & forbiddenParts){
   vector<long long> numOfPartitions(MAX_PARTITION_SIZE + 1, 0);
 
@@ -165,8 +154,11 @@ int main(){
   vector<int> forbiddenParts = {2};
 
   Mat<int> diffMatrix = int(seed.size()) * seed + shift;
-  printMatrix(diffMatrix);
 
   vector<long long> numOfPartitions = countPartitionsByDiffMatrix(diffMatrix, forbiddenParts);
-  checkSeq(numOfPartitions);
+  vector<long long> exponents = Factor(numOfPartitions);
+  if(detectPeriod(exponents) > 0){
+    printMatrix(diffMatrix);
+    printTermOfPeriodicSeq(exponents);
+  }
 }
