@@ -27,8 +27,11 @@ template<class T>void printVector(vector<T> & vec){
   cout << endl;
 }
 
-vector<long long> Factor(vector<long long> &  B){//今はここが律速
-  //Eulerのアルゴリズム
+// Euler の q - series の因数分解.
+// B = (b_0, b_1, b_2, b_3, ..., b_N) -> A = (0, a_1, a_2, a_3, ..., a_N) s.t.
+// (1 - q) ^ (-a_1) (1 - q ^ 2) ^ (-a_2) (1 - q ^ 3) ^ (-a_3) ... (1 - q ^ N) ^ (-a_N)
+// = 1 + b_1 * q + b_2 * q ^ 2 + b_3 * q ^ 3 + ... + b_N * q ^ N + o(q ^ (N + 1)).
+vector<long long> Factor(vector<long long> &  B){
   vector<long long> A;
   A.push_back(0);
   for(int i = 1; i < B.size(); i++){
