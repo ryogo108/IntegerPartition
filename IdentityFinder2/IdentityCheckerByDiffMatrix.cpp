@@ -12,6 +12,13 @@ int max(int a,int b){
   return a>b?a:b;
 }
 
+template<class T> bool isInVector(T target, const vector<T> & vec) {
+  for(int i = 0; i < vec.size(); i++){
+    if(target == vec[i]) return true;
+  }
+  return false;
+}
+
 template<class T>void printVector(vector<T> & vec){
   for(int i = 0; i < vec.size(); i++){
     if(i > 0)cout << " ";
@@ -80,7 +87,7 @@ bool checkSeq(vector<long long> & Seq){
   return false;
 }
 
-vector<long long> countPartitionsByDiffMatrix(const Mat<int> & diffMatrix){
+vector<long long> countPartitionsByDiffMatrix(const Mat<int> & diffMatrix, const vector<int> & forbiddenParts){
   vector<long long> numOfPartitions(MAX_N + 1, 0);
 
   int mod = diffMatrix.size();
@@ -102,7 +109,7 @@ vector<long long> countPartitionsByDiffMatrix(const Mat<int> & diffMatrix){
 
       if(maximalPart > partitionSize) continue;
 
-      if(maximalPart == 2){
+      if(isInVector(maximalPart, forbiddenParts)){
         continue;
       }
 
@@ -146,9 +153,11 @@ int main(){
     {7, 6, 5, 4, 3, 2, 1, 0},
   };
 
+  vector<int> forbiddenParts = {2};
+
   Mat<int> diffMatrix = int(ker.size()) * ker + shift;
   printMatrix(diffMatrix);
 
-  vector<long long> numOfPartitions = countPartitionsByDiffMatrix(diffMatrix);
+  vector<long long> numOfPartitions = countPartitionsByDiffMatrix(diffMatrix, forbiddenParts);
   checkSeq(numOfPartitions);
 }
