@@ -4,12 +4,12 @@
 
 using namespace std;
 
-const int MAX_N=100;
-const int MAX_MOD=20;
-long long dp[MAX_N+5][MAX_N+5][MAX_MOD+1];
+const int MAX_N = 100;
+const int MAX_MOD = 20;
+long long dp[MAX_N + 5][MAX_N + 5][MAX_MOD + 1];
 
 int max(int a,int b){
-  return a>b?a:b;
+  return a > b ? a : b;
 }
 
 template<class T> bool isInVector(T target, const vector<T> & vec) {
@@ -92,9 +92,9 @@ vector<long long> countPartitionsByDiffMatrix(const Mat<int> & diffMatrix, const
 
   int mod = diffMatrix.size();
 
-  for(int partitionSize = 0; partitionSize < MAX_N + 5; partitionSize++){
-    for(int maximalPart = 0; maximalPart < MAX_N + 5; maximalPart++){
-      for(int residue = 0; residue < MAX_MOD + 1; residue++){
+  for(int partitionSize = 0; partitionSize <= MAX_N; partitionSize++){
+    for(int maximalPart = 0; maximalPart <= MAX_N; maximalPart++){
+      for(int residue = 0; residue <= MAX_MOD; residue++){
         dp[partitionSize][maximalPart][residue] = 0;
       }
     }
