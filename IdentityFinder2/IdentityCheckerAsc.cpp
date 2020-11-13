@@ -69,13 +69,17 @@ bool checkSeq(vector<long long>& Seq){
 }
 
 const int MAX_N=100;
-const int MAX_MOD=5;
+const int MAX_MOD=20;
 long long dp[MAX_N+5][MAX_N+5][MAX_MOD+1];
 vector<long long>A(MAX_N+1);
 
 void countPartition(Mat<int> ker,Mat<int> shift){
   int mod=ker.size();
   Mat<int>data=mod*ker+shift;
+
+  printMatrix(data);
+
+
   fill(A.begin(),A.end(),0);
   for(int i=0;i<MAX_N+5;i++)for(int j=0;j<MAX_N+5;j++)for(int k=0;k<MAX_MOD+1;k++)dp[i][j][k]=0;
   dp[0][0][0]=1;
@@ -83,7 +87,7 @@ void countPartition(Mat<int> ker,Mat<int> shift){
     for(int j=1;j<MAX_N+1;j++){
       for(int k=0;k<mod;k++){
         dp[i][j][k]=dp[i][j-1][k];
-        if(i>=j && j%mod==k){
+        if(i>=j && j%mod==k && j != 2){
           for(int r=0;r<mod;r++){
               dp[i][j][k]+=dp[i-j][max(j-data[k][r],0)][r];
             }
@@ -105,14 +109,24 @@ int main(){
 
 Mat<int> ker,shift;
   ker={
-    {2,1,2},
-    {1,0,1},
-    {0,1,0}
+    {1, 1, 2, 2, 2, 2, 2, 2},
+    {1, 1, 1, 1, 1, 2, 2, 2},
+    {1, 1, 2, 2, 2, 2, 2, 2},
+    {1, 1, 1, 1, 1, 1, 2, 2},
+    {1, 1, 1, 1, 1, 1, 2, 1},
+    {1, 1, 1, 1, 1, 1, 2, 1},
+    {1, 1, 1, 1, 1, 1, 2, 1},
+    {0, 0, 1, 1, 1, 1, 1, 1},
   };
   shift={
-    {0,-1,-2},
-    {1,0,-1},
-    {2,1,0}
+    {0, -1, -2, -3, -4, -5, -6, -7},
+    {1, 0, -1, -2, -3, -4, -5, -6},
+    {2, 1, 0, -1, -2, -3, -4, -5},
+    {3, 2, 1, 0, -1, -2, -3, -4},
+    {4, 3, 2, 1, 0, -1, -2, -3},
+    {5, 4, 3, 2, 1, 0, -1, -2},
+    {6, 5, 4, 3, 2, 1, 0, -1},
+    {7, 6, 5, 4, 3, 2, 1, 0},
   };
   countPartition(ker,shift);
 }
