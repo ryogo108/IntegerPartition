@@ -52,18 +52,22 @@ vector<long long> Factor(vector<long long> &  B){
   return A;
 }
 
-int detect(vector<long long> & A){
-  //列Aが周期的かどうか調べその周期を返す
-  int n = A.size();
-  for(int i = 1; i <= n / 2; i++){
-    bool f = true;
-    for(int j = 1; j < n; j++){
-      if(A[j] != A[j % i == 0 ? i : j % i]){
-        f = false;
+// seq で seq[1] から始まる周期列があればそのの長さを返す.
+// seq[1] から始めて周期的でなければ 0 を返す.
+template<class T> int detectPeriod(const vector<T> & seq){
+  int lengthOfSeq = seq.size();
+  for(int period = 1; period <= lengthOfSeq / 2; period++){
+    bool isPeoridic = true;
+    for(int i = 1; i < lengthOfSeq; i++){
+      if(seq[i] != seq[i % period == 0 ? period : i % period]){
+        isPeoridic = false;
         break;
       }
     }
-    if(f)return i;
+
+    if(isPeoridic){
+      return period;
+    }
   }
 
   return 0;
@@ -71,7 +75,7 @@ int detect(vector<long long> & A){
 
 bool printPeriodOfSeq(vector<long long> & Seq){
   //列Seqが周期的なときその1周期分の列を表示する
-  int l = detect(Seq);
+  int l = detectPeriod(Seq);
 	vector<long long> v;
 	for(int i = 1; i <= l; i++){
 		if(Seq[i] != 0) v.push_back(Seq[i] * i);
