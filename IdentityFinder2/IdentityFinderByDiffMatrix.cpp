@@ -152,15 +152,16 @@ void dfsForbiddenPartsGenerator(const Mat<int> & diffMatrix, int forbiddenPart, 
     dfsForbiddenPartsGenerator(diffMatrix, forbiddenPart + 1, maxForbiddenPart, forbiddenParts);
   }
 }
-void dfsDiffMatrixGenerator(int matrixSize, int maxDiff, int depth, Mat<int> seedMatrix, const Mat<int> & shiftMatrix){
+void dfsDiffMatrixGenerator(int matrixSize, int maxDiff, int depth, const Mat<int> & seedMatrix, const Mat<int> & shiftMatrix){
   if(depth == matrixSize * matrixSize){
     Mat<int> diffMatrix = int(seedMatrix.size()) * seedMatrix + shiftMatrix;
     dfsForbiddenPartsGenerator(diffMatrix, 1, MAX_FORBIDDEN_PART, vector<int>());
   }
   else{
     for(int diff = 0; diff <= maxDiff; diff++){
-      seedMatrix[depth / matrixSize][depth % matrixSize] += diff;
-      dfsDiffMatrixGenerator(matrixSize, maxDiff, depth + 1, seedMatrix, shiftMatrix);
+      Mat<int> newSeedMatrix = seedMatrix;
+      newSeedMatrix[depth / matrixSize][depth % matrixSize] += diff;
+      dfsDiffMatrixGenerator(matrixSize, maxDiff, depth + 1, newSeedMatrix, shiftMatrix);
     }
   }
 }
