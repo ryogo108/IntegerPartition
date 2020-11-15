@@ -179,7 +179,7 @@ int main(int argc, char *argv[]){
   Mat<int> seedMatrix(matrixSize, vector<int>(matrixSize, 0));
   for(int i = 0; i < matrixSize; i++){
     for(int j = 0; j < matrixSize;j++){
-      seedMatrix[i][j] = j > i;
+      seedMatrix[i][j] = j >= i;
     }
   }
 
