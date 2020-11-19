@@ -5,8 +5,8 @@
 
 using namespace std;
 
-const int MAX_PARTITION_SIZE = 100;
-const int MAX_PART = 100;
+const int MAX_PARTITION_SIZE = 50;
+const int MAX_PART = 50;
 const int MAX_FORBIDDEN_PART = 5;
 const int MAX_MOD = 20;
 
