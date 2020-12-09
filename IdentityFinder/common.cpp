@@ -136,6 +136,27 @@ vector<long long> countSuitablePartitions(int maxSizeOfPartition, vector<part> &
   return numOfSuitablePartitionsBySize;
 }
 
+// countSuitableRefinedPartitions は 条件を満たす分割を分割の大きさ, refineFunction の値ごとに数える.
+vector<vector<long long> > countSuitableRefinedPartitions(int maxSizeOfPartition, vector<part> & rawPartitions, function<bool(Par &)> isSuitable, function<unsigned int(Par &)> refineFunction, bool withPrint = false){
+  vector<long long> numOfSuitableRefinedPartitionsBySize( maxSizeOfPartition + 1, vector<long long> (maxSizeOfPartition + 1, 0 ) );
+  Par examinedPartition;
+  examinedPartition.reserve( maxSizeOfPartition + 1 );
+  for(auto itr = rawPartitions.begin(); itr != rawPartitions.end(); itr++){
+    if(*itr == part(0)){
+      examinedPartition.push_back(part(0)); //0は分割の終端を表す.
+      if( isSuitable( examinedPartition ) ){
+        numOfSuitableRefinedPartitionsBySize[ sumVector(examinedPartition) ][ refineFunction(examinedPartition) ]++;
+        if( withPrint ) printPartition( examinedPartition );
+      }
+      examinedPartition.clear();
+    }
+    else {
+      examinedPartition.push_back( *itr );
+    }
+  }
+  return numOfSuitablePartitionsBySize;
+}
+
 void printSuitablePartitionsBySize(int maxSizeOfPartition, vector<part> & rawPartitions, function<bool(Par &)> isSuitable){
   // 条件 isSuitable を満たす分割を 大きさ ごとに表示する.
 
@@ -177,61 +198,6 @@ void printSuitablePartitionsBySize(int maxSizeOfPartition, vector<part> & rawPar
       }
     }
   }
-}
-
-vector<long long> countPartitionsWithPirnt(int n,vector<part> & ps, function<bool(Par &)> f){
-  //条件fを満たす分割の数を数える
-  vector<long long> re;
-  long long now = 0;
-  for(int l = 0; l <= n; l++){
-    long long cap = numOfPartsOfAllPartition( l );
-    long long cnt = 0;
-    for(; now < cap; now += PARTITION_LENGTH){
-      vector<part> v;
-      v.assign(ps.begin() + now, ps.begin() + now+PARTITION_LENGTH);
-      if( f( v ) ){
-        printPartition( v );
-        cnt++;
-      }
-    }
-    cout << endl;
-    re.push_back( cnt );
-  }
-  return re;
-}
-
-vector<vector<long long> > countRefinedPartitions(int n, vector<part> & ps, function<bool(Par &)> f){
-  //条件fを満たし長さも考慮して分割を数える
-  vector<vector<long long> > re( PARTITION_LENGTH, vector<long long> ( PARTITION_LENGTH, 0 ) );
-  long long now = 0;
-  for(int i = 0; i<=n; i++){
-    long long cap = numOfPartsOfAllPartition( i );
-    for(; now < cap; now += PARTITION_LENGTH){
-      vector<part> v;
-      v.assign(ps.begin() + now, ps.begin() + now+PARTITION_LENGTH);
-      if( f( v ) ){
-				re[ i ][ lengthOfPartition( v ) ]++;
-			}
-    }
-  }
-  return re;
-}
-vector<vector<long long> > countRefinedPartitions2(int n, vector<part> & ps, function<bool(Par &)> f){
-  //条件fを満たし適当な重みを考慮して分割を数える
-  vector<vector<long long> > re( PARTITION_LENGTH, vector<long long> (PARTITION_LENGTH * 2, 0) );
-  long long now = 0;
-  for(int i = 0; i <= n; i++){
-    long long cap = numOfPartsOfAllPartition( i );
-    for(; now < cap; now += PARTITION_LENGTH){
-      vector<part> v;
-      v.assign(ps.begin() + now, ps.begin() + now+PARTITION_LENGTH);
-      if( f( v ) ){
-        cout << lengthOfPartitionSp( v ) << " ";
-				re[ i ][ lengthOfPartitionSp( v ) ]++;
-			}
-    }
-  }
-  return re;
 }
 
 vector<long long> Factor(vector<long long> &  B){
