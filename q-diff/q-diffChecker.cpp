@@ -16,7 +16,10 @@ bool isSuitablePartition(Par & p){
   for(int i = 0; i < p.size(); i++){
     if(p[ i ] == 0) break;
     if(p[ i + 1 ] != 0){
-      isSuitable &= p[ i ] - p[ i + 1 ] >= 2;
+      isSuitable &= p[ i ] - p[ i + 1 ] >= 3;
+      if(p[i] % 3 == 0){
+        isSuitable &= p[ i ] - p[ i + 1 ] >= 4;
+      }
     }
   }
   return isSuitable;
@@ -26,7 +29,12 @@ unsigned int refineFunction(Par & p){
   unsigned int refineValue = 0;
   for(int i = 0; i < p.size(); i++){
     if(p[i] == 0) break;
-    refineValue++;
+    if(p[i] % 3 == 0){
+      refineValue += 2;
+    }
+    else{
+      refineValue++;
+    }
   }
   return refineValue;
 }
