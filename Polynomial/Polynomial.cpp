@@ -97,22 +97,20 @@ Polynomial xInv(const Polynomial & p){
 }
 
 void print_Polynomial(Polynomial & p){
-  int terms=0;
-  for(int i=0;i<p.size();i++){
-    int cnt=0;
-    for(int j=0;j<p[i].size();j++){
-      if(p[i][j]==0)continue;
-      else cnt++;
-      if((cnt>1 || terms!=0)&&p[i][j]>0)cout<<"+";
-      if(p[i][j]!=1 || (i==0 && j==0) )cout<<p[i][j];
-      if(j==1)cout<<"x";
-      else if(j)cout<<"x^"<<j;
-      if(i==1)cout<<"q";
-      else if(i)cout<<"q^"<<i;
+  int terms = 0;
+  for(int i = 0; i < p.size(); i++){
+    int termsBySize = 0;
+    for(int j = 0; j < p[i].size(); j++){
+      if(p[i][j] == 0)continue;
+      else termsBySize++;
+      if(terms > 0 && p[i][j] > 0) cout << " + ";
+      cout << p[i][j];
+      if(j > 0) cout << " * x^" << j;
+      if(i > 0) cout << " * q^" << i;
     }
-    terms+=cnt;
-    if(cnt>0)cout<<endl;
+    terms += termsBySize;
   }
+  cout<<endl;
 }
 
 /*int main(){
