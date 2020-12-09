@@ -138,7 +138,7 @@ vector<long long> countSuitablePartitions(int maxSizeOfPartition, vector<part> &
 
 // countSuitableRefinedPartitions は 条件を満たす分割を分割の大きさ, refineFunction の値ごとに数える.
 vector<vector<long long> > countSuitableRefinedPartitions(int maxSizeOfPartition, vector<part> & rawPartitions, function<bool(Par &)> isSuitable, function<unsigned int(Par &)> refineFunction, bool withPrint = false){
-  vector<long long> numOfSuitableRefinedPartitionsBySize( maxSizeOfPartition + 1, vector<long long> (maxSizeOfPartition + 1, 0 ) );
+  vector<vector<long long> > numOfSuitableRefinedPartitionsBySize( maxSizeOfPartition + 1, vector<long long> (maxSizeOfPartition + 1, 0 ) );
   Par examinedPartition;
   examinedPartition.reserve( maxSizeOfPartition + 1 );
   for(auto itr = rawPartitions.begin(); itr != rawPartitions.end(); itr++){
@@ -154,7 +154,7 @@ vector<vector<long long> > countSuitableRefinedPartitions(int maxSizeOfPartition
       examinedPartition.push_back( *itr );
     }
   }
-  return numOfSuitablePartitionsBySize;
+  return numOfSuitableRefinedPartitionsBySize;
 }
 
 void printSuitablePartitionsBySize(int maxSizeOfPartition, vector<part> & rawPartitions, function<bool(Par &)> isSuitable){
