@@ -14,11 +14,17 @@ const bool generateStrictPartitions = true;
 bool isSuitablePartition(Par & p){
   bool isSuitable = true;
   for(int i = 0; i < p.size(); i++){
-    if(p[ i ] == 0) break;
-    if(p[ i + 1 ] != 0){
-      isSuitable &= p[ i ] - p[ i + 1 ] >= 3;
+    isSuitable &= p[i] != 3;
+    if(p[i] == 0) break;
+    if(p[i + 1] != 0){
       if(p[i] % 3 == 0){
-        isSuitable &= p[ i ] - p[ i + 1 ] >= 4;
+        isSuitable &= p[i] - p[i + 1] >= 5;
+      }
+      else if(p[i] % 3 == 1){
+        isSuitable &= p[i] - p[i + 1] == 3 || p[i] - p[i + 1] == 4 || p[i] - p[i + 1] >= 6;
+      }
+      else if(p[i] % 3 == 2){
+        isSuitable &= p[i] - p[i + 1] >= 1;
       }
     }
   }
