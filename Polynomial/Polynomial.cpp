@@ -59,23 +59,19 @@ Polynomial operator - (const Polynomial & l, const Polynomial & r){
 }
 
 Polynomial operator * (const Polynomial & l, const Polynomial & r){
-  int mls = 0, mrs = 0;
-  for(int i = 0; i < l.size(); i++) mls = max(mls, l[i].size());
-
-  for(int i = 0; i < r.size(); i++) mrs = max(mrs, r[i].size());
-
-  Polynomial re(l.size() + r.size() - 1, vector<long long>(mls + mrs - 1, 0));
-
-  for(int il = 0; il < l.size(); il++){
-    for(int jl = 0; jl < l[il].size(); jl++){
-      for(int ir = 0; ir < r.size(); ir++){
-        for(int jr = 0; jr < r[ir].size(); jr++){
-          re[il + ir][jl + jr] += l[il][jl] * r[ir][jr];
+  Polynomial result(MAX_Q_INDEX + 1, vector<long long>(MAX_X_INDEX + 1, 0));
+  for(int lQIndex = 0; lQIndex < min(l.size(), MAX_Q_INDEX + 1); lQIndex++){
+    for(int lXIndex = 0; lXIndex < min(l[lQIndex].size(), MAX_X_INDEX + 1); lXIndex++){
+      for(int rQIndex = 0; rQIndex < min(r.size(), MAX_Q_INDEX + 1); rQIndex++){
+        for(int rXIndex = 0; rXIndex < min(r[rQIndex].size(), MAX_X_INDEX + 1); rXIndex++){
+          if(lQIndex + rQIndex > MAX_Q_INDEX) continue;
+          if(lXIndex + rXIndex > MAX_X_INDEX) continue;
+          result[lQIndex + rQIndex][lXIndex + rXIndex] += l[lQIndex][lXIndex] * r[rQIndex][rXIndex];
         }
       }
     }
   }
-  return re;
+  return result;
 }
 
 // f(x) -> f(x * q ^ s)
@@ -123,10 +119,12 @@ void print_Polynomial(Polynomial & p){
 
 int main(){
   Polynomial p1 = Polynomial({{1, 1, 100, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 1, 1, 1}});
-  Polynomial p2 = Polynomial({{1, 1, 1}, {1, 1, 1, 1}});
+  Polynomial p2 = Polynomial({{1}, {1, 1}});
   Polynomial x={{1,1,1,1,1,1},{1,2,3,4}};
 
-  Polynomial r = p1 - p2;
+  Polynomial q = Polynomial({{1}, {0, 1}});
+
+  Polynomial r = q * p2;
   print_Polynomial(r);
   //print_Polynomial(r);
 }
