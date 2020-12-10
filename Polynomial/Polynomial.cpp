@@ -33,13 +33,13 @@ Polynomial operator + (const Polynomial & l, const Polynomial & r){
 }
 
 Polynomial operator - (const Polynomial & r){
-  Polynomial re = r;
-  for(int i = 0; i < re.size(); i++){
-    for(int j = 0; j < re[i].size(); j++){
-      re[i][j] = -re[i][j];
+  Polynomial result(MAX_Q_INDEX + 1, vector<long long>(MAX_X_INDEX + 1, 0));
+  for(int qIndex = 0; qIndex < min(r.size(), MAX_Q_INDEX + 1); qIndex++){
+    for(int xIndex = 0; xIndex < min(r[qIndex].size(), MAX_X_INDEX + 1); xIndex++){
+      result[qIndex][xIndex] = -r[qIndex][xIndex];
     }
   }
-  return re;
+  return result;
 }
 
 Polynomial operator - (const Polynomial & l, const Polynomial & r){
@@ -116,7 +116,10 @@ void print_Polynomial(Polynomial & p){
   for(int i = 0; i < p.size(); i++){
     for(int j = 0; j < p[i].size(); j++){
       if(p[i][j] == 0)continue;
-      if(terms > 0 && p[i][j] > 0) cout << " + ";
+      if(terms > 0){
+        if(p[i][j] > 0) cout << " + ";
+        if(p[i][j] < 0) cout << " ";
+      }
       cout << p[i][j];
       if(j > 0) cout << " * x^" << j;
       if(i > 0) cout << " * q^" << i;
@@ -131,7 +134,7 @@ int main(){
   Polynomial p2 = Polynomial({{1, 1, 1}, {1, 1, 1, 1}});
   Polynomial x={{1,1,1,1,1,1},{1,2,3,4}};
 
-  Polynomial r = p1 + p2;
+  Polynomial r = -p1;
   print_Polynomial(r);
   //print_Polynomial(r);
 }
