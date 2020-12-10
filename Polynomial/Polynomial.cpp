@@ -116,22 +116,20 @@ Polynomial xInv(const Polynomial & p){
 void print_Polynomial(Polynomial & p){
   int terms = 0;
   for(int i = 0; i < p.size(); i++){
-    int termsBySize = 0;
     for(int j = 0; j < p[i].size(); j++){
       if(p[i][j] == 0)continue;
-      else termsBySize++;
       if(terms > 0 && p[i][j] > 0) cout << " + ";
       cout << p[i][j];
       if(j > 0) cout << " * x^" << j;
       if(i > 0) cout << " * q^" << i;
+      terms++;
     }
-    terms += termsBySize;
   }
   cout<<endl;
 }
 
 int main(){
-  Polynomial p = Polynomial({{1, 0, 1}, {1, 1, 1, 1}});
+  Polynomial p = Polynomial({{1, 1, 1}, {1, 1, 1, 1}});
   Polynomial x={{1,1,1,1,1,1},{1,2,3,4}};
 
   print_Polynomial(p);
