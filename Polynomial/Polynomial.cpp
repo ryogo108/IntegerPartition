@@ -5,8 +5,8 @@ using namespace std;
 
 // Polynomial は ZZ[x, q] / (x ^ (MAX_X_INDEX + 1), q ^ (MAX_Q_INDEX + 1)) の上の元.
 typedef vector<vector<long long> > Polynomial;
-const int MAX_Q_INDEX = 30;
-const int MAX_X_INDEX = 30;
+const int MAX_Q_INDEX = 5;
+const int MAX_X_INDEX = 5;
 
 int max(int a, int b){
   return a > b ? a : b;
@@ -86,6 +86,16 @@ Polynomial qShift(const Polynomial & p, int s){
   return result;
 }
 
+vector<long long> polynomialToVec(const Polynomial & p){
+  vector<long long> result((MAX_Q_INDEX + 1) * (MAX_X_INDEX), 0);
+  for(int qIndex = 0; qIndex < min(p.size(), MAX_Q_INDEX + 1); qIndex++){
+    for(int xIndex = 0; xIndex < min(p[qIndex].size(), MAX_X_INDEX + 1); xIndex++){
+      result[qIndex * (MAX_X_INDEX + 1) + xIndex] = p[qIndex][xIndex];
+    }
+  }
+  return result;
+}
+
 void print_Polynomial(Polynomial & p){
   int terms = 0;
   for(int i = 0; i < p.size(); i++){
@@ -112,6 +122,6 @@ int main(){
   Polynomial q = Polynomial({{1}, {0, 1}});
 
   Polynomial r = qShift(p2, 5);
-  print_Polynomial(r);
+  print_Polynomial(q);
   //print_Polynomial(r);
 }
