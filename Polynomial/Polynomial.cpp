@@ -12,27 +12,24 @@ int max(int a, int b){
   return a > b ? a : b;
 }
 
+int min(int a, int b){
+  return a < b ? a : b;
+}
+
 Polynomial operator + (const Polynomial & l, const Polynomial & r){
-  Polynomial re(max(l.size(), r.size()));
-  for(int i = 0; i < re.size(); i++){
-    int ls = 0, rs = 0;
-    if(i < l.size()) ls = l[i].size();
-    if(i < r.size()) rs = r[i].size();
-    re[i].resize(max(ls, rs));
-  }
-
-  for(int i = 0; i < l.size(); i++){
-    for(int j = 0; j < l[i].size(); j++){
-      re[i][j] += l[i][j];
+  Polynomial result(MAX_Q_INDEX + 1, vector<long long>(MAX_X_INDEX + 1, 0));
+  for(int qIndex = 0; qIndex < min(l.size(), MAX_Q_INDEX + 1); qIndex++){
+    for(int xIndex = 0; xIndex < min(l[qIndex].size(), MAX_X_INDEX + 1); xIndex++){
+      result[qIndex][xIndex] += l[qIndex][xIndex];
     }
   }
 
-  for(int i = 0; i < r.size(); i++){
-    for(int j = 0; j < r[i].size(); j++){
-      re[i][j] += r[i][j];
+  for(int qIndex = 0; qIndex < min(r.size(),  MAX_Q_INDEX + 1); qIndex++){
+    for(int xIndex = 0; xIndex < min(r[qIndex].size(), MAX_X_INDEX + 1); xIndex++){
+      result[qIndex][xIndex] += r[qIndex][xIndex];
     }
-  }
-  return re;
+ }
+  return result;
 }
 
 Polynomial operator - (const Polynomial & r){
@@ -89,6 +86,7 @@ Polynomial operator * (const Polynomial & l, const Polynomial & r){
   return re;
 }
 
+// f(x) -> f(x * q ^ s)
 Polynomial qShift(const Polynomial & p, int s){
   int ms = 0;
   for(int i = 0;i < p.size(); i++) ms = max(ms, p[i].size());
@@ -129,9 +127,11 @@ void print_Polynomial(Polynomial & p){
 }
 
 int main(){
-  Polynomial p = Polynomial({{1, 1, 1}, {1, 1, 1, 1}});
+  Polynomial p1 = Polynomial({{1, 1, 100, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 1, 1, 1}});
+  Polynomial p2 = Polynomial({{1, 1, 1}, {1, 1, 1, 1}});
   Polynomial x={{1,1,1,1,1,1},{1,2,3,4}};
 
-  print_Polynomial(p);
+  Polynomial r = p1 + p2;
+  print_Polynomial(r);
   //print_Polynomial(r);
 }
