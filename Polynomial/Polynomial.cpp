@@ -76,27 +76,14 @@ Polynomial operator * (const Polynomial & l, const Polynomial & r){
 
 // f(x) -> f(x * q ^ s)
 Polynomial qShift(const Polynomial & p, int s){
-  int ms = 0;
-  for(int i = 0;i < p.size(); i++) ms = max(ms, p[i].size());
-
-  Polynomial re(p.size() + (ms - 1) * s, vector<long long>(ms, 0));
-  for(int i = 0; i < p.size(); i++){
-    for(int j = 0; j < p[i].size(); j++){
-      re[i + j * s][j] = p[i][j];
+  Polynomial result(MAX_Q_INDEX + 1, vector<long long>(MAX_X_INDEX + 1, 0));
+  for(int qIndex = 0; qIndex < min(p.size(), MAX_Q_INDEX + 1); qIndex++){
+    for(int xIndex = 0; xIndex < min(p[qIndex].size(), MAX_X_INDEX + 1); xIndex++){
+      if(qIndex + xIndex * s > MAX_Q_INDEX) continue;
+      result[qIndex + xIndex * s][xIndex] = p[qIndex][xIndex];
     }
   }
-  return re;
-}
-
-Polynomial xInv(const Polynomial & p){
-  //x <- (-x)
-  Polynomial re = p;
-  for(int i = 0; i < re.size(); i++){
-    for(int j = 0;j < re[i].size(); j++){
-      if(j % 2) re[i][j] = -re[i][j];
-    }
-  }
-  return re;
+  return result;
 }
 
 void print_Polynomial(Polynomial & p){
@@ -119,12 +106,12 @@ void print_Polynomial(Polynomial & p){
 
 int main(){
   Polynomial p1 = Polynomial({{1, 1, 100, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 1, 1, 1}});
-  Polynomial p2 = Polynomial({{1}, {1, 1}});
+  Polynomial p2 = Polynomial({{1}, {1, 1, 2, 3, 4, 5, 6, 7, 8}, {0 ,1}});
   Polynomial x={{1,1,1,1,1,1},{1,2,3,4}};
 
   Polynomial q = Polynomial({{1}, {0, 1}});
 
-  Polynomial r = q * p2;
+  Polynomial r = qShift(p2, 5);
   print_Polynomial(r);
   //print_Polynomial(r);
 }
