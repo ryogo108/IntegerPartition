@@ -1,6 +1,8 @@
 #include"../IdentityFinder/common.cpp"
 #include"../Polynomial/Polynomial.cpp"
 
+typedef vector<vector<long long> > Matrix;
+
 vector<part> partitions;
 
 // countSuitablePartitions で Suitable な分割を表示するかどうかのフラグ
@@ -31,7 +33,36 @@ unsigned int refineFunction(Par & p){
   return refineValue;
 }
 
+Matrix transpose(const Matrix & m){
+  if(m.empty()) return Matrix(0);
+  Matrix result(m[0].size(), vector<long long>(m.size(), 0));
+  for(int mRowIndex = 0; mRowIndex < m.size(); mRowIndex++){
+    for(int mColIndex = 0; mColIndex < m[mRowIndex].size(); mColIndex++){
+      result[mColIndex][mRowIndex] = m[mRowIndex][mColIndex];
+    }
+  }
+  return result;
+}
+
+void printMatrix(const Matrix & m){
+  cout << "Matrix([";
+  for(int mRowIndex = 0; mRowIndex < m.size(); mRowIndex++){
+    if(mRowIndex) cout << ", ";
+    cout << "[";
+    for(int mColIndex = 0; mColIndex < m[mRowIndex].size(); mColIndex++){
+      if(mColIndex) cout << ", ";
+      cout << m[mRowIndex][mColIndex];
+    }
+    cout << "]";
+  }
+  cout << "])" << endl;
+}
+
 int main(int argc,char *argv[]){
+  Matrix m = Matrix({{1, 2, 3}, {4, 5, 6}, {7, 8, 9}});
+  Matrix mt = transpose(m);
+  printMatrix(m);
+  printMatrix(mt);
   // 実行時に生成する分割の大きさの上限をコマンドライン引数にとる.
   int maxPartitionSize = atoi( argv[1] );
 
