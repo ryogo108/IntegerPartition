@@ -3,6 +3,7 @@
 #include<cstdint>
 #include<functional>
 #include<queue>
+#include<gmpxx.h>
 #include"countPartition.cpp"
 using namespace std;
 
@@ -12,6 +13,8 @@ const int PARTITION_LENGTH=100;
 
 typedef /*uint_fast8_t*/ short part; // printVectorで表示するため一時的にpartにshort型を使う.
 typedef vector<part> Par;
+
+using ZZ = mpz_class;
 
 part min(part l, part r){
   if(r > l) return l;
@@ -137,8 +140,8 @@ vector<long long> countSuitablePartitions(int maxSizeOfPartition, vector<part> &
 }
 
 // countSuitableRefinedPartitions は 条件を満たす分割を分割の大きさ, refineFunction の値ごとに数える.
-vector<vector<long long> > countSuitableRefinedPartitions(int maxSizeOfPartition, vector<part> & rawPartitions, function<bool(Par &)> isSuitable, function<unsigned int(Par &)> refineFunction, bool withPrint = false){
-  vector<vector<long long> > numOfSuitableRefinedPartitionsBySize( maxSizeOfPartition + 1, vector<long long> (maxSizeOfPartition + 1, 0 ) );
+vector<vector<ZZ> > countSuitableRefinedPartitions(int maxSizeOfPartition, vector<part> & rawPartitions, function<bool(Par &)> isSuitable, function<unsigned int(Par &)> refineFunction, bool withPrint = false){
+  vector<vector<ZZ> > numOfSuitableRefinedPartitionsBySize( maxSizeOfPartition + 1, vector<ZZ> (maxSizeOfPartition + 1, ZZ(0) ) );
   Par examinedPartition;
   examinedPartition.reserve( maxSizeOfPartition + 1 );
   for(auto itr = rawPartitions.begin(); itr != rawPartitions.end(); itr++){
