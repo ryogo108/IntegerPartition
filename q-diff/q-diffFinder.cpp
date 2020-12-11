@@ -16,14 +16,14 @@ const bool countWithPrint = false;
 
 // Strict 分割だけを生成するかどうかフラグ.
 // もし現れる分割が全て Strict ならこれを true にすると高速化される.
-const bool generateStrictPartitions = true;
+const bool generateStrictPartitions = false;
 
 bool isSuitablePartition(Par & p){
   bool isSuitable = true;
   for(int i = 0; i < p.size(); i++){
     if(p[i] == 0) break;
     if(p[i + 1] != 0){
-  /*    if(p[i] % 3 == 0){
+ /*     if(p[i] % 3 == 0){
         isSuitable &= p[i] - p[i + 1] >= 5;
       }
       if(p[i] % 3 == 1){
@@ -32,8 +32,7 @@ bool isSuitablePartition(Par & p){
       if(p[i] % 3 == 2){
         isSuitable &= p[i] - p[i + 1] >= 1;
       }*/
-      isSuitable &= p[i] - p[i + 1] >= 3;
-      if(p[i] % 3 == 0) isSuitable &= p[i] - p[i + 1] >= 4;
+      isSuitable &= p[i] - p[i + 1] >= 2;
     }
   }
   return isSuitable;
@@ -132,16 +131,15 @@ vector<ZZ> parseAnsString(string ans){
   return ansVect;
 }
 
-void printQDiff(string ans, int qDifforder, int maxXIndex, int maxQIndex, int qDiffD){
-  vector<ZZ> ansVect = parseAnsString(ans);
-  cout << "f(x) = " << endl;
-  for(int order = 1; order <= qDifforder; order++){
-    if(order > 1) cout <<" + ";
+void printQDiff(const vector<QQ> & kernel, int qDifforder, int maxXIndex, int maxQIndex, int qDiffD){
+  cout << "0  = " << endl;
+  for(int order = 0; order <= qDifforder; order++){
+    if(order) cout <<" + ";
     Polynomial coef = Polynomial({{0}});
     for(unsigned int xTimes = 0; xTimes <= maxXIndex; xTimes++){
       for(unsigned int qTimes = 0; qTimes <= maxQIndex; qTimes++){
-        ZZ coefOfXQ = ansVect[(order - 1) * (maxXIndex + 1) * (maxQIndex + 1) + qTimes * (maxXIndex + 1) + xTimes];
-        coef = coef + calcXQ(xTimes, qTimes) * Polynomial({{ coefOfXQ }});
+        QQ coefOfXQ = kernel[order * (maxXIndex + 1) * (maxQIndex + 1) + qTimes * (maxXIndex + 1) + xTimes];
+        coef = coef + calcXQ(xTimes, qTimes) * Polynomial({{ ZZ(coefOfXQ) }});
       }
     }
     print_Polynomial(coef);
@@ -170,21 +168,13 @@ int main(int argc,char *argv[]){
   Polynomial refinedGeneratingFunction = countSuitableRefinedPartitions( maxPartitionSize, partitions, isSuitablePartition, refineFunction, countWithPrint ) + Polynomial({{1}});
 
   Matrix m = findQDiffMatrix(refinedGeneratingFunction, qDiffOrder, maxXIndex, maxQIndex, qDiffD);
-  //printMatrix(m);
   Matrix mt = transpose(m);
 
   vector<vector<QQ> > kernel = GaussianElimination(mt);
   if(kernel.empty()){
     cout << "q-diff NOT found." << endl;
   }
-  else{
-    for(int i = 0; i < kernel.size(); i++)printVector(kernel[i]);
-  }
   cout << "size of kernel = " << kernel.size() << endl;
-  //print_Polynomial(refinedGeneratingFunction);
 
- /* string ans;
-  getline(cin, ans);
-
-  printQDiff(ans, qDiffOrder, maxXIndex, maxQIndex, qDiffD);*/
+  printQDiff(kernel[0], qDiffOrder, maxXIndex, maxQIndex, qDiffD);
 }
