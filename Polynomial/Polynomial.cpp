@@ -87,7 +87,7 @@ Polynomial qShift(const Polynomial & p, int s){
 }
 
 vector<long long> polynomialToVec(const Polynomial & p){
-  vector<long long> result((MAX_Q_INDEX + 1) * (MAX_X_INDEX), 0);
+  vector<long long> result((MAX_Q_INDEX + 1) * (MAX_X_INDEX + 1), 0);
   for(int qIndex = 0; qIndex < min(p.size(), MAX_Q_INDEX + 1); qIndex++){
     for(int xIndex = 0; xIndex < min(p[qIndex].size(), MAX_X_INDEX + 1); xIndex++){
       result[qIndex * (MAX_X_INDEX + 1) + xIndex] = p[qIndex][xIndex];
@@ -114,7 +114,7 @@ void print_Polynomial(Polynomial & p){
   cout<<endl;
 }
 
-int main(){
+/*int main(){
   Polynomial p1 = Polynomial({{1, 1, 100, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 1, 1, 1}});
   Polynomial p2 = Polynomial({{1}, {1, 1, 2, 3, 4, 5, 6, 7, 8}, {0 ,1}});
   Polynomial x={{1,1,1,1,1,1},{1,2,3,4}};
@@ -124,4 +124,4 @@ int main(){
   Polynomial r = qShift(p2, 5);
   print_Polynomial(q);
   //print_Polynomial(r);
-}
+}*/
