@@ -1,10 +1,14 @@
 #include<iostream>
 #include<vector>
 #include<string>
+#include<gmpxx.h>
 using namespace std;
 
+using QQ = mpq_class;
+using ZZ = mpz_class;
+
 // Polynomial は ZZ[x, q] / (x ^ (MAX_X_INDEX + 1), q ^ (MAX_Q_INDEX + 1)) の上の元.
-typedef vector<vector<long long> > Polynomial;
+typedef vector<vector<ZZ> > Polynomial;
 const int MAX_Q_INDEX = 20;
 const int MAX_X_INDEX = 20;
 
@@ -17,7 +21,7 @@ int min(int a, int b){
 }
 
 Polynomial operator + (const Polynomial & l, const Polynomial & r){
-  Polynomial result(MAX_Q_INDEX + 1, vector<long long>(MAX_X_INDEX + 1, 0));
+  Polynomial result(MAX_Q_INDEX + 1, vector<ZZ>(MAX_X_INDEX + 1, 0));
   for(int qIndex = 0; qIndex < min(l.size(), MAX_Q_INDEX + 1); qIndex++){
     for(int xIndex = 0; xIndex < min(l[qIndex].size(), MAX_X_INDEX + 1); xIndex++){
       result[qIndex][xIndex] += l[qIndex][xIndex];
@@ -33,7 +37,7 @@ Polynomial operator + (const Polynomial & l, const Polynomial & r){
 }
 
 Polynomial operator - (const Polynomial & r){
-  Polynomial result(MAX_Q_INDEX + 1, vector<long long>(MAX_X_INDEX + 1, 0));
+  Polynomial result(MAX_Q_INDEX + 1, vector<ZZ>(MAX_X_INDEX + 1, 0));
   for(int qIndex = 0; qIndex < min(r.size(), MAX_Q_INDEX + 1); qIndex++){
     for(int xIndex = 0; xIndex < min(r[qIndex].size(), MAX_X_INDEX + 1); xIndex++){
       result[qIndex][xIndex] = -r[qIndex][xIndex];
@@ -43,7 +47,7 @@ Polynomial operator - (const Polynomial & r){
 }
 
 Polynomial operator - (const Polynomial & l, const Polynomial & r){
-  Polynomial result(MAX_Q_INDEX + 1, vector<long long>(MAX_X_INDEX + 1, 0));
+  Polynomial result(MAX_Q_INDEX + 1, vector<ZZ>(MAX_X_INDEX + 1, 0));
   for(int qIndex = 0; qIndex < min(l.size(), MAX_Q_INDEX + 1); qIndex++){
     for(int xIndex = 0; xIndex < min(l[qIndex].size(), MAX_X_INDEX + 1); xIndex++){
       result[qIndex][xIndex] += l[qIndex][xIndex];
@@ -59,7 +63,7 @@ Polynomial operator - (const Polynomial & l, const Polynomial & r){
 }
 
 Polynomial operator * (const Polynomial & l, const Polynomial & r){
-  Polynomial result(MAX_Q_INDEX + 1, vector<long long>(MAX_X_INDEX + 1, 0));
+  Polynomial result(MAX_Q_INDEX + 1, vector<ZZ>(MAX_X_INDEX + 1, 0));
   for(int lQIndex = 0; lQIndex < min(l.size(), MAX_Q_INDEX + 1); lQIndex++){
     for(int lXIndex = 0; lXIndex < min(l[lQIndex].size(), MAX_X_INDEX + 1); lXIndex++){
       for(int rQIndex = 0; rQIndex < min(r.size(), MAX_Q_INDEX + 1); rQIndex++){
@@ -76,7 +80,7 @@ Polynomial operator * (const Polynomial & l, const Polynomial & r){
 
 // f(x) -> f(x * q ^ s)
 Polynomial qShift(const Polynomial & p, int s){
-  Polynomial result(MAX_Q_INDEX + 1, vector<long long>(MAX_X_INDEX + 1, 0));
+  Polynomial result(MAX_Q_INDEX + 1, vector<ZZ>(MAX_X_INDEX + 1, 0));
   for(int qIndex = 0; qIndex < min(p.size(), MAX_Q_INDEX + 1); qIndex++){
     for(int xIndex = 0; xIndex < min(p[qIndex].size(), MAX_X_INDEX + 1); xIndex++){
       if(qIndex + xIndex * s > MAX_Q_INDEX) continue;
@@ -86,8 +90,8 @@ Polynomial qShift(const Polynomial & p, int s){
   return result;
 }
 
-vector<long long> polynomialToVec(const Polynomial & p){
-  vector<long long> result((MAX_Q_INDEX + 1) * (MAX_X_INDEX + 1), 0);
+vector<ZZ> polynomialToVec(const Polynomial & p){
+  vector<ZZ> result((MAX_Q_INDEX + 1) * (MAX_X_INDEX + 1), 0);
   for(int qIndex = 0; qIndex < min(p.size(), MAX_Q_INDEX + 1); qIndex++){
     for(int xIndex = 0; xIndex < min(p[qIndex].size(), MAX_X_INDEX + 1); xIndex++){
       result[qIndex * (MAX_X_INDEX + 1) + xIndex] = p[qIndex][xIndex];
