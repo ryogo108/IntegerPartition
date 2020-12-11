@@ -18,7 +18,15 @@ bool isSuitablePartition(Par & p){
   for(int i = 0; i < p.size(); i++){
     if(p[i] == 0) break;
     if(p[i + 1] != 0){
-      isSuitable &= p[i] - p[i + 1] >= 2;
+      if(p[i] % 3 == 0){
+        isSuitable &= p[i] - p[i + 1] >= 5;
+      }
+      if(p[i] % 3 == 1){
+        isSuitable &= p[i] - p[i + 1] == 3 || p[i] - p[i + 1] == 4 || p[i] - p[i + 1] >= 6;
+      }
+      if(p[i] % 3 == 2){
+        isSuitable &= p[i] - p[i + 1] >= 1;
+      }
     }
   }
   return isSuitable;
@@ -34,7 +42,7 @@ unsigned int refineFunction(Par & p){
 }
 
 void printMatrix(const Matrix & m){
-  cout << "Matrix([";
+  cout << "M = Matrix([";
   for(int mRowIndex = 0; mRowIndex < m.size(); mRowIndex++){
     if(mRowIndex) cout << ", ";
     cout << "[";
@@ -44,16 +52,16 @@ void printMatrix(const Matrix & m){
     }
     cout << "]";
   }
-  cout << "])" << endl;
+  cout << "]);" << endl;
 }
 
 void printVectorForSage(const vector<long long> & v){
-  cout << "vector([";
-  for(int i; i < v.size(); i++){
+  cout << "w = vector([";
+  for(int i = 0; i < v.size(); i++){
     if(i) cout << ", ";
     cout << v[i];
   }
-  cout << "])" << endl;
+  cout << "]); " << endl;
 }
 
 Matrix transpose(const Matrix & m){
@@ -87,7 +95,7 @@ Matrix findQDiffMatrix(const Polynomial & p, int r, int s, int t, int d = 1){
         Polynomial coefTimes = calcXQ(xTimes, qTimes);
         Polynomial multipliedPoly = coefTimes * shiftedPoly;
         vector<long long> resultVect = polynomialToVec(multipliedPoly);
-        copy(resultVect.begin(), resultVect.end(), result[(i - 1) * (s + 1) * (t + 1) + xTimes * (t + 1) + qTimes].begin());
+        copy(resultVect.begin(), resultVect.end(), result[(i - 1) * (s + 1) * (t + 1) + qTimes * (s + 1) + xTimes].begin());
       }
     }
   }
@@ -128,7 +136,7 @@ void printQDiff(string ans, int qDifforder, int maxXIndex, int maxQIndex, int qD
     Polynomial coef = Polynomial({{0}});
     for(unsigned int xTimes = 0; xTimes <= maxXIndex; xTimes++){
       for(unsigned int qTimes = 0; qTimes <= maxQIndex; qTimes++){
-        long long coefOfXQ = ansVect[(order - 1) * (maxXIndex + 1) * (maxQIndex + 1) + xTimes * (maxQIndex + 1) + qTimes];
+        long long coefOfXQ = ansVect[(order - 1) * (maxXIndex + 1) * (maxQIndex + 1) + qTimes * (maxXIndex + 1) + xTimes];
         coef = coef + calcXQ(xTimes, qTimes) * Polynomial({{ coefOfXQ }});
       }
     }
@@ -159,7 +167,7 @@ int main(int argc,char *argv[]){
 
   Matrix m = findQDiffMatrix(refinedGeneratingFunction, qDiffOrder, maxXIndex, maxQIndex, qDiffD);
   printMatrix(m);
-  print_Polynomial(refinedGeneratingFunction);
+  //print_Polynomial(refinedGeneratingFunction);
 
   string ans;
   getline(cin, ans);
