@@ -9,8 +9,8 @@ using ZZ = mpz_class;
 
 // Polynomial は ZZ[x, q] / (x ^ (MAX_X_INDEX + 1), q ^ (MAX_Q_INDEX + 1)) の上の元.
 typedef vector<vector<ZZ> > Polynomial;
-const int MAX_Q_INDEX = 20;
-const int MAX_X_INDEX = 20;
+const int MAX_Q_INDEX = 30;
+const int MAX_X_INDEX = 30;
 
 int max(int a, int b){
   return a > b ? a : b;
