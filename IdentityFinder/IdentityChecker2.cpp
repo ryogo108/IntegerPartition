@@ -15,8 +15,17 @@ bool isSuitablePartition(Par & p){
   bool isSuitable = true;
   for(int i = 0; i < p.size(); i++){
     if(p[ i ] == 0) break;
+    isSuitable &= p[i] != 2;
     if(p[ i + 1 ] != 0){
-      isSuitable &= p[ i ] - p[ i + 1 ] >= 2;
+      if(p[i] % 3 == 0){
+        isSuitable &= p[i] - p[i + 1] >= 3 ;
+      }
+      if(p[i] % 3 == 1){
+        isSuitable &= p[i] - p[i + 1] == 2 || p[i] - p[i + 1] >= 4;
+      }
+      if(p[i] % 3 == 2){
+        isSuitable &=  p[i] - p[i + 1] >= 4;
+      }
     }
   }
   return isSuitable;
