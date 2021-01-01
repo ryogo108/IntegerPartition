@@ -33,6 +33,7 @@ template<class T>void printVector(vector<T> & vec){
 // B = (b_0, b_1, b_2, b_3, ..., b_N) -> A = (0, a_1, a_2, a_3, ..., a_N) s.t.
 // (1 - q) ^ (-a_1) (1 - q ^ 2) ^ (-a_2) (1 - q ^ 3) ^ (-a_3) ... (1 - q ^ N) ^ (-a_N)
 // = 1 + b_1 * q + b_2 * q ^ 2 + b_3 * q ^ 3 + ... + b_N * q ^ N + o(q ^ (N + 1)).
+// complexity : O(N ^ 3) ( N = B.size() )
 vector<long long> Factor(vector<long long> &  B){
   vector<long long> A;
   A.push_back(0);
@@ -86,6 +87,8 @@ void printTermOfPeriodicSeq(const vector<long long> & seq){
   printVector(term);
 }
 
+// 与えられた diffMatrix と forbiddenParts の条件を満たす分割の数え上げ.
+// complexity : O(D * N ^ 2) ( N = MAX_PARTITION_SIZE = MAX_PART, D = MAX_MOD )
 vector<long long> countPartitionsByDiffMatrix(const Mat<int> & diffMatrix, const vector<int> & forbiddenParts){
   vector<long long> numOfPartitions(MAX_PARTITION_SIZE + 1, 0);
 
@@ -130,6 +133,8 @@ vector<long long> countPartitionsByDiffMatrix(const Mat<int> & diffMatrix, const
   return numOfPartitions;
 }
 
+// 1 ~ MAX_FORBIDDEN_PART の subset を 生成する.
+// complexity : O(2 ^ MAX_FORBIDDEN_PART) ( * Factor )
 void dfsForbiddenPartsGenerator(const Mat<int> & diffMatrix, int forbiddenPart, int maxForbiddenPart, vector<int> forbiddenParts){
   if(forbiddenPart == maxForbiddenPart){
     // これ以上 forbiddenPart は考えない.
@@ -152,6 +157,9 @@ void dfsForbiddenPartsGenerator(const Mat<int> & diffMatrix, int forbiddenPart, 
     dfsForbiddenPartsGenerator(diffMatrix, forbiddenPart + 1, maxForbiddenPart, forbiddenParts);
   }
 }
+
+// diffMatrix を生成する.
+// complexity : O(M ^ (N ^ 2)) (M = maxDiff, N = matrixSize) ( * dfsForbiddenPartsGenerator)
 void dfsDiffMatrixGenerator(int matrixSize, int maxDiff, int depth, const Mat<int> & seedMatrix, const Mat<int> & shiftMatrix){
   if(depth == matrixSize * matrixSize){
     Mat<int> diffMatrix = int(seedMatrix.size()) * seedMatrix + shiftMatrix;
