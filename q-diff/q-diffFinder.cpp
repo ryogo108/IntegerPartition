@@ -23,16 +23,15 @@ bool isSuitablePartition(Par & p){
   for(int i = 0; i < p.size(); i++){
     if(p[i] == 0) break;
     if(p[i + 1] != 0){
- /*     if(p[i] % 3 == 0){
-        isSuitable &= p[i] - p[i + 1] >= 5;
+      if(p[i] % 3 == 0){
+        isSuitable &= p[i] - p[i + 1] >= 3 ;
       }
       if(p[i] % 3 == 1){
-        isSuitable &= p[i] - p[i + 1] == 3 || p[i] - p[i + 1] == 4 || p[i] - p[i + 1] >= 6;
+        isSuitable &= p[i] - p[i + 1] == 2 || p[i] - p[i + 1] >= 4;
       }
       if(p[i] % 3 == 2){
-        isSuitable &= p[i] - p[i + 1] >= 1;
-      }*/
-      isSuitable &= p[i] - p[i + 1] >= 2;
+        isSuitable &=  p[i] - p[i + 1] >= 4;
+      }
     }
   }
   return isSuitable;
@@ -40,10 +39,7 @@ bool isSuitablePartition(Par & p){
 
 unsigned int refineFunction(Par & p){
   unsigned int refineValue = 0;
-  for(int i = 0; i < p.size(); i++){
-    if(p[i] == 0) break;
-    refineValue++;
-  }
+  refineValue = lengthOfPartition(p);
   return refineValue;
 }
 
@@ -176,5 +172,9 @@ int main(int argc,char *argv[]){
   }
   cout << "size of kernel = " << kernel.size() << endl;
 
-  printQDiff(kernel[0], qDiffOrder, maxXIndex, maxQIndex, qDiffD);
+  cout << "Head 30 q-diffs :" << endl;
+  for(int i = 0; i < min(kernel.size(), 30); i++){
+    cout << i << " th q-diff : " << endl;
+    printQDiff(kernel[i], qDiffOrder, maxXIndex, maxQIndex, qDiffD);
+  }
 }
