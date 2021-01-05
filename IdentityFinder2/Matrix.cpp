@@ -52,7 +52,8 @@ template <class T> void printMatrix(const Mat<T>&  m){
 }
 template <class T> void printMatrixInRow(const Mat<T>&  m){
   if(m.empty()){
-    throw invalid_argument("empty matrix cannot be shown");
+    cout << "empty matrix cannot be shown" << endl;
+    return;
   }
   else cout<<m.size()<<" "<<m[0].size();
   for(int i=0;i<m.size();i++){
@@ -129,13 +130,19 @@ template<class T> vector< vector<T> > GaussianElimination(Mat<T>& A){
 
 
 template<class T> vector<T> operator+(const vector<T>& vl,const vector<T>& vr){
-  if(vl.size()!=vr.size())throw invalid_argument("a vector cannot add to a vector which has different size");
+  if(vl.size()!=vr.size()){
+    cout << "a vector cannot add to a vector which has different size" << endl;
+    return vl;
+  }
   vector<T> v(vl);
   for(int i=0;i<v.size();i++)v[i]=v[i]+vr[i];
   return v;
 }
 template <class T> vector<T> operator-(const vector<T>& vl,const vector<T>& vr){
-  if(vl.size()!=vr.size())throw invalid_argument("a vector cannot  subtract with a vector which has different size");
+  if(vl.size()!=vr.size()){
+    cout << "a vector cannot  subtract with a vector which has different size" << endl;
+    return vl;
+  }
   vector<T> v(vl);
   for(int i=0;i<v.size();i++)v[i]=v[i]-vr[i];
   return v;
@@ -158,8 +165,14 @@ template <class T> vector<T> operator-(const vector<T>& v){
 
 }
 template <class T> vector<T> operator*(const Mat<T>& ml,const vector<T>& vr){ 
-  if(ml.empty())throw invalid_argument("empty matrix cannot time to a vector");
-  if(ml[0].size()!=vr.size())throw invalid_argument("a matrix cannot time  to a vector which has different size");
+  if(ml.empty()){
+    cout << "empty matrix cannot time to a vector" << endl;
+    return vr;
+  }
+  if(ml[0].size()!=vr.size()){
+    cout << "a matrix cannot time  to a vector which has different size" << endl;
+    return vr;
+  }
   vector<T> v(ml.size(),0);
   for(int i=0;i<v.size();i++){
     T sum=0;
@@ -169,8 +182,14 @@ template <class T> vector<T> operator*(const Mat<T>& ml,const vector<T>& vr){
   return v;
 }
 template <class T> Mat<T> operator+(const Mat<T>& ml,const Mat<T>& mr){
-  if(ml.empty() || mr.empty())throw invalid_argument("empty matrix cannto add to a matrix");
-  if(ml.size()!=mr.size() || ml[0].size()!=mr[0].size())throw invalid_argument("a matrix cannot add to a matrix which has different shape");
+  if(ml.empty() || mr.empty()){
+    cout << "empty matrix cannto add to a matrix" << endl;
+    return ml;
+  }
+  if(ml.size()!=mr.size() || ml[0].size()!=mr[0].size()){
+    cout << "a matrix cannot add to a matrix which has different shape" << endl;
+    return ml;
+  }
   Mat<T> m(ml.size(),vector<T>(ml[0].size(),0));
   for(int i=0;i<m.size();i++){
     for(int j=0;j<m[i].size();j++){
@@ -180,8 +199,14 @@ template <class T> Mat<T> operator+(const Mat<T>& ml,const Mat<T>& mr){
   return m;
 }
 template <class T> Mat<T> operator-(const Mat<T>& ml,const Mat<T>& mr){
-  if(ml.empty() || mr.empty())throw invalid_argument("empty matrix cannot subtract with a matrix");
-  if(ml.size()!=mr.size() || ml[0].size()!=mr[0].size())throw invalid_argument("a matrix cannot subtract with a matrix which has different shape");
+  if(ml.empty() || mr.empty()){
+    cout << "empty matrix cannot subtract with a matrix" << endl;
+    return ml;
+  }
+  if(ml.size()!=mr.size() || ml[0].size()!=mr[0].size()){
+    cout << "a matrix cannot subtract with a matrix which has different shape" << endl;
+    return ml;
+  }
   Mat<T> m(ml.size(),vector<T>(ml[0].size(),0));
   for(int i=0;i<m.size();i++){
     for(int j=0;j<m[i].size();j++){
@@ -192,8 +217,14 @@ template <class T> Mat<T> operator-(const Mat<T>& ml,const Mat<T>& mr){
   
 }
 template <class T> Mat<T> operator*(const Mat<T>& ml,const Mat<T>& mr){
-  if(ml.empty() || mr.empty())throw invalid_argument("empty matrix cannot time to a matrix");
-  if(ml[0].size()!=mr.size())throw invalid_argument("a matrix cannot time to a matrix which has invalid shape");
+  if(ml.empty() || mr.empty()){
+    cout << "empty matrix cannot time to a matrix" << endl;
+    return ml; 
+  }
+  if(ml[0].size()!=mr.size()){
+    cout << "a matrix cannot time to a matrix which has invalid shape";
+    return ml;
+  }
   Mat<T> m(ml.size(),vector<T>(mr[0].size(),0));
   for(int i=0;i<m.size();i++){
     for(int j=0;j<m[i].size();j++){
